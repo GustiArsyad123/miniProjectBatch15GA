@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       linkMeet: DataTypes.STRING,
       speakerPhoto: DataTypes.STRING,
       speakerName: DataTypes.STRING,
+      speakerJobTitle: DataTypes.STRING,
       userId: DataTypes.INTEGER,
       categoryId: DataTypes.INTEGER,
     },

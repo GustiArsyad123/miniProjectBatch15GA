@@ -36,6 +36,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      speakerJobTitle: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
