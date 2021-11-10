@@ -13,9 +13,14 @@ module.exports = (sequelize, DataTypes) => {
       models.event.belongsTo(models.user, {
         foreignKey: "userId",
       });
-
       models.event.belongsTo(models.category, {
         foreignKey: "categoryId",
+      });
+      models.event.hasMany(models.comment, {
+        foreignKey: "eventId",
+      });
+      models.event.hasMany(models.bookmark, {
+        foreignKey: "eventId",
       });
     }
   }
