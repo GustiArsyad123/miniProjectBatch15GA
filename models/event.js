@@ -22,6 +22,9 @@ module.exports = (sequelize, DataTypes) => {
       models.event.hasMany(models.bookmark, {
         foreignKey: "eventId",
       });
+      models.event.hasMany(models.rating, {
+        foreignKey: "eventId",
+      });
     }
   }
   event.init(

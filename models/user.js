@@ -18,6 +18,9 @@ module.exports = (sequelize, DataTypes) => {
       models.user.hasMany(models.bookmark, {
         foreignKey: "userId",
       });
+      models.user.hasMany(models.rating, {
+        foreignKey: "userId",
+      });
     }
   }
   user.init(
