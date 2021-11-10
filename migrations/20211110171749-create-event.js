@@ -12,11 +12,27 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      photoEvent: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      dateEvent: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
       detail: {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      image: {
+      linkMeet: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      speakerPhoto: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      speakerName: {
         allowNull: false,
         type: Sequelize.STRING,
       },
