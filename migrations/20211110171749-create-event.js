@@ -22,7 +22,7 @@ module.exports = {
       },
       detail: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(600),
       },
       linkMeet: {
         allowNull: false,
