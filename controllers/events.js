@@ -10,7 +10,7 @@ const moment = require("moment");
 // Make pagination
 const getPagination = (page, size) => {
   const limit = size ? +size : 8;
-  const offset = page ? page * limit : 0;
+  const offset = (page - 1) * limit || 0;
 
   return { limit, offset };
 };
@@ -18,7 +18,7 @@ const getPagination = (page, size) => {
 // make paging data
 const getPagingData = (data, page, limit) => {
   const { count: totalItems, rows: events } = data;
-  const currentPage = page ? +page : 0;
+  const currentPage = page ? +page : 1;
   const totalPages = Math.ceil(totalItems / limit);
 
   return { totalItems, events, totalPages, currentPage };
@@ -27,7 +27,7 @@ const getPagingData = (data, page, limit) => {
 /**
  * PR
  * - search by keyword nya belum dibuat
- * - filter by time (tomorow dan today)
+ * - filter by time (tomorow)
  *
  */
 
@@ -35,13 +35,18 @@ class Events {
   // Make getStartaedEvent function >>>>>> masih harus diperbaiki
   static async getStartedEvent(req, res, next) {
     try {
-      console.log(moment());
-      // Tampilan menu di home
-      // - Event yg segera mulai
-      // const a = await event.findAll({});
-      // const hampir = a.createdAt - new Date();
-      // const a = new Date();
+      // Get started
+      const startOfDay = moment().startOf("day");
+      const endOfDay = moment().endOf("day");
+      console.log(startOfDay);
+      console.log(endOfDay);
+
       const dataStarted = await event.findAll({
+        where: {
+          dateEvent: {
+            [Op.between]: [startOfDay, endOfDay],
+          },
+        },
         attributes: ["photoEvent", "dateEvent", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
@@ -87,8 +92,8 @@ class Events {
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
         ],
-        limit: 8,
-        offset: 0,
+        limit,
+        offset,
         // where: { categoryId: req.userId.categoryId },
         order: [["dateEvent", "DESC"]],
       });
@@ -96,6 +101,45 @@ class Events {
       if (data.length === 0) {
         return res.status(404).json({ errors: ["Events not found"] });
       }
+
+      res.status(200).json(getPagingData(data, page, limit));
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // Search Event
+  static async searchEvent(req, res, next) {
+    try {
+      const { page, size } = req.query;
+      const { limit, offset } = getPagination(page, size);
+      const cari = req.body.cari;
+
+      let data = await event.findAndCountAll({
+        where: {
+          [Op.or]: [
+            {
+              title: {
+                [Op.iLike]: `%${cari}%`,
+              },
+            },
+            {
+              speakerName: {
+                [Op.iLike]: `%${cari}%`,
+              },
+            },
+          ],
+        },
+        attributes: ["photoEvent", "dateEvent", "title"],
+        include: [
+          { model: user, attributes: ["firstName"] },
+          { model: category, attributes: ["category"] },
+        ],
+        limit,
+        offset,
+        // where: { categoryId: req.userId.categoryId },
+        order: [["dateEvent", "DESC"]],
+      });
 
       res.status(200).json(getPagingData(data, page, limit));
     } catch (error) {
@@ -115,8 +159,8 @@ class Events {
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
         ],
-        limit: 8,
-        offset: 0,
+        limit,
+        offset,
         // where: { categoryId: req.userId.categoryId },
         where: { categoryId: req.params.id },
       });
@@ -131,15 +175,22 @@ class Events {
     }
   }
 
-  // Make getAllEventByWeek filter by week
-  static async getAllEventsByWeek(req, res, next) {
+  // Make getAllEventByToday filter by Today
+  static async getAllEventsByToday(req, res, next) {
     try {
       const { page, size } = req.query;
       const { limit, offset } = getPagination(page, size);
+
+      // today
+      const startOfDay = moment().startOf("day");
+      const endOfDay = moment().endOf("day");
+      console.log(startOfDay);
+      console.log(endOfDay);
+
       let data = await event.findAndCountAll({
         where: {
           dateEvent: {
-            [Op.gte]: moment().subtract(7, "days").toDate(),
+            [Op.between]: [startOfDay, endOfDay],
           },
         },
         attributes: ["photoEvent", "dateEvent", "title"],
@@ -147,12 +198,91 @@ class Events {
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
         ],
-        limit: 8,
-        offset: 0,
+        limit,
+        offset,
         // where: { categoryId: req.userId.categoryId },
-        order: [["dateEvent", "ASC"]],
+        order: [["dateEvent", "DESC"]],
       });
-      console.log(data);
+      if (data.length === 0) {
+        return res.status(404).json({ errors: ["Events not found"] });
+      }
+
+      res.status(200).json(getPagingData(data, page, limit));
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // Make getAllEventByTomorrow filter by tomorrow
+  static async getAllEventsByTomorrow(req, res, next) {
+    try {
+      const { page, size } = req.query;
+      const { limit, offset } = getPagination(page, size);
+
+      let day = new Date();
+      let y = day.getFullYear();
+      let m = day.getMonth();
+      let d = day.getDate();
+
+      const startOfDay = moment().endOf("days");
+      const endOfDay = moment().add("days", 2);
+      console.log(startOfDay);
+      console.log(endOfDay);
+
+      let data = await event.findAndCountAll({
+        where: {
+          dateEvent: {
+            [Op.eq]: moment().add(1, "days"),
+          },
+        },
+        attributes: ["photoEvent", "dateEvent", "title"],
+        include: [
+          { model: user, attributes: ["firstName"] },
+          { model: category, attributes: ["category"] },
+        ],
+        limit,
+        offset,
+        // where: { categoryId: req.userId.categoryId },
+        order: [["dateEvent", "DESC"]],
+      });
+      if (data.length === 0) {
+        return res.status(404).json({ errors: ["Events not found"] });
+      }
+
+      res.status(200).json(getPagingData(data, page, limit));
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // Make getAllEventByWeek filter by week
+  static async getAllEventsByWeek(req, res, next) {
+    try {
+      const { page, size } = req.query;
+      const { limit, offset } = getPagination(page, size);
+
+      // week
+      const startOfWeek = moment().startOf("day");
+      const endOfWeek = moment().add(6, "days");
+      console.log(startOfWeek);
+      console.log(endOfWeek);
+
+      let data = await event.findAndCountAll({
+        where: {
+          dateEvent: {
+            [Op.between]: [startOfWeek, endOfWeek],
+          },
+        },
+        attributes: ["photoEvent", "dateEvent", "title"],
+        include: [
+          { model: user, attributes: ["firstName"] },
+          { model: category, attributes: ["category"] },
+        ],
+        limit,
+        offset,
+        // where: { categoryId: req.userId.categoryId },
+        order: [["dateEvent", "DESC"]],
+      });
       if (data.length === 0) {
         return res.status(404).json({ errors: ["Events not found"] });
       }
@@ -170,8 +300,10 @@ class Events {
       const { limit, offset } = getPagination(page, size);
 
       // Month
-      const startOfMonth = moment().startOf("month").format("YYYY-MM-DD hh:mm");
-      const endOfMonth = moment().endOf("month").format("YYYY-MM-DD hh:mm");
+      const startOfMonth = moment().startOf("month");
+      const endOfMonth = moment().endOf("month");
+      console.log(startOfMonth);
+      console.log(endOfMonth);
 
       let data = await event.findAndCountAll({
         where: {
@@ -184,8 +316,8 @@ class Events {
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
         ],
-        limit: 8,
-        offset: 0,
+        limit,
+        offset,
         // where: { categoryId: req.userId.categoryId },
         order: [["dateEvent", "ASC"]],
       });
@@ -207,8 +339,10 @@ class Events {
       const { limit, offset } = getPagination(page, size);
 
       // Year
-      const startOfYear = moment().startOf("year").format("YYYY-MM-DD hh:mm");
-      const endOfYear = moment().endOf("year").format("YYYY-MM-DD hh:mm");
+      const startOfYear = moment().startOf("year");
+      const endOfYear = moment().endOf("year");
+      console.log(startOfYear);
+      console.log(endOfYear);
 
       let data = await event.findAndCountAll({
         where: {
@@ -221,8 +355,8 @@ class Events {
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
         ],
-        limit: 8,
-        offset: 0,
+        limit,
+        offset,
         // where: { categoryId: req.userId.categoryId },
         order: [["dateEvent", "ASC"]],
       });

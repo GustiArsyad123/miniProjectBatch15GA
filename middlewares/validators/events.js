@@ -59,19 +59,19 @@ exports.createOrUpadateEventValidator = async (req, res, next) => {
     // }
 
     // Check input of date event
-    if (validator.isDate(req.body.dateEvent)) {
+    if (!validator.isDate(req.body.dateEvent)) {
       errors.push("Please input the date correctly!");
     }
 
     // Check input of detail and min character 100
     if (
-      validator.contains(req.body.detail, {
+      !validator.contains(req.body.detail, {
         ignoreCase: false,
         minOccurrences: 100,
         maxOccurrences: 600,
       })
     ) {
-      errors.push("Detail of event min 300 and max 600 characters!");
+      errors.push("Detail of event min 100 and max 600 characters!");
     }
 
     // Check input of link meet
