@@ -51,7 +51,7 @@ exports.createOrUpadateEventValidator = async (req, res, next) => {
       await move(`./public/images/events/${file.name}`);
 
       // assign req.body.image with file.name
-      req.body.image = file.name;
+      req.body.photoEvent = file.name;
     }
 
     // if (errors.length > 0) {
@@ -59,19 +59,19 @@ exports.createOrUpadateEventValidator = async (req, res, next) => {
     // }
 
     // Check input of date event
-    if (!validator.isDate(req.body.dateEvent)) {
+    if (validator.isDate(req.body.dateEvent)) {
       errors.push("Please input the date correctly!");
     }
 
-    // Check input of detail and min character 500
+    // Check input of detail and min character 100
     if (
-      !validator.contains(req.body.detail, {
+      validator.contains(req.body.detail, {
         ignoreCase: false,
-        minOccurrences: 500,
+        minOccurrences: 100,
         maxOccurrences: 600,
       })
     ) {
-      errors.push("Detail of event min 500 and max 600 characters!");
+      errors.push("Detail of event min 300 and max 600 characters!");
     }
 
     // Check input of link meet
@@ -117,7 +117,7 @@ exports.createOrUpadateEventValidator = async (req, res, next) => {
       await move(`./public/images/speakerPhoto/${file.name}`);
 
       // assign req.body.image with file.name
-      req.body.image = file.name;
+      req.body.speakerPhoto = file.name;
     }
 
     // if (errors.length > 0) {
