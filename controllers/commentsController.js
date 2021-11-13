@@ -27,7 +27,7 @@ class Comment {
             
             res.status(201).json({ data, message: ['Success add your comment'] });
         } catch (error) {
-            console.log(error);
+            // console.log(error);
            res.status(500).json({ errors: ['Internal Server Error']});
         }
     }
