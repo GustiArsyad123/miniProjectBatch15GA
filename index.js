@@ -3,7 +3,7 @@ const fileUpload = require("express-fileupload"); // import express fileUpload
 
 // Import routes
 const events = require("./routes/events");
-const comments = require("./routes/comments");
+const comments = require("./routes/commentsRouter");
 
 const port = process.env.PORT || 3000;
 

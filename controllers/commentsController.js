@@ -1,40 +1,9 @@
 const {comment, user} = require('../models');
 
 class Comment {
-    // static async getCommentById (req,res,next) {
-    //     try {
-    //         let data = await comment.findAll ({
-    //             attributes: ['comment', 'createdAt'],
-    //             include: [
-    //                 {
-    //                     model: users,
-    //                     attributes: ['fullName', 'lastName', 'image']
-    //                 },
-    //             ],
-    //         });
-
-    //         if (data.length === 0) {
-    //             return res.status(404).json({ errors: ['Comment not found'] });
-    //         }
-
-    //         res.status(200).json({ data });
-    //     } catch (error) {
-    //         next(error);
-    //     }
-    // }
-
-    // static async getCommentByEventId (req,res,next) {
-    //     try {
-            
-    //     } catch (error) {
-            
-    //     }
-    // }
-
     // Create Comment
     static async createComment (req,res,next) {
         try {
-            
             // Create Data Comment
             const newData = await comment.create({
                 comment: req.body.comment,
@@ -56,9 +25,9 @@ class Comment {
                 ],
             });
             
-            res.status(201).json({ data });
+            res.status(201).json({ data, message: ['Success add your comment'] });
         } catch (error) {
-            // console.log(error);
+            console.log(error);
            res.status(500).json({ errors: ['Internal Server Error']});
         }
     }
@@ -85,15 +54,15 @@ class Comment {
                 attributes:  ['comment', 'createdAt'] ,
                 include: [
                     {
-                        model: users,
-                        attributes: ['fullName', 'lastName', 'image']
+                        model: user,
+                        attributes: ['firstName', 'lastName', 'image']
                     },
                 ],
             });
 
-            res.status(201).json({ data });
+            res.status(201).json({ data, message: ['Succes Update Your Comment'] });
         } catch (error) {
-            next(error);
+            res.status(500).json({ errors: ["Internal Server Error"] });
         }
     }
 
@@ -106,9 +75,9 @@ class Comment {
                 return res.status(404).json({ errors: ['Comment Not Found']});
             }
 
-            res.status(200).json({ message: 'Success Delete Commen'});
+            res.status(200).json({ message: 'Success Delete Your Comment'});
         } catch (error) {
-            next(error);
+            res.status(500).json({ errors: ["Internal Server Error"] });
         }
     }
 };
