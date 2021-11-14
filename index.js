@@ -3,6 +3,7 @@ const fileUpload = require("express-fileupload"); // import express fileUpload
 
 // Import routes
 const events = require("./routes/events");
+const users = require("./routes/users");
 
 const port = process.env.PORT || 3000;
 
@@ -21,6 +22,7 @@ app.use(fileUpload());
 app.use(express.static("public"));
 
 /* Make routes */
+app.use("/a", users);
 app.use("/", events);
 
 /* Run server */

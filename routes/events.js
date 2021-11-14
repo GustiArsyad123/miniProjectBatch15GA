@@ -10,6 +10,9 @@ const {
   getStartedEvent,
   getAllEvents,
   getEventByCategory,
+  searchEvent,
+  getAllEventsByToday,
+  getAllEventsByTomorrow,
   getAllEventsByWeek,
   getAllEventsByMonth,
   getAllEventsByYear,
@@ -30,19 +33,25 @@ router
   .get(getAllEvents)
   .post(createOrUpadateEventValidator, createEvent);
 
-router.put("/event/:id", createOrUpadateEventValidator, updateEvent);
+router.get("/cari", searchEvent);
 
-router.delete("/event/:id", deleteEvent);
+router.get("/cat/:id", getEventByCategory);
 
-router.get("/event/category/:id", getEventByCategory);
+router.get("/tody", getAllEventsByToday);
 
-router.get("/event/week", getAllEventsByWeek);
+router.get("/tomorrow", getAllEventsByTomorrow);
 
-router.get("/event/month", getAllEventsByMonth);
+router.get("/we", getAllEventsByWeek);
 
-router.get("/event/year", getAllEventsByYear);
+router.get("/month", getAllEventsByMonth);
 
-router.get("/event/:id", getDetailEvent);
+router.get("/year", getAllEventsByYear);
+
+router.put("/:id", createOrUpadateEventValidator, updateEvent);
+
+router.delete("/:id", deleteEvent);
+
+router.get("/:id", getDetailEvent);
 
 // Export router
 module.exports = router;

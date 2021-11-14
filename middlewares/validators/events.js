@@ -54,24 +54,20 @@ exports.createOrUpadateEventValidator = async (req, res, next) => {
       req.body.photoEvent = file.name;
     }
 
-    // if (errors.length > 0) {
-    //   return res.status(400).json({ errors: errors });
-    // }
-
     // Check input of date event
-    if (validator.isDate(req.body.dateEvent)) {
+
+    if (!validator.isDate(req.body.dateEvent, "YYYY-MM-DD hh:mm:ss")) {
       errors.push("Please input the date correctly!");
     }
 
     // Check input of detail and min character 100
     if (
-      validator.contains(req.body.detail, {
-        ignoreCase: false,
-        minOccurrences: 100,
-        maxOccurrences: 600,
+      !validator.isLength(req.body.detail, {
+        min: 100,
+        max: 600,
       })
     ) {
-      errors.push("Detail of event min 300 and max 600 characters!");
+      errors.push("Detail of event min 100 and max 600 characters!");
     }
 
     // Check input of link meet
@@ -99,11 +95,6 @@ exports.createOrUpadateEventValidator = async (req, res, next) => {
         errors.push("Image must be less than 1MB");
       }
 
-      // If error
-      if (errors.length > 0) {
-        return res.status(400).json({ errors: errors });
-      }
-
       // Create custom filename
       let fileName = crypto.randomBytes(16).toString("hex");
 
@@ -119,10 +110,6 @@ exports.createOrUpadateEventValidator = async (req, res, next) => {
       // assign req.body.image with file.name
       req.body.speakerPhoto = file.name;
     }
-
-    // if (errors.length > 0) {
-    //   return res.status(400).json({ errors: errors });
-    // }
 
     //   Check input of speaker name
     if (validator.isEmpty(req.body.speakerName, { ignore_whitespace: false })) {
