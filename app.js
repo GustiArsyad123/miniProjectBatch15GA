@@ -2,14 +2,16 @@ const express = require("express"); // Import express
 const fileUpload = require("express-fileupload"); // import express fileUpload
 
 // Import routes
-const events = require("./routes/events");
-const users = require("./routes/users");
-const comments = require("./routes/commentsRouter");
-const ratings = require("./routes/ratingsRouter");
+const router = require("./routes/index");
 
+// Import error Handler
+const errorHandler = require("./middlewares/errorHandler");
+
+// Make port
 const port = process.env.PORT || 3000;
 
-const app = express(); // Make express app
+// Make express app
+const app = express();
 
 /* Enable req.body */
 app.use(express.json());
@@ -24,10 +26,15 @@ app.use(fileUpload());
 app.use(express.static("public"));
 
 /* Make routes */
-app.use("/a", users);
-app.use("/", events);
-app.use("/comments", comments);
-app.use("/ratings", ratings);
+app.use("/", router);
+
+// If routes not exist
+app.all("*", (req, res, next) => {
+  next({ statusCode: 404, message: "Endpoint not found" });
+});
+
+// Enable error handler
+app.use(errorHandler);
 
 /* Run server */
 app.listen(port, () => console.log(`Server running on ${port}`));

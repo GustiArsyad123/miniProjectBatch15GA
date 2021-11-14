@@ -1,13 +1,7 @@
 const express = require("express");
 
-// Import validator
-const {
-  createOrUpadateEventValidator,
-} = require("../middlewares/validators/events");
-
 // Import controller
 const {
-  getStartedEvent,
   getAllEvents,
   getEventByCategory,
   searchEvent,
@@ -17,21 +11,12 @@ const {
   getAllEventsByMonth,
   getAllEventsByYear,
   getDetailEvent,
-  createEvent,
-  updateEvent,
-  deleteEvent,
 } = require("../controllers/events");
 
 // Import router
 const router = express.Router();
 
-// Make a router
-router.route("/").get(getStartedEvent);
-
-router
-  .route("/event")
-  .get(getAllEvents)
-  .post(createOrUpadateEventValidator, createEvent);
+router.get("/", getAllEvents);
 
 router.get("/cari", searchEvent);
 
@@ -46,10 +31,6 @@ router.get("/we", getAllEventsByWeek);
 router.get("/month", getAllEventsByMonth);
 
 router.get("/year", getAllEventsByYear);
-
-router.put("/:id", createOrUpadateEventValidator, updateEvent);
-
-router.delete("/:id", deleteEvent);
 
 router.get("/:id", getDetailEvent);
 

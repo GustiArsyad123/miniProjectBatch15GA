@@ -56,7 +56,10 @@ exports.createOrUpadateEventValidator = async (req, res, next) => {
 
     // Check input of date event
 
-    if (!validator.isDate(req.body.dateEvent, "YYYY-MM-DD hh:mm:ss")) {
+    /**
+     * ----  Masih harus diperbaiki ------
+     */
+    if (!validator.isDate(req.body.dateEvent)) {
       errors.push("Please input the date correctly!");
     }
 

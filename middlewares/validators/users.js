@@ -9,23 +9,33 @@ exports.createOrUpadateUserValidator = async (req, res, next) => {
     const errors = [];
 
     //Check input of FirstName
-    if (validator.isEmpty(req.body.firstName, { ignore_whitespace: false })) {
+    if (validator.isEmpty(req.body.firstName, { ignore_whitespace: true })) {
       errors.push("Please input the FirstName!");
     }
 
-     //Check input of LastName
-    if (validator.isEmpty(req.body.lastName, { ignore_whitespace: false })) {
+    //Check input of LastName
+    if (validator.isEmpty(req.body.lastName, { ignore_whitespace: true })) {
       errors.push("Please input the LastName!");
     }
 
+    if (!validator.isEmail(req.body.email)) {
+      errors.push("Email is not valid");
+    }
+
+    if (!validator.isStrongPassword(req.body.password)) {
+      errors.push(
+        "password must include lowercase: min 1, uppercase: min 1, numbers: min 1, symbol: min 1, and length: min 8 characters."
+      );
+    }
+
     // Check for the image of Users was upload or not
-    if (!(req.files && req.files.photoUser)) {
+    if (!(req.files && req.files.image)) {
       errors.push("Please upload the image");
-    } else if (req.files.photoUser) {
+    } else if (req.files.image) {
       // If image was uploaded the photo user
 
       // req.files.photoUser is come from key (file) in postman
-      const file = req.files.photoUser;
+      const file = req.files.image;
 
       // Make sure image is photo
       if (!file.mimetype.startsWith("image")) {
@@ -35,11 +45,6 @@ exports.createOrUpadateUserValidator = async (req, res, next) => {
       // Check file size (max 1MB)
       if (file.size > 1000000) {
         errors.push("Image must be less than 1MB");
-      }
-
-      // If error
-      if (errors.length > 0) {
-        return res.status(400).json({ errors: errors });
       }
 
       // Create custom filename
@@ -55,18 +60,7 @@ exports.createOrUpadateUserValidator = async (req, res, next) => {
       await move(`./public/images/users/${file.name}`);
 
       // assign req.body.image with file.name
-      req.body.photoUser = file.name;
-    }
-
-    // Check input of detail and min character 100
-    if (
-      validator.contains(req.body.detail, {
-        ignoreCase: false,
-        minOccurrences: 100,
-        maxOccurrences: 600,
-      })
-    ) {
-      errors.push("Detail of event min 300 and max 600 characters!");
+      req.body.image = file.name;
     }
 
     if (errors.length > 0) {
@@ -75,6 +69,7 @@ exports.createOrUpadateUserValidator = async (req, res, next) => {
 
     next();
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };

@@ -1,5 +1,4 @@
-const { decodeToken } = require("../utils/jwt");
-//const { user } = require("../models");
+const { decodeToken } = require("../../utils/jwt");
 
 const authentication = async (req, res, next) => {
   try {
@@ -9,14 +8,14 @@ const authentication = async (req, res, next) => {
         message: "Please sign in first",
       });
     }
-    //   Save token to userData
+    //   Save token to loginUser
     let token = req.headers.access_token;
     let userData = decodeToken(token);
     req.loginUser = userData;
     next();
   } catch (error) {
     console.log(error);
-    return error;
+    next(error);
   }
 };
 

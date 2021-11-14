@@ -1,15 +1,13 @@
-const { User } = require("../models");
+const { user } = require("../../models");
 
 const authorization = async (req, res, next) => {
   try {
     const userId = req.loginUser.id;
     const UserId = req.params.id;
-    console.log("======== USER ======");
-    console.log(UserId);
 
-    const userData = await User.findOne({
+    const userData = await user.findOne({
       where: {
-        UserId,
+        id: UserId,
       },
     });
 
@@ -23,8 +21,7 @@ const authorization = async (req, res, next) => {
 
     next();
   } catch (error) {
-    // next(error)
-    console.log(error);
+    next(error);
   }
 };
 

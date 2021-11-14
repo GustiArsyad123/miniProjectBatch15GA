@@ -1,6 +1,5 @@
 // Import models
 const { event, comment, user, category, rating } = require("../models");
-// process.env.TZ = "Asia/Jakarta";
 
 // Import sequelize
 const { Op } = require("sequelize");
@@ -25,22 +24,12 @@ const getPagingData = (data, page, limit) => {
   return { totalItems, events, totalPages, currentPage };
 };
 
-/**
- * PR
- * - search by keyword nya belum dibuat
- * - filter by time (tomorow)
- *
- */
-
 class Events {
-  // Make getStartaedEvent function >>>>>> masih harus diperbaiki
   static async getStartedEvent(req, res, next) {
     try {
       // Get started
       const startOfDay = moment().startOf("day");
       const endOfDay = moment().endOf("day");
-      console.log(startOfDay);
-      console.log(endOfDay);
 
       const dataStarted = await event.findAll({
         where: {
@@ -95,7 +84,6 @@ class Events {
         ],
         limit,
         offset,
-        // where: { categoryId: req.userId.categoryId },
         order: [["dateEvent", "DESC"]],
       });
 
@@ -138,7 +126,6 @@ class Events {
         ],
         limit,
         offset,
-        // where: { categoryId: req.userId.categoryId },
         order: [["dateEvent", "DESC"]],
       });
 
@@ -162,7 +149,6 @@ class Events {
         ],
         limit,
         offset,
-        // where: { categoryId: req.userId.categoryId },
         where: { categoryId: req.params.id },
       });
 
@@ -196,8 +182,7 @@ class Events {
         ],
         limit,
         offset,
-        // where: { categoryId: req.userId.categoryId },
-        order: [["dateEvent", "DESC"]],
+        order: [["dateEvent", "ASC"]],
       });
       if (data.length === 0) {
         return res.status(404).json({ errors: ["Events not found"] });
@@ -233,7 +218,6 @@ class Events {
         ],
         limit,
         offset,
-        // where: { categoryId: req.userId.categoryId },
         order: [["dateEvent", "ASC"]],
       });
       if (data.length === 0) {
@@ -252,9 +236,6 @@ class Events {
       const { page, size } = req.query;
       const { limit, offset } = getPagination(page, size);
 
-      let a = new Date();
-      console.log(a);
-
       // week
       const where = {
         dateEvent: {
@@ -271,8 +252,7 @@ class Events {
         ],
         limit,
         offset,
-        // where: { categoryId: req.userId.categoryId },
-        order: [["dateEvent", "DESC"]],
+        order: [["dateEvent", "ASC"]],
       });
       if (data.length === 0) {
         return res.status(404).json({ errors: ["Events not found"] });
@@ -304,7 +284,6 @@ class Events {
         ],
         limit,
         offset,
-        // where: { categoryId: req.userId.categoryId },
         order: [["dateEvent", "ASC"]],
       });
 
@@ -338,7 +317,6 @@ class Events {
         ],
         limit,
         offset,
-        // where: { categoryId: req.userId.categoryId },
         order: [["dateEvent", "ASC"]],
       });
 
@@ -356,7 +334,6 @@ class Events {
   static async getDetailEvent(req, res, next) {
     try {
       const data = await event.findOne({
-        //  ganti nanti
         where: { id: req.params.id },
       });
 
@@ -370,11 +347,17 @@ class Events {
         where: { eventId: data.id },
       });
 
-      const rate = await rating.findAll({
-        where: { eventId: data.id },
+      const sumRate = await rating.sum("rating", {
+        where: { eventId: req.params.id },
       });
 
-      return res.status(201).json({ data, komen, rate });
+      const countRate = await rating.count({
+        where: { eventId: req.params.id },
+      });
+
+      const avg = sumRate / countRate;
+
+      return res.status(201).json({ data, komen, avg });
     } catch (error) {
       next(error);
     }
@@ -392,7 +375,7 @@ class Events {
         speakerPhoto: req.body.speakerPhoto,
         speakerName: req.body.speakerName,
         speakerJobTitle: req.body.speakerJobTitle,
-        userId: req.body.userId,
+        userId: req.loginUser.id,
         categoryId: req.body.categoryId,
       });
 
@@ -403,7 +386,9 @@ class Events {
       });
 
       // send response with inserted event
-      return res.status(201).json({ data });
+      return res
+        .status(201)
+        .json({ data, message: ["Event has been created!"] });
     } catch (error) {
       console.log(error);
       next(error);
@@ -423,7 +408,7 @@ class Events {
           speakerPhoto: req.body.speakerPhoto,
           speakerName: req.body.speakerName,
           speakerJobTitle: req.body.speakerJobTitle,
-          userId: req.body.id,
+          userId: req.loginUser.id,
           categoryId: req.body.categoryId,
         },
         { where: { id: req.params.id } }
@@ -435,7 +420,9 @@ class Events {
       });
 
       // send response with inserted event
-      return res.status(201).json({ data });
+      return res
+        .status(201)
+        .json({ data, message: ["Event has been updated!"] });
     } catch (error) {
       next(error);
     }
@@ -449,7 +436,7 @@ class Events {
       });
 
       // If success
-      return res.status(200).json({ message: "Success delete event" });
+      return res.status(200).json({ message: "Event has been deleted!" });
     } catch (error) {
       next(error);
     }
