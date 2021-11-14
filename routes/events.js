@@ -35,23 +35,23 @@ router
 
 router.get("/cari", searchEvent);
 
-router.get("/event/category/:id", getEventByCategory);
+router.get("/cat/:id", getEventByCategory);
 
-router.get("/event/today", getAllEventsByToday);
+router.get("/tody", getAllEventsByToday);
 
-router.get("/event/to", getAllEventsByTomorrow);
+router.get("/tomorrow", getAllEventsByTomorrow);
 
-router.get("/event/week", getAllEventsByWeek);
+router.get("/we", getAllEventsByWeek);
 
-router.get("/event/month", getAllEventsByMonth);
+router.get("/month", getAllEventsByMonth);
 
-router.get("/event/year", getAllEventsByYear);
+router.get("/year", getAllEventsByYear);
 
-router.put("/event/:id", createOrUpadateEventValidator, updateEvent);
+router.put("/:id", createOrUpadateEventValidator, updateEvent);
 
-router.delete("/event/:id", deleteEvent);
+router.delete("/:id", deleteEvent);
 
-router.get("/event/:id", getDetailEvent);
+router.get("/:id", getDetailEvent);
 
 // Export router
 module.exports = router;

@@ -1,11 +1,12 @@
 // Import models
 const { event, comment, user, category, rating } = require("../models");
+// process.env.TZ = "Asia/Jakarta";
 
 // Import sequelize
 const { Op } = require("sequelize");
 
 // Import moment
-const moment = require("moment");
+const moment = require("moment-timezone");
 
 // Make pagination
 const getPagination = (page, size) => {
@@ -74,7 +75,7 @@ class Events {
         limit: 4,
         order: [["dateEvent", "DESC"]],
       });
-      res.status(200).json({ dataStarted, dataCategory, dataDesign });
+      return res.status(200).json({ dataStarted, dataCategory, dataDesign });
     } catch (error) {
       next(error);
     }
@@ -102,7 +103,7 @@ class Events {
         return res.status(404).json({ errors: ["Events not found"] });
       }
 
-      res.status(200).json(getPagingData(data, page, limit));
+      return res.status(200).json(getPagingData(data, page, limit));
     } catch (error) {
       next(error);
     }
@@ -130,7 +131,7 @@ class Events {
             },
           ],
         },
-        attributes: ["photoEvent", "dateEvent", "title"],
+        attributes: ["photoEvent", "dateEvent", "title", "speakerName"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -141,7 +142,7 @@ class Events {
         order: [["dateEvent", "DESC"]],
       });
 
-      res.status(200).json(getPagingData(data, page, limit));
+      return res.status(200).json(getPagingData(data, page, limit));
     } catch (error) {
       next(error);
     }
@@ -169,7 +170,7 @@ class Events {
         return res.status(404).json({ errors: ["Events not found"] });
       }
 
-      res.status(200).json(getPagingData(data, page, limit));
+      return res.status(200).json(getPagingData(data, page, limit));
     } catch (error) {
       next(error);
     }
@@ -182,15 +183,10 @@ class Events {
       const { limit, offset } = getPagination(page, size);
 
       // today
-      const startOfDay = moment().startOf("day");
-      const endOfDay = moment().endOf("day");
-      console.log(startOfDay);
-      console.log(endOfDay);
-
       let data = await event.findAndCountAll({
         where: {
           dateEvent: {
-            [Op.between]: [startOfDay, endOfDay],
+            [Op.between]: [moment().startOf("day"), moment().endOf("day")],
           },
         },
         attributes: ["photoEvent", "dateEvent", "title"],
@@ -207,7 +203,7 @@ class Events {
         return res.status(404).json({ errors: ["Events not found"] });
       }
 
-      res.status(200).json(getPagingData(data, page, limit));
+      return res.status(200).json(getPagingData(data, page, limit));
     } catch (error) {
       next(error);
     }
@@ -219,20 +215,15 @@ class Events {
       const { page, size } = req.query;
       const { limit, offset } = getPagination(page, size);
 
-      let day = new Date();
-      let y = day.getFullYear();
-      let m = day.getMonth();
-      let d = day.getDate();
-
-      const startOfDay = moment().endOf("days");
-      const endOfDay = moment().add("days", 2);
-      console.log(startOfDay);
-      console.log(endOfDay);
+      let a = new Date();
+      let b = a.setDate(a.getDate() + 1);
+      let c = new Date(b).setHours(0, 0, 0, 0);
+      let d = new Date(b).setHours(23, 59, 0, 0);
 
       let data = await event.findAndCountAll({
         where: {
           dateEvent: {
-            [Op.eq]: moment().add(1, "days"),
+            [Op.between]: [c, d],
           },
         },
         attributes: ["photoEvent", "dateEvent", "title"],
@@ -243,13 +234,13 @@ class Events {
         limit,
         offset,
         // where: { categoryId: req.userId.categoryId },
-        order: [["dateEvent", "DESC"]],
+        order: [["dateEvent", "ASC"]],
       });
       if (data.length === 0) {
         return res.status(404).json({ errors: ["Events not found"] });
       }
 
-      res.status(200).json(getPagingData(data, page, limit));
+      return res.status(200).json(getPagingData(data, page, limit));
     } catch (error) {
       next(error);
     }
@@ -261,18 +252,18 @@ class Events {
       const { page, size } = req.query;
       const { limit, offset } = getPagination(page, size);
 
+      let a = new Date();
+      console.log(a);
+
       // week
-      const startOfWeek = moment().startOf("day");
-      const endOfWeek = moment().add(6, "days");
-      console.log(startOfWeek);
-      console.log(endOfWeek);
+      const where = {
+        dateEvent: {
+          [Op.between]: [moment().startOf("day"), moment().add(6, "days")],
+        },
+      };
 
       let data = await event.findAndCountAll({
-        where: {
-          dateEvent: {
-            [Op.between]: [startOfWeek, endOfWeek],
-          },
-        },
+        where,
         attributes: ["photoEvent", "dateEvent", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
@@ -287,7 +278,7 @@ class Events {
         return res.status(404).json({ errors: ["Events not found"] });
       }
 
-      res.status(200).json(getPagingData(data, page, limit));
+      return res.status(200).json(getPagingData(data, page, limit));
     } catch (error) {
       next(error);
     }
@@ -300,15 +291,10 @@ class Events {
       const { limit, offset } = getPagination(page, size);
 
       // Month
-      const startOfMonth = moment().startOf("month");
-      const endOfMonth = moment().endOf("month");
-      console.log(startOfMonth);
-      console.log(endOfMonth);
-
       let data = await event.findAndCountAll({
         where: {
           dateEvent: {
-            [Op.between]: [startOfMonth, endOfMonth],
+            [Op.between]: [moment().startOf("month"), moment().endOf("month")],
           },
         },
         attributes: ["photoEvent", "dateEvent", "title"],
@@ -326,7 +312,7 @@ class Events {
         return res.status(404).json({ errors: ["Events not found"] });
       }
 
-      res.status(200).json(getPagingData(data, page, limit));
+      return res.status(200).json(getPagingData(data, page, limit));
     } catch (error) {
       next(error);
     }
@@ -339,15 +325,10 @@ class Events {
       const { limit, offset } = getPagination(page, size);
 
       // Year
-      const startOfYear = moment().startOf("year");
-      const endOfYear = moment().endOf("year");
-      console.log(startOfYear);
-      console.log(endOfYear);
-
       let data = await event.findAndCountAll({
         where: {
           dateEvent: {
-            [Op.between]: [startOfYear, endOfYear],
+            [Op.between]: [moment().startOf("year"), moment().endOf("year")],
           },
         },
         attributes: ["photoEvent", "dateEvent", "title"],
@@ -365,7 +346,7 @@ class Events {
         return res.status(404).json({ errors: ["Events not found"] });
       }
 
-      res.status(200).json(getPagingData(data, page, limit));
+      return res.status(200).json(getPagingData(data, page, limit));
     } catch (error) {
       next(error);
     }
@@ -393,7 +374,7 @@ class Events {
         where: { eventId: data.id },
       });
 
-      res.status(201).json({ data, komen, rate });
+      return res.status(201).json({ data, komen, rate });
     } catch (error) {
       next(error);
     }
@@ -401,7 +382,6 @@ class Events {
 
   // Make create event function
   static async createEvent(req, res, next) {
-    console.log("masuk sisni====================");
     try {
       const insertEvent = await event.create({
         title: req.body.title,
@@ -423,7 +403,7 @@ class Events {
       });
 
       // send response with inserted event
-      res.status(201).json({ data });
+      return res.status(201).json({ data });
     } catch (error) {
       console.log(error);
       next(error);
@@ -433,7 +413,6 @@ class Events {
   // Make update event function
   static async updateEvent(req, res, next) {
     try {
-      console.log("masuk sini==================");
       const updateEvent = await event.update(
         {
           title: req.body.title,
@@ -456,7 +435,7 @@ class Events {
       });
 
       // send response with inserted event
-      res.status(201).json({ data });
+      return res.status(201).json({ data });
     } catch (error) {
       next(error);
     }
@@ -470,7 +449,7 @@ class Events {
       });
 
       // If success
-      res.status(200).json({ message: "Success delete event" });
+      return res.status(200).json({ message: "Success delete event" });
     } catch (error) {
       next(error);
     }
