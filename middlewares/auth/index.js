@@ -10,7 +10,7 @@ exports.Authentication = (req, res, next) => {
   passport.Authentication(
     "authentication",
     { session: false },
-    (err, user, info) => {
+    (err, userData, info) => {
       if (err) {
         return res.status(500).json({
           message: "Internal Server error",
@@ -18,13 +18,13 @@ exports.Authentication = (req, res, next) => {
         });
       }
 
-      if (!user) {
+      if (!userData) {
         return res.status(401).json({
           message: info.message,
         });
       }
 
-      req.loginUser = user;
+      req.loginUser = userData;
       next();
     }
   )(req, res, next);
@@ -41,7 +41,6 @@ passport.use(
     async (req, email, password, done) => {
       try {
         const token = req.headers.access_token;
-        console.log(token);
         const payload = generateToken(token);
         if (!token) {
           return done(null, false, {
@@ -49,15 +48,13 @@ passport.use(
           });
         }
 
-        console.log(payload);
-
-        const user = await User.findOne({
+        const userData = await user.findOne({
           where: {
             id: payload.id,
           },
         });
 
-        if (!user) {
+        if (!userData) {
           return done(null, false, {
             message: "Please Login",
           });
@@ -67,7 +64,6 @@ passport.use(
           message: "Authenticate Success",
         });
       } catch (error) {
-        console.log(error);
         return done(null, false, {
           message: "Something wrong",
         });

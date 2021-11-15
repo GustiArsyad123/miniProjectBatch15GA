@@ -1,48 +1,38 @@
 const express = require("express");
 
-// Import validator
-const {
-  createOrUpadateEventValidator,
-} = require("../middlewares/validators/events");
-
 // Import controller
 const {
-  getStartedEvent,
   getAllEvents,
   getEventByCategory,
+  searchEvent,
+  getAllEventsByToday,
+  getAllEventsByTomorrow,
   getAllEventsByWeek,
   getAllEventsByMonth,
   getAllEventsByYear,
   getDetailEvent,
-  createEvent,
-  updateEvent,
-  deleteEvent,
 } = require("../controllers/events");
 
 // Import router
 const router = express.Router();
 
-// Make a router
-router.route("/").get(getStartedEvent);
+router.get("/", getAllEvents);
 
-router
-  .route("/event")
-  .get(getAllEvents)
-  .post(createOrUpadateEventValidator, createEvent);
+router.get("/cari", searchEvent);
 
-router.put("/event/:id", createOrUpadateEventValidator, updateEvent);
+router.get("/cat/:id", getEventByCategory);
 
-router.delete("/event/:id", deleteEvent);
+router.get("/tody", getAllEventsByToday);
 
-router.get("/event/category/:id", getEventByCategory);
+router.get("/tomorrow", getAllEventsByTomorrow);
 
-router.get("/event/week", getAllEventsByWeek);
+router.get("/we", getAllEventsByWeek);
 
-router.get("/event/month", getAllEventsByMonth);
+router.get("/month", getAllEventsByMonth);
 
-router.get("/event/year", getAllEventsByYear);
+router.get("/year", getAllEventsByYear);
 
-router.get("/event/:id", getDetailEvent);
+router.get("/:id", getDetailEvent);
 
 // Export router
 module.exports = router;

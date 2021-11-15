@@ -1,4 +1,4 @@
-const { user } = require("../models");
+const { user, event, category } = require("../models");
 const { generateToken, encodePin, compare } = require("../utils");
 
 class Users {
@@ -44,6 +44,7 @@ class Users {
       res.status(200).json({
         status: 200,
         data: userData,
+        message: ["Your account has been created!"],
       });
     } catch (error) {
       console.log(error);
@@ -66,7 +67,7 @@ class Users {
       if (!compareResult) {
         res.status(401).json({
           status: 401,
-          msg: "Masukkan Email dan Password yang benar",
+          msg: "Please input email and password correctly!",
         });
         return;
       }
@@ -74,7 +75,7 @@ class Users {
       if (!dataUser) {
         res.status(401).json({
           status: 401,
-          msg: "Silahkan daftarkan akun anda",
+          msg: "Please signup first!",
         });
       }
       const payload = dataUser.dataValues;
@@ -92,7 +93,6 @@ class Users {
   //update user
   static async updateUser(req, res, next) {
     try {
-      console.log(req.loginUser, "ini update");
       const { firstName, lastName, email, password, image } = req.body;
       const hashPassword = encodePin(password);
       await user.update(
@@ -115,17 +115,17 @@ class Users {
       return res.status(201).json({
         status: 201,
         data,
+        message: ["Your account has been updated!"],
       });
     } catch (error) {
-      //next(error);
-      console.log(error);
+      next(error);
     }
   }
 
   //delete User
   static async deleteUser(req, res, next) {
     try {
-      const id = req.params.id;
+      const id = req.loginUser.id;
       const deletedUser = await user.destroy({
         where: {
           id,
@@ -144,9 +144,56 @@ class Users {
       res.status(200).json({
         status: 200,
         data: {
-          msg: "Berhasil menghapus User " + id,
+          msg: "Your account has been deleted! ",
         },
       });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // Make myEvents function
+  static async myEvents(req, res, next) {
+    try {
+      // Make pagination
+      const getPagination = (page, size) => {
+        const limit = size ? +size : 8;
+        const offset = (page - 1) * limit || 0;
+
+        return { limit, offset };
+      };
+
+      // make paging data
+      const getPagingData = (data, page, limit) => {
+        const { count: totalItems, rows: events } = data;
+        const currentPage = page ? +page : 1;
+        const totalPages = Math.ceil(totalItems / limit);
+
+        return { totalItems, events, totalPages, currentPage };
+      };
+      const { page, size } = req.query;
+      const { limit, offset } = getPagination(page, size);
+
+      let data = await event.findAll({
+        where: {
+          userId: req.loginUser.id,
+        },
+        attributes: ["userId", "photoEvent", "dateEvent", "title"],
+        include: [
+          { model: user, attributes: ["firstName"] },
+          { model: category, attributes: ["category"] },
+        ],
+        limit,
+        offset,
+        order: [["dateEvent", "DESC"]],
+      });
+      console.log(data);
+
+      if (data.length === 0) {
+        return res.status(404).json({ errors: ["Events not found"] });
+      }
+
+      return res.status(200).json({ data });
     } catch (error) {
       next(error);
     }

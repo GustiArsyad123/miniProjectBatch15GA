@@ -4,10 +4,10 @@ const {
   createRatingValidator,
 } = require("../middlewares/validators/ratingsValidator");
 
-const {createRating} = require("../controllers/ratingControllers");
+const { createRating } = require("../controllers/ratingControllers");
 
 const router = express.Router();
 
-router.post("/", createRatingValidator,createRating);
+router.post("/:id", createRatingValidator, createRating);
 
 module.exports = router;
