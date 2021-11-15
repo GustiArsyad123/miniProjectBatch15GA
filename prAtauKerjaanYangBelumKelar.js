@@ -4,6 +4,7 @@
 // autorisasi dalam hapus dan edit comment
 // tomorow masih belum bisa
 // cek ERD database
+// di comment masalah nampil, di order by created at
 
 // Pagination di myEvent dan getAllBookmark belum bisa berjalan
 
