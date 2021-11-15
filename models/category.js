@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "categoryId",
       });
       models.category.hasMany(models.rating, {
-        foreignKey: "eventId",
+        foreignKey: "categoryId",
       });
     }
   }

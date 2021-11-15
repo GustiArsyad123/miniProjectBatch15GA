@@ -155,24 +155,33 @@ class Users {
   // Make myEvents function
   static async myEvents(req, res, next) {
     try {
-      // Make pagination
-      const getPagination = (page, size) => {
-        const limit = size ? +size : 8;
-        const offset = (page - 1) * limit || 0;
+      // // Make pagination
+      // const getPagination = (page, size) => {
+      //   const limit = size ? +size : 8;
+      //   const offset = (page - 1) * limit || 0;
 
-        return { limit, offset };
-      };
+      //   return { limit, offset };
+      // };
 
-      // make paging data
-      const getPagingData = (data, page, limit) => {
-        const { count: totalItems, rows: events } = data;
-        const currentPage = page ? +page : 1;
-        const totalPages = Math.ceil(totalItems / limit);
+      // // make paging data
+      // const getPagingData = (data, page, limit) => {
+      //   const { count: totalItems, rows: events } = data;
+      //   console.log("ini total items", data.totalItems);
+      //   const currentPage = page ? +page : 1;
+      //   const totalPages = Math.ceil(totalItems / limit);
 
-        return { totalItems, events, totalPages, currentPage };
-      };
-      const { page, size } = req.query;
-      const { limit, offset } = getPagination(page, size);
+      //   return { totalItems, events, totalPages, currentPage };
+      // };
+      let { page, size } = req.query;
+      if (!page) {
+        page = 1;
+      }
+      if (!size) {
+        size = 5;
+      }
+      //const { limit, offset } = getPagination(page, size);
+      console.log("page: ", page);
+      console.log("size: ", size);
 
       let data = await event.findAll({
         where: {
@@ -183,17 +192,17 @@ class Users {
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
         ],
-        limit,
-        offset,
+        limit: size,
+        offset: (+page - 1) * parseInt(size),
         order: [["dateEvent", "DESC"]],
       });
-      console.log(data);
+      //console.log(data);
 
       if (data.length === 0) {
         return res.status(404).json({ errors: ["Events not found"] });
       }
 
-      return res.status(200).json({ data });
+      return res.status(200).json(data);
     } catch (error) {
       next(error);
     }

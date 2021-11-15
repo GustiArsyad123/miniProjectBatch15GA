@@ -168,11 +168,17 @@ class Events {
       const { page, size } = req.query;
       const { limit, offset } = getPagination(page, size);
 
+      console.log("start: ", moment().startOf("day").local());
+      console.log("end: ", moment().endOf("day").local());
+
       // today
       let data = await event.findAndCountAll({
         where: {
           dateEvent: {
-            [Op.between]: [moment().startOf("day"), moment().endOf("day")],
+            [Op.between]: [
+              moment().startOf("day").local(),
+              moment().endOf("day").local(),
+            ],
           },
         },
         attributes: ["photoEvent", "dateEvent", "title"],
@@ -208,7 +214,7 @@ class Events {
       let data = await event.findAndCountAll({
         where: {
           dateEvent: {
-            [Op.between]: [c, d],
+            [Op.between]: [moment(c).local(), moment(d).local()],
           },
         },
         attributes: ["photoEvent", "dateEvent", "title"],
