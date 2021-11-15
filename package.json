@@ -7,6 +7,9 @@
     "dev": "NODE_ENV=development npx nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "engines": {
+    "node": "14.18.0"
+  },
   "repository": {
     "type": "git",
     "url": "git@gitlab.com:binarxglints_batch15/miniproject/team-d/backendteam_d.git"

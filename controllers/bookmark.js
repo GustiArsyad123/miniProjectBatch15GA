@@ -25,14 +25,7 @@ class Bookmark {
 
       const data = await bookmark.findAll({
         attributes: {
-          exclude: [
-            "id",
-            "eventId",
-            "userId",
-            "createdAt",
-            "updatedAt",
-            "deletedAt",
-          ],
+          exclude: ["eventId", "userId", "createdAt", "updatedAt", "deletedAt"],
         },
         include: [
           { model: event, attributes: ["photoEvent", "dateEvent", "title"] },

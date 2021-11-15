@@ -178,7 +178,7 @@ class Users {
         where: {
           userId: req.loginUser.id,
         },
-        attributes: ["userId", "photoEvent", "dateEvent", "title"],
+        attributes: ["id", "userId", "photoEvent", "dateEvent", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -187,7 +187,6 @@ class Users {
         offset,
         order: [["dateEvent", "DESC"]],
       });
-      console.log(data);
 
       if (data.length === 0) {
         return res.status(404).json({ errors: ["Events not found"] });

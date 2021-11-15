@@ -31,7 +31,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       title: DataTypes.STRING,
       photoEvent: DataTypes.STRING,
-      dateEvent: DataTypes.DATE,
+      dateEvent: DataTypes.DATEONLY,
+      eventTime: DataTypes.STRING,
       detail: DataTypes.STRING(600),
       linkMeet: DataTypes.STRING,
       speakerPhoto: DataTypes.STRING,

@@ -37,7 +37,7 @@ class Comment {
       // Comment Table Update Data
       const updatedData = await comment.update(req.body, {
         where: {
-          eventId: req.params.id,
+          id: req.params.id,
         },
       });
 

@@ -16,12 +16,17 @@ module.exports = (sequelize, DataTypes) => {
       models.bookmark.belongsTo(models.event, {
         foreignKey: "eventId",
       });
+
+      models.bookmark.belongsTo(models.category, {
+        foreignKey: "categoryId",
+      });
     }
   }
   bookmark.init(
     {
       userId: DataTypes.INTEGER,
       eventId: DataTypes.INTEGER,
+      bookmarkId: DataTypes.INTEGER,
     },
     {
       sequelize,

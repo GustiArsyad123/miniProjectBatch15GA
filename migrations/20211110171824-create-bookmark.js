@@ -16,6 +16,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
+      categoryId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -52,6 +56,20 @@ module.exports = {
       references: {
         //Required field
         table: "events",
+        field: "id",
+      },
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    });
+
+    // Make categoryId to be foreign key
+    await queryInterface.addConstraint("bookmarks", {
+      fields: ["categoryId"],
+      type: "foreign key",
+      name: "custom_fkey_category-Id",
+      references: {
+        //Required field
+        table: "categories",
         field: "id",
       },
       onDelete: "cascade",

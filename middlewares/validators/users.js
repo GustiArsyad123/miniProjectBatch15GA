@@ -2,6 +2,7 @@ const path = require("path");
 const crypto = require("crypto");
 const validator = require("validator");
 const { promisify } = require("util");
+const { user } = require("../../models");
 
 // Make class of create or update users validator
 exports.createOrUpadateUserValidator = async (req, res, next) => {
@@ -16,6 +17,13 @@ exports.createOrUpadateUserValidator = async (req, res, next) => {
     //Check input of LastName
     if (validator.isEmpty(req.body.lastName, { ignore_whitespace: true })) {
       errors.push("Please input the LastName!");
+    }
+
+    // Find unique email
+    const findEmail = await user.findOne({ where: { email: req.body.email } });
+
+    if (findEmail) {
+      errors.push("This email is already registered");
     }
 
     if (!validator.isEmail(req.body.email)) {
