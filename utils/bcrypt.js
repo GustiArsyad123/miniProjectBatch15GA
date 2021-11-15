@@ -2,8 +2,10 @@ const bcrypt = require("bcryptjs");
 
 const encodePin = (plain) => {
   try {
-    console.log(plain, "<<< PLAIN");
-    return bcrypt.hashSync(plain, 10);
+    const saltRounds = parseInt(process.env.SALT_ROUNDS);
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hash = bcrypt.hashSync(plain, salt);
+    return hash;
   } catch (error) {
     console.log(error);
   }

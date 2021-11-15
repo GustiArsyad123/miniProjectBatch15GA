@@ -20,16 +20,11 @@ module.exports = {
       },
       dateEvent: {
         allowNull: false,
-        type: Sequelize.DATE,
-        createdAt: {
-          type: Sequelize.DATE,
-          //note here this is the guy that you are looking for
-          get() {
-            return moment(this.getDataValue("createdAt")).format(
-              "DD/MM/YYYY h:mm:ss"
-            );
-          },
-        },
+        type: Sequelize.DATEONLY,
+      },
+      eventTime: {
+        allowNull: false,
+        type: Sequelize.STRING,
       },
       detail: {
         allowNull: false,
@@ -62,21 +57,10 @@ module.exports = {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        //note here this is the guy that you are looking for
-        get() {
-          return moment(this.getDataValue("createdAt")).format(
-            "DD/MM/YYYY h:mm:ss"
-          );
-        },
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        get() {
-          return moment(this.getDataValue("updatedAt")).format(
-            "DD/MM/YYYY h:mm:ss"
-          );
-        },
       },
       deletedAt: {
         allowNull: true,

@@ -20,10 +20,16 @@ module.exports = {
     dialect: "mysql",
   },
   production: {
-    username: "root",
-    password: null,
-    database: "database_production",
-    host: "127.0.0.1",
-    dialect: "mysql",
+    username: "pglranbneidtaj",
+    password:
+      "859d93132a1cdba1b59f803031235313f324e7c448a8e3d5105df2ba42995e4f",
+    database: "d3e64ki6lhtad8",
+    host: "ec2-34-198-189-252.compute-1.amazonaws.com",
+    dialect: "postgres",
+    dialectOptions: {
+      ssl: {
+        rejectUnauthorized: false,
+      },
+    },
   },
 };

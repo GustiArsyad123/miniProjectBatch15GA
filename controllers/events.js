@@ -344,11 +344,11 @@ class Events {
       });
 
       if (!data) {
-        res.status(401).json({ message: ["Id not found"] });
+        res.status(401).json({ message: ["Event not found"] });
       }
 
       const komen = await comment.findAll({
-        attributes: ["comment"],
+        attributes: ["id", "comment"],
         include: [{ model: user, attributes: ["firstName", "image"] }],
         where: { eventId: data.id },
       });
