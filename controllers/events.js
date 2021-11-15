@@ -344,7 +344,7 @@ class Events {
       });
 
       if (!data) {
-        res.status(401).json({ message: ["Id not found"] });
+        res.status(401).json({ message: ["Event not found"] });
       }
 
       const komen = await comment.findAll({
