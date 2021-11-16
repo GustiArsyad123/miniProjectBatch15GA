@@ -30,6 +30,10 @@ exports.createOrUpadateUserValidator = async (req, res, next) => {
       errors.push("Email is not valid");
     }
 
+    if (req.body.password !== req.body.confirmPassword) {
+      errors.push("password and confirm password didn't match!");
+    }
+
     if (!validator.isStrongPassword(req.body.password)) {
       errors.push(
         "password must include lowercase: min 1, uppercase: min 1, numbers: min 1, symbol: min 1, and length: min 8 characters."
