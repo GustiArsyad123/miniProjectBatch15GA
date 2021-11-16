@@ -30,8 +30,7 @@ class Bookmark {
         include: [
           { model: event, attributes: ["photoEvent", "dateEvent", "title"] },
           { model: user, attributes: ["firstName"] },
-          // ---------- PR => category belum ada relasi dengan tabel bookmark
-          // { model: category, attributes: ["category"] },
+          { model: category, attributes: ["category"] },
         ],
         where: {
           userId: req.loginUser.id,
@@ -53,10 +52,12 @@ class Bookmark {
     try {
       const eventId = req.params.id;
       const userId = req.loginUser.id;
+      const categoryId = req.body.categoryId;
 
       const newData = await bookmark.create({
         eventId,
         userId,
+        categoryId,
       });
 
       res.status(201).json({ message: ["Event has been saved!"] });
