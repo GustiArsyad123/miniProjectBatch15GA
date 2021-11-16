@@ -15,6 +15,9 @@ module.exports = (sequelize, DataTypes) => {
       models.category.hasMany(models.rating, {
         foreignKey: "categoryId",
       });
+      models.category.hasMany(models.bookmark, {
+        foreignKey: "categoryId",
+      });
     }
   }
   category.init(
