@@ -28,22 +28,19 @@ class Events {
   static async getStartedEvent(req, res, next) {
     try {
       // Get started
-      const startOfDay = moment().startOf("day");
-      const endOfDay = moment().endOf("day");
-
       const dataStarted = await event.findAll({
         where: {
           dateEvent: {
-            [Op.between]: [startOfDay, endOfDay],
+            [Op.between]: [moment().startOf("day"), moment().add(7, "days")],
           },
         },
-        attributes: ["photoEvent", "dateEvent", "title"],
+        attributes: ["photoEvent", "dateEvent", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
         ],
         limit: 4,
-        order: [["dateEvent", "DESC"]],
+        order: [["dateEvent", "ASC"]],
       });
 
       if (!dataStarted) {
@@ -56,6 +53,7 @@ class Events {
       // - Design event
       const dataDesign = await event.findAll({
         where: { categoryId: 2 },
+        attributes: ["photoEvent", "dateEvent", "eventTime", "title"],
         attributes: ["photoEvent", "dateEvent", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
@@ -77,7 +75,7 @@ class Events {
       const { limit, offset } = getPagination(page, size);
 
       let data = await event.findAndCountAll({
-        attributes: ["id", "photoEvent", "dateEvent", "title"],
+        attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -87,7 +85,7 @@ class Events {
         order: [["dateEvent", "DESC"]],
       });
 
-      if (data.length === 0) {
+      if (data.rows.length === 0) {
         return res.status(404).json({ errors: ["Events not found"] });
       }
 
@@ -119,7 +117,13 @@ class Events {
             },
           ],
         },
-        attributes: ["photoEvent", "dateEvent", "title", "speakerName"],
+        attributes: [
+          "photoEvent",
+          "dateEvent",
+          "eventTime",
+          "title",
+          "speakerName",
+        ],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -128,6 +132,10 @@ class Events {
         offset,
         order: [["dateEvent", "DESC"]],
       });
+
+      if (data.rows.length === 0) {
+        return res.status(404).json({ errors: ["Events not found"] });
+      }
 
       return res.status(200).json(getPagingData(data, page, limit));
     } catch (error) {
@@ -142,7 +150,7 @@ class Events {
       const { limit, offset } = getPagination(page, size);
 
       let data = await event.findAndCountAll({
-        attributes: ["id", "photoEvent", "dateEvent", "title"],
+        attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -178,7 +186,7 @@ class Events {
             ],
           },
         },
-        attributes: ["photoEvent", "dateEvent", "title"],
+        attributes: ["photoEvent", "dateEvent", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -187,7 +195,8 @@ class Events {
         offset,
         order: [["dateEvent", "ASC"]],
       });
-      if (data.length === 0) {
+
+      if (data.rows.length === 0) {
         return res.status(404).json({ errors: ["Events not found"] });
       }
 
@@ -214,7 +223,7 @@ class Events {
             [Op.between]: [moment(c).local(), moment(d).local()],
           },
         },
-        attributes: ["id", "photoEvent", "dateEvent", "title"],
+        attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -223,7 +232,8 @@ class Events {
         offset,
         order: [["dateEvent", "ASC"]],
       });
-      if (data.length === 0) {
+
+      if (data.rows.length === 0) {
         return res.status(404).json({ errors: ["Events not found"] });
       }
 
@@ -248,7 +258,7 @@ class Events {
 
       let data = await event.findAndCountAll({
         where,
-        attributes: ["id", "photoEvent", "dateEvent", "title"],
+        attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -257,7 +267,8 @@ class Events {
         offset,
         order: [["dateEvent", "ASC"]],
       });
-      if (data.length === 0) {
+
+      if (data.rows.length === 0) {
         return res.status(404).json({ errors: ["Events not found"] });
       }
 
@@ -280,7 +291,7 @@ class Events {
             [Op.between]: [moment().startOf("month"), moment().endOf("month")],
           },
         },
-        attributes: ["id", "photoEvent", "dateEvent", "title"],
+        attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -290,7 +301,7 @@ class Events {
         order: [["dateEvent", "ASC"]],
       });
 
-      if (data.length === 0) {
+      if (data.rows.length === 0) {
         return res.status(404).json({ errors: ["Events not found"] });
       }
 
@@ -313,7 +324,7 @@ class Events {
             [Op.between]: [moment().startOf("year"), moment().endOf("year")],
           },
         },
-        attributes: ["id", "photoEvent", "dateEvent", "title"],
+        attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -323,7 +334,7 @@ class Events {
         order: [["dateEvent", "ASC"]],
       });
 
-      if (data.length === 0) {
+      if (data.rows.length === 0) {
         return res.status(404).json({ errors: ["Events not found"] });
       }
 
@@ -361,6 +372,60 @@ class Events {
       const avg = sumRate / countRate;
 
       return res.status(201).json({ data, komen, avg });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // Make getEventSortingByName function
+  static async getEventsSortingByName(req, res, next) {
+    try {
+      const { page, size } = req.query;
+      const { limit, offset } = getPagination(page, size);
+
+      let data = await event.findAndCountAll({
+        attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
+        include: [
+          { model: user, attributes: ["firstName"] },
+          { model: category, attributes: ["category"] },
+        ],
+        limit,
+        offset,
+        order: [["title", "ASC"]],
+      });
+
+      if (data.rows.length === 0) {
+        return res.status(404).json({ errors: ["Events not found"] });
+      }
+
+      return res.status(200).json(getPagingData(data, page, limit));
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // Make getEventSortingByDate function
+  static async getEventsSortingByDate(req, res, next) {
+    try {
+      const { page, size } = req.query;
+      const { limit, offset } = getPagination(page, size);
+
+      let data = await event.findAndCountAll({
+        attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
+        include: [
+          { model: user, attributes: ["firstName"] },
+          { model: category, attributes: ["category"] },
+        ],
+        limit,
+        offset,
+        order: [["dateEvent", "ASC"]],
+      });
+
+      if (data.rows.length === 0) {
+        return res.status(404).json({ errors: ["Events not found"] });
+      }
+
+      return res.status(200).json(getPagingData(data, page, limit));
     } catch (error) {
       next(error);
     }

@@ -10,6 +10,8 @@ const {
   getAllEventsByWeek,
   getAllEventsByMonth,
   getAllEventsByYear,
+  getEventsSortingByName,
+  getEventsSortingByDate,
   getDetailEvent,
 } = require("../controllers/events");
 
@@ -31,6 +33,10 @@ router.get("/we", getAllEventsByWeek);
 router.get("/month", getAllEventsByMonth);
 
 router.get("/year", getAllEventsByYear);
+
+router.get("/name", getEventsSortingByName);
+
+router.get("/date", getEventsSortingByDate);
 
 router.get("/:id", getDetailEvent);
 
