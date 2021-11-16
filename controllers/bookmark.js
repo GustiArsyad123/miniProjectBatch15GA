@@ -42,7 +42,7 @@ class Bookmark {
       if (data.length === 0) {
         return res.status(400).json({ errors: ["Bookmark not found!"] });
       }
-      res.status(200).json({ data });
+      return res.status(200).json({ data });
     } catch (error) {
       next(error);
     }
@@ -60,7 +60,7 @@ class Bookmark {
         categoryId,
       });
 
-      res.status(201).json({ message: ["Event has been saved!"] });
+      return res.status(201).json({ message: ["Event has been saved!"] });
     } catch (error) {
       next(error);
     }
@@ -74,7 +74,7 @@ class Bookmark {
         },
       });
 
-      res.status(200).json({ message: ["Success remove bookmark!"] });
+      return res.status(200).json({ message: ["Success remove bookmark!"] });
     } catch (error) {
       console.log(error);
       next(error);

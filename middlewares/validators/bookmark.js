@@ -16,7 +16,7 @@ exports.createBookmarkValidator = async (req, res, next) => {
     }
 
     // Check for user had or not input rating for one event
-    const bookmarkUser = await bookmark.findOne({
+    const savedEvent = await bookmark.findOne({
       where: {
         [Op.and]: [
           {
@@ -32,7 +32,9 @@ exports.createBookmarkValidator = async (req, res, next) => {
       },
     });
 
-    if (bookmarkUser) {
+    console.log(savedEvent);
+
+    if (savedEvent) {
       errors.push("You already saved for this event!");
     }
 

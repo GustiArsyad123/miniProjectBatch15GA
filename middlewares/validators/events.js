@@ -2,6 +2,7 @@ const path = require("path");
 const crypto = require("crypto");
 const validator = require("validator");
 const { promisify } = require("util");
+const cloudinary = require("cloudinary").v2;
 
 // Make class of create or update event validatro
 exports.createOrUpadateEventValidator = async (req, res, next) => {
@@ -31,11 +32,6 @@ exports.createOrUpadateEventValidator = async (req, res, next) => {
       // Check file size (max 1MB)
       if (file.size > 1000000) {
         errors.push("Image must be less than 1MB");
-      }
-
-      // If error
-      if (errors.length > 0) {
-        return res.status(400).json({ errors: errors });
       }
 
       // Create custom filename
