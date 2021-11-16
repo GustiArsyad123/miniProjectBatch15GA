@@ -32,10 +32,12 @@ exports.createBookmarkValidator = async (req, res, next) => {
       },
     });
 
-    console.log(savedEvent);
-
     if (savedEvent) {
       errors.push("You already saved for this event!");
+    }
+
+    if (errors.length > 0) {
+      return res.status(400).json({ errors: errors });
     }
 
     next();

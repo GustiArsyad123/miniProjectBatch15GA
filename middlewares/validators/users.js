@@ -34,9 +34,20 @@ exports.createOrUpadateUserValidator = async (req, res, next) => {
       errors.push("password and confirm password didn't match!");
     }
 
-    if (!validator.isStrongPassword(req.body.password)) {
+    if (
+      !validator.isStrongPassword(req.body.password, [
+        {
+          minLength: 10,
+          minLowercase: 1,
+          minUppercase: 1,
+          minNumbers: 1,
+          minSymbols: 1,
+          maxLength: 20,
+        },
+      ])
+    ) {
       errors.push(
-        "password must include lowercase: min 1, uppercase: min 1, numbers: min 1, symbol: min 1, and length: min 8 characters."
+        "password must include lowercase: min 1, uppercase: min 1, numbers: min 1, symbol: min 1, and length: min 10 characters & max 20 characters."
       );
     }
 

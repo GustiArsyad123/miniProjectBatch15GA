@@ -1,4 +1,5 @@
 const { bookmark, user, category, event } = require("../models");
+const { Op } = require("sequelize");
 
 // Make pagination
 const getPagination = (page, size) => {
@@ -73,6 +74,10 @@ class Bookmark {
           id: req.params.id,
         },
       });
+
+      if (!deletedData) {
+        return res.status(400).json({ message: ["Bookmark not found!"] });
+      }
 
       return res.status(200).json({ message: ["Success remove bookmark!"] });
     } catch (error) {
