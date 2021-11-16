@@ -72,7 +72,7 @@ exports.createOrUpadateUserValidator = async (req, res, next) => {
       await move(`./public/images/users/${file.name}`);
 
       // assign req.body.image with file.name
-      req.body.image = file.name;
+      req.body.image = `https://timdevent.herokuapp.com/images/speaker/users/${file.name}`;
     }
 
     if (errors.length > 0) {

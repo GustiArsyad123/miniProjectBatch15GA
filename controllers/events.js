@@ -7,14 +7,6 @@ const { Op } = require("sequelize");
 // Import moment
 const moment = require("moment-timezone");
 
-const cloudinary = require("cloudinary").v2;
-
-cloudinary.config({
-  cloud_name: "dquhych7x",
-  api_key: "614927963312361",
-  api_secret: "cF1wujnyq6PRfolbWBbaUurzDa4",
-});
-
 // Make pagination
 const getPagination = (page, size) => {
   const limit = size ? +size : 8;
@@ -454,7 +446,6 @@ class Events {
         speakerJobTitle,
         categoryId,
       } = req.body;
-
       const insertEvent = await event.create({
         title,
         photoEvent,
@@ -469,25 +460,15 @@ class Events {
         categoryId,
       });
 
-      cloudinary.uploader.upload(
-        `./public/images/events/${req.body.photoEvent}`,
-        async function (error, result) {
-          console.log(result, error);
+      // Get inserted event
+      const data = await event.findOne({
+        where: { id: insertEvent.id },
+      });
 
-          // Get inserted event
-          console.log(insertEvent);
-          const data = await event.findOne({
-            where: { id: insertEvent.id },
-          });
-
-          result = result.secure_url;
-
-          // send response with inserted event
-          return res
-            .status(201)
-            .json({ data, result, message: ["Event has been created!"] });
-        }
-      );
+      // send response with inserted event
+      return res
+        .status(201)
+        .json({ data, message: ["Event has been created!"] });
     } catch (error) {
       console.log(error);
       next(error);

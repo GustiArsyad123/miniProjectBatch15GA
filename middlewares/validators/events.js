@@ -47,7 +47,7 @@ exports.createOrUpadateEventValidator = async (req, res, next) => {
       await move(`./public/images/events/${file.name}`);
 
       // assign req.body.image with file.name
-      req.body.photoEvent = file.name;
+      req.body.photoEvent = `https://timdevent.herokuapp.com/images/events/${file.name}`;
     }
 
     // Check input of date event
@@ -108,7 +108,7 @@ exports.createOrUpadateEventValidator = async (req, res, next) => {
       await move(`./public/images/speakerPhoto/${file.name}`);
 
       // assign req.body.image with file.name
-      req.body.speakerPhoto = file.name;
+      req.body.speakerPhoto = `https://timdevent.herokuapp.com/images/speakerPhoto/${file.name}`;
     }
 
     //   Check input of speaker name
