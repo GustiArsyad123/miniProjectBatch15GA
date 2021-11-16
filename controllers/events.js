@@ -77,7 +77,7 @@ class Events {
       const { limit, offset } = getPagination(page, size);
 
       let data = await event.findAndCountAll({
-        attributes: ["photoEvent", "dateEvent", "title"],
+        attributes: ["id", "photoEvent", "dateEvent", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -142,7 +142,7 @@ class Events {
       const { limit, offset } = getPagination(page, size);
 
       let data = await event.findAndCountAll({
-        attributes: ["photoEvent", "dateEvent", "title"],
+        attributes: ["id", "photoEvent", "dateEvent", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -214,7 +214,7 @@ class Events {
             [Op.between]: [moment(c).local(), moment(d).local()],
           },
         },
-        attributes: ["photoEvent", "dateEvent", "title"],
+        attributes: ["id", "photoEvent", "dateEvent", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -248,7 +248,7 @@ class Events {
 
       let data = await event.findAndCountAll({
         where,
-        attributes: ["photoEvent", "dateEvent", "title"],
+        attributes: ["id", "photoEvent", "dateEvent", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -280,7 +280,7 @@ class Events {
             [Op.between]: [moment().startOf("month"), moment().endOf("month")],
           },
         },
-        attributes: ["photoEvent", "dateEvent", "title"],
+        attributes: ["id", "photoEvent", "dateEvent", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -313,7 +313,7 @@ class Events {
             [Op.between]: [moment().startOf("year"), moment().endOf("year")],
           },
         },
-        attributes: ["photoEvent", "dateEvent", "title"],
+        attributes: ["id", "photoEvent", "dateEvent", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -414,6 +414,16 @@ class Events {
   // Make update event function
   static async updateEvent(req, res, next) {
     try {
+      const eventUser = await event.findOne({
+        where: { id: req.params.id },
+      });
+
+      if (eventUser.userId !== req.loginUser.id) {
+        return res.status(401).json({
+          errors: ["You do not have permission to access this!"],
+        });
+      }
+
       const {
         title,
         photoEvent,
@@ -460,6 +470,16 @@ class Events {
   // Make delete event function
   static async deleteEvent(req, res, next) {
     try {
+      const eventUser = await event.findOne({
+        where: { id: req.params.id },
+      });
+
+      if (eventUser.userId !== req.loginUser.id) {
+        return res.status(401).json({
+          errors: ["You do not have permission to access this!"],
+        });
+      }
+
       let data = await event.destroy({
         where: { id: req.params.id },
       });
