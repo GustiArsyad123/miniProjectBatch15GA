@@ -55,12 +55,13 @@ exports.createOrUpadateEventValidator = async (req, res, next) => {
     }
 
     // Check input of date event
-
-    /**
-     * ----  Masih harus diperbaiki ------
-     */
     if (!validator.isDate(req.body.dateEvent)) {
       errors.push("Please input the date correctly!");
+    }
+
+    // Check input of time for the event
+    if (validator.isEmpty(req.body.eventTime, { ignore_whitespace: false })) {
+      errors.push("Please input the time of event!");
     }
 
     // Check input of detail and min character 100

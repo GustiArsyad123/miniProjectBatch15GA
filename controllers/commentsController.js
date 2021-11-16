@@ -35,6 +35,17 @@ class Comment {
   static async updateComment(req, res, next) {
     try {
       // Comment Table Update Data
+
+      const commentId = await comment.findOne({
+        where: { id: req.params.id },
+      });
+
+      if (commentId.userId !== req.loginUser.id) {
+        return res
+          .status(401)
+          .json({ errors: ["You do not have permission to access this!"] });
+      }
+
       const updatedData = await comment.update(req.body, {
         where: {
           id: req.params.id,
@@ -68,6 +79,17 @@ class Comment {
   // Delete Comment
   static async deleteComment(req, res, next) {
     try {
+      // If id loginUser didn't match with comment userId
+      const commentId = await comment.findOne({
+        where: { id: req.params.id },
+      });
+
+      if (commentId.userId !== req.loginUser.id) {
+        return res
+          .status(401)
+          .json({ errors: ["You do not have permission to access this!"] });
+      }
+
       let data = await comment.destroy({ where: { id: req.params.id } });
 
       if (!data) {

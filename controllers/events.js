@@ -168,9 +168,6 @@ class Events {
       const { page, size } = req.query;
       const { limit, offset } = getPagination(page, size);
 
-      console.log("start: ", moment().startOf("day").local());
-      console.log("end: ", moment().endOf("day").local());
-
       // today
       let data = await event.findAndCountAll({
         where: {
@@ -245,7 +242,7 @@ class Events {
       // week
       const where = {
         dateEvent: {
-          [Op.between]: [moment().startOf("day"), moment().add(6, "days")],
+          [Op.between]: [moment().startOf("day"), moment().add(7, "days")],
         },
       };
 
@@ -372,17 +369,30 @@ class Events {
   // Make create event function
   static async createEvent(req, res, next) {
     try {
+      const {
+        title,
+        photoEvent,
+        dateEvent,
+        eventTime,
+        detail,
+        linkMeet,
+        speakerPhoto,
+        speakerName,
+        speakerJobTitle,
+        categoryId,
+      } = req.body;
       const insertEvent = await event.create({
-        title: req.body.title,
-        photoEvent: req.body.photoEvent,
-        dateEvent: req.body.dateEvent,
-        detail: req.body.detail,
-        linkMeet: req.body.linkMeet,
-        speakerPhoto: req.body.speakerPhoto,
-        speakerName: req.body.speakerName,
-        speakerJobTitle: req.body.speakerJobTitle,
+        title,
+        photoEvent,
+        dateEvent,
+        eventTime,
+        detail,
+        linkMeet,
+        speakerPhoto,
+        speakerName,
+        speakerJobTitle,
         userId: req.loginUser.id,
-        categoryId: req.body.categoryId,
+        categoryId,
       });
 
       // Get inserted event
@@ -404,18 +414,31 @@ class Events {
   // Make update event function
   static async updateEvent(req, res, next) {
     try {
+      const {
+        title,
+        photoEvent,
+        dateEvent,
+        eventTime,
+        detail,
+        linkMeet,
+        speakerPhoto,
+        speakerName,
+        speakerJobTitle,
+        categoryId,
+      } = req.body;
       const updateEvent = await event.update(
         {
-          title: req.body.title,
-          photoEvent: req.body.photoEvent,
-          dateEvent: req.body.dateEvent,
-          detail: req.body.detail,
-          linkMeet: req.body.linkMeet,
-          speakerPhoto: req.body.speakerPhoto,
-          speakerName: req.body.speakerName,
-          speakerJobTitle: req.body.speakerJobTitle,
+          title,
+          photoEvent,
+          dateEvent,
+          eventTime,
+          detail,
+          linkMeet,
+          speakerPhoto,
+          speakerName,
+          speakerJobTitle,
           userId: req.loginUser.id,
-          categoryId: req.body.categoryId,
+          categoryId,
         },
         { where: { id: req.params.id } }
       );
