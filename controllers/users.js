@@ -4,7 +4,7 @@ const { generateToken, encodePin, compare } = require("../utils");
 class Users {
   static async createUser(req, res, next) {
     try {
-      const { firstName, lastName, email, password, image } = req.body;
+      const { firstName, lastName, email, password } = req.body;
       const hashPassword = encodePin(password);
 
       const newUser = await user.create({
@@ -12,11 +12,10 @@ class Users {
         lastName,
         email,
         password: hashPassword,
-        image,
       });
 
       const data = await user.findOne({
-        attributes: ["firstName", "lastName", "email", "image"],
+        attributes: ["id", "firstName", "lastName", "email"],
         where: {
           id: newUser.id,
         },
@@ -35,7 +34,7 @@ class Users {
     try {
       const id = req.params.id;
       const userData = await user.findOne({
-        attributes: ["firstName", "lastName", "email", "image"],
+        attributes: ["id", "firstName", "lastName", "email"],
         where: {
           id,
         },
@@ -100,7 +99,7 @@ class Users {
   //update user
   static async updateUser(req, res, next) {
     try {
-      const { firstName, lastName, email, password, image } = req.body;
+      const { firstName, lastName, email, password } = req.body;
       const hashPassword = encodePin(password);
       await user.update(
         {
@@ -108,13 +107,12 @@ class Users {
           lastName,
           email,
           password: hashPassword,
-          image,
         },
         { where: { id: req.loginUser.id } }
       );
 
       const data = await user.findOne({
-        attributes: ["firstName", "lastName", "email", "image"],
+        attributes: ["id", "firstName", "lastName", "email"],
         where: {
           id: req.loginUser.id,
         },
