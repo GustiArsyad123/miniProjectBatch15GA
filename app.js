@@ -54,3 +54,5 @@ app.use(errorHandler);
 
 /* Run server */
 app.listen(port, () => console.log(`Server running on ${port}`));
+
+module.exports = app;

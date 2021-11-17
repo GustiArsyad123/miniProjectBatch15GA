@@ -61,13 +61,20 @@ class Users {
         },
       });
 
+      if (!dataUser) {
+        return res.status(400).json({
+          status: 400,
+          msg: "Please input email correctly!",
+        });
+      }
+
       const hashPass = dataUser.dataValues.password;
       const compareResult = compare(password, hashPass);
       //compare password
       if (!compareResult) {
-        res.status(401).json({
-          status: 401,
-          msg: "Please input email and password correctly!",
+        return res.status(400).json({
+          status: 400,
+          msg: "Please input password correctly!",
         });
         return;
       }
