@@ -7,6 +7,13 @@ const { Op } = require("sequelize");
 // Import moment
 const moment = require("moment-timezone");
 
+const cloudinary = require("cloudinary");
+cloudinary.config({
+  cloud_name: "drta3xh4e",
+  api_key: "699989283326316",
+  api_secret: "urll8J8oczRkKJlCxHkLv6yQv9g",
+});
+
 // Make pagination
 const getPagination = (page, size) => {
   const limit = size ? +size : 8;
@@ -356,7 +363,7 @@ class Events {
       }
 
       const komen = await comment.findAll({
-        attributes: ["id", "comment"],
+        attributes: ["id", "comment", "createdAt", "updatedAt"],
         include: [{ model: user, attributes: ["firstName", "image"] }],
         where: { eventId: data.id },
       });
@@ -460,15 +467,43 @@ class Events {
         categoryId,
       });
 
-      // Get inserted event
-      const data = await event.findOne({
-        where: { id: insertEvent.id },
-      });
+      // Upload image to cloudinary and updated photo event value and send data
+      cloudinary.uploader.upload(
+        `./public/images/events/${req.body.photoEvent}`,
+        async function (result, error) {
+          let a = result.secure_url;
 
-      // send response with inserted event
-      return res
-        .status(201)
-        .json({ data, message: ["Event has been created!"] });
+          let b = insertEvent.dataValues.id;
+
+          // update photo event value with image url
+          const updateEvent = await event.update(
+            {
+              title,
+              photoEvent: a,
+              dateEvent,
+              eventTime,
+              detail,
+              linkMeet,
+              speakerPhoto,
+              speakerName,
+              speakerJobTitle,
+              userId: req.loginUser.id,
+              categoryId,
+            },
+            { where: { id: b } }
+          );
+
+          // Get inserted event
+          const data = await event.findOne({
+            where: { id: b },
+          });
+
+          // send response with inserted event
+          return res
+            .status(201)
+            .json({ data, message: ["Event has been created!"] });
+        }
+      );
     } catch (error) {
       console.log(error);
       next(error);

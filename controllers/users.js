@@ -1,5 +1,6 @@
 const { user, event, category } = require("../models");
 const { generateToken, encodePin, compare } = require("../utils");
+const validator = require("validator");
 
 class Users {
   static async createUser(req, res, next) {
@@ -25,8 +26,7 @@ class Users {
         data,
       });
     } catch (error) {
-      //next(error);
-      console.log(error);
+      next(error);
     }
   }
 
@@ -60,39 +60,38 @@ class Users {
         },
       });
 
-      if (!dataUser) {
+      if (!validator.isEmail(email)) {
         return res.status(400).json({
           status: 400,
-          msg: "Please input email correctly!",
+          message: "Please input email correctly!",
         });
       }
 
-      const hashPass = dataUser.dataValues.password;
+      if (!dataUser) {
+        return res.status(401).json({
+          status: 401,
+          message: "Please signup first!",
+        });
+      }
+
+      const hashPass = dataUser.password;
       const compareResult = compare(password, hashPass);
       //compare password
-      if (!compareResult) {
+      if (dataUser.email && !compareResult) {
         return res.status(400).json({
           status: 400,
-          msg: "Please input password correctly!",
-        });
-        return;
-      }
-
-      if (!dataUser) {
-        res.status(401).json({
-          status: 401,
-          msg: "Please signup first!",
+          message: "Please input password correctly!",
         });
       }
+      console.log(dataUser.dataValues);
       const payload = dataUser.dataValues;
       const token = generateToken(payload);
-      console.log(token);
-      res.status(200).json({
+      return res.status(200).json({
         status: 200,
         token,
       });
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 
@@ -139,17 +138,16 @@ class Users {
       });
 
       if (!deletedUser) {
-        res.status(404).json({
+        return res.status(404).json({
           status: 404,
-          msg: "The User Not Found",
+          message: "The User Not Found",
         });
-        return;
       }
 
-      res.status(200).json({
+      return res.status(200).json({
         status: 200,
         data: {
-          msg: "Your account has been deleted! ",
+          message: "Your account has been deleted! ",
         },
       });
     } catch (error) {

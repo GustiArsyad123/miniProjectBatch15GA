@@ -52,7 +52,9 @@ app.all("*", (req, res, next) => {
 // Enable error handler
 app.use(errorHandler);
 
-/* Run server */
-app.listen(port, () => console.log(`Server running on ${port}`));
+if (process.env.NODE_ENV !== "test") {
+  /* Run server */
+  app.listen(port, () => console.log(`Server running on ${port}`));
+}
 
 module.exports = app;
