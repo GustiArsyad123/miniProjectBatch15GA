@@ -4,6 +4,8 @@ const { event, comment, user, category, rating } = require("../models");
 // Import sequelize
 const { Op } = require("sequelize");
 
+const sequelize = require("sequelize");
+
 // Import moment
 const moment = require("moment-timezone");
 
@@ -368,6 +370,21 @@ class Events {
         where: { eventId: data.id },
       });
 
+      let komenTime = [];
+      let commentTime = [];
+      for (let i = 0; i < komen.length; i++) {
+        let waktu = komen[i].createdAt;
+        komenTime.push(
+          new Date(waktu).toLocaleString("en-US", {
+            timeZone: "Asia/Jakarta",
+          })
+        );
+
+        commentTime.push(
+          moment(komenTime[i], "MM/DD/YYYY hh:mm:ss A").fromNow()
+        );
+      }
+
       const sumRate = await rating.sum("rating", {
         where: { eventId: req.params.id },
       });
@@ -378,7 +395,7 @@ class Events {
 
       const avg = sumRate / countRate;
 
-      return res.status(201).json({ data, komen, avg });
+      return res.status(201).json({ data, komen, commentTime, avg });
     } catch (error) {
       next(error);
     }
@@ -448,7 +465,6 @@ class Events {
         eventTime,
         detail,
         linkMeet,
-        speakerPhoto,
         speakerName,
         speakerJobTitle,
         categoryId,
@@ -460,7 +476,6 @@ class Events {
         eventTime,
         detail,
         linkMeet,
-        speakerPhoto,
         speakerName,
         speakerJobTitle,
         userId: req.loginUser.id,
@@ -484,7 +499,6 @@ class Events {
               eventTime,
               detail,
               linkMeet,
-              speakerPhoto,
               speakerName,
               speakerJobTitle,
               userId: req.loginUser.id,
@@ -517,6 +531,10 @@ class Events {
         where: { id: req.params.id },
       });
 
+      if (!eventUser) {
+        return res.status(400).json({ message: ["Event not found!"] });
+      }
+
       if (eventUser.userId !== req.loginUser.id) {
         return res.status(401).json({
           errors: ["You do not have permission to access this!"],
@@ -530,7 +548,6 @@ class Events {
         eventTime,
         detail,
         linkMeet,
-        speakerPhoto,
         speakerName,
         speakerJobTitle,
         categoryId,
@@ -543,7 +560,6 @@ class Events {
           eventTime,
           detail,
           linkMeet,
-          speakerPhoto,
           speakerName,
           speakerJobTitle,
           userId: req.loginUser.id,
@@ -552,15 +568,40 @@ class Events {
         { where: { id: req.params.id } }
       );
 
-      // Get updated event
-      const data = await event.findOne({
-        where: { id: req.params.id },
-      });
+      // Upload image to cloudinary and updated photo event value and send data
+      cloudinary.uploader.upload(
+        `./public/images/events/${req.body.photoEvent}`,
+        async function (result, error) {
+          let a = result.secure_url;
 
-      // send response with inserted event
-      return res
-        .status(201)
-        .json({ data, message: ["Event has been updated!"] });
+          // update photo event value with image url
+          const updateEvent2 = await event.update(
+            {
+              title,
+              photoEvent: a,
+              dateEvent,
+              eventTime,
+              detail,
+              linkMeet,
+              speakerName,
+              speakerJobTitle,
+              userId: req.loginUser.id,
+              categoryId,
+            },
+            { where: { id: req.params.id } }
+          );
+
+          // Get inserted event
+          const data = await event.findOne({
+            where: { id: req.params.id },
+          });
+
+          // send response with inserted event
+          return res
+            .status(201)
+            .json({ data, message: ["Event has been updated!"] });
+        }
+      );
     } catch (error) {
       next(error);
     }
@@ -572,6 +613,10 @@ class Events {
       const eventUser = await event.findOne({
         where: { id: req.params.id },
       });
+
+      if (!eventUser) {
+        return res.status(400).json({ message: ["Event not found!"] });
+      }
 
       if (eventUser.userId !== req.loginUser.id) {
         return res.status(401).json({

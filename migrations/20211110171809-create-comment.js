@@ -1,4 +1,7 @@
 "use strict";
+const sequelize = require("sequelize");
+const moment = require("moment");
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable("comments", {
@@ -20,13 +23,32 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
-      createdAt: {
+      createAt: {
         allowNull: false,
+        defaultValue: sequelize.fn("now"),
         type: Sequelize.DATE,
       },
-      updatedAt: {
+      updateAt: {
         allowNull: false,
+        defaultValue: sequelize.fn("now"),
+        type: Sequelize.DATEONLY,
+      },
+      createdAt: {
         type: Sequelize.DATE,
+        //note here this is the guy that you are looking for
+        get() {
+          return moment(this.getDataValue("createdAt")).format(
+            "DD/MM/YYYY h:mm:ss"
+          );
+        },
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        get() {
+          return moment(this.getDataValue("updatedAt")).format(
+            "DD/MM/YYYY h:mm:ss"
+          );
+        },
       },
       deletedAt: {
         allowNull: true,

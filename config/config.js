@@ -8,9 +8,9 @@ module.exports = {
     host: process.env.DB_HOST,
     dialect: process.env.DB_DIALECT,
     dialectOptions: {
-      //useUTC: true, // for reading from database
+      // useUTC: true, // for reading from database
     },
-    //timezone: "+07:00", // for writing to database
+    // timezone: "+07:00", // for writing to database
   },
   test: {
     username: "dena",

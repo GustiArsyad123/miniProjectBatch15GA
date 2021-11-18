@@ -83,7 +83,7 @@ class Users {
           message: "Please input password correctly!",
         });
       }
-      console.log(dataUser.dataValues);
+
       const payload = dataUser.dataValues;
       const token = generateToken(payload);
       return res.status(200).json({

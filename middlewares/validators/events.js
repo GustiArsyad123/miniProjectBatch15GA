@@ -75,42 +75,6 @@ exports.createOrUpadateEventValidator = async (req, res, next) => {
       errors.push("Link meet must be correctly!");
     }
 
-    // Check for the image of event was upload or not
-
-    if (!(req.files && req.files.speakerPhoto)) {
-      errors.push("Please upload of speaker Photo!");
-    } else if (req.files.photoEvent) {
-      // If image was uploaded
-
-      // req.files.photoEvent is come from key (file) in postman
-      const file = req.files.speakerPhoto;
-
-      // Make sure image is photo
-      if (!file.mimetype.startsWith("image")) {
-        errors.push("File must be an image");
-      }
-
-      // Check file size (max 1MB)
-      if (file.size > 1000000) {
-        errors.push("Image must be less than 1MB");
-      }
-
-      // Create custom filename
-      let fileName = crypto.randomBytes(16).toString("hex");
-
-      // Rename the file
-      file.name = `${fileName}${path.parse(file.name).ext}`;
-
-      // Make file.mv to promise
-      const move = promisify(file.mv);
-
-      // Upload image to /public/images
-      await move(`./public/images/speakerPhoto/${file.name}`);
-
-      // assign req.body.image with file.name
-      req.body.speakerPhoto = file.name;
-    }
-
     //   Check input of speaker name
     if (validator.isEmpty(req.body.speakerName, { ignore_whitespace: false })) {
       errors.push("Please input the name of speaker!");
