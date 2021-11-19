@@ -15,7 +15,7 @@ const router = express.Router();
 
 router.get("/myevent", myEvents);
 router.get("/:id", getUserDetail);
-router.put("/update", createOrUpadateUserValidator, updateUser);
+router.put("/update/:id", createOrUpadateUserValidator, updateUser);
 router.delete("/:id", deleteUser);
 
 module.exports = router;

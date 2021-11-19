@@ -14,7 +14,10 @@ class Users {
       });
 
       if (findEmail) {
-        errors.push("This email is already registered");
+        return res.status(400).json({
+          status: 400,
+          message: "Email already registered!",
+        });
       }
 
       const newUser = await user.create({
