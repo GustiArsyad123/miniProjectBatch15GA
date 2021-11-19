@@ -1,10 +1,11 @@
 const { user, event, category } = require("../models");
 const { generateToken, encodePin, compare } = require("../utils");
+const validator = require("validator");
 
 class Users {
   static async createUser(req, res, next) {
     try {
-      const { firstName, lastName, email, password, image } = req.body;
+      const { firstName, lastName, email, password } = req.body;
       const hashPassword = encodePin(password);
 
       const newUser = await user.create({
@@ -12,11 +13,10 @@ class Users {
         lastName,
         email,
         password: hashPassword,
-        image,
       });
 
       const data = await user.findOne({
-        attributes: ["firstName", "lastName", "email", "image"],
+        attributes: ["id", "firstName", "lastName", "email"],
         where: {
           id: newUser.id,
         },
@@ -26,8 +26,7 @@ class Users {
         data,
       });
     } catch (error) {
-      //next(error);
-      console.log(error);
+      next(error);
     }
   }
 
@@ -35,7 +34,7 @@ class Users {
     try {
       const id = req.params.id;
       const userData = await user.findOne({
-        attributes: ["firstName", "lastName", "email", "image"],
+        attributes: ["id", "firstName", "lastName", "email"],
         where: {
           id,
         },
@@ -61,39 +60,45 @@ class Users {
         },
       });
 
-      const hashPass = dataUser.dataValues.password;
-      const compareResult = compare(password, hashPass);
-      //compare password
-      if (!compareResult) {
-        res.status(401).json({
-          status: 401,
-          msg: "Please input email and password correctly!",
+      if (!validator.isEmail(email)) {
+        return res.status(400).json({
+          status: 400,
+          message: "Please input email correctly!",
         });
-        return;
       }
 
       if (!dataUser) {
-        res.status(401).json({
+        return res.status(401).json({
           status: 401,
-          msg: "Please signup first!",
+          message: "Please signup first!",
         });
       }
+
+      const hashPass = dataUser.password;
+      const compareResult = compare(password, hashPass);
+      //compare password
+      if (dataUser.email && !compareResult) {
+        return res.status(400).json({
+          status: 400,
+          message: "Please input password correctly!",
+        });
+      }
+
       const payload = dataUser.dataValues;
       const token = generateToken(payload);
-      console.log(token);
-      res.status(200).json({
+      return res.status(200).json({
         status: 200,
         token,
       });
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 
   //update user
   static async updateUser(req, res, next) {
     try {
-      const { firstName, lastName, email, password, image } = req.body;
+      const { firstName, lastName, email, password } = req.body;
       const hashPassword = encodePin(password);
       await user.update(
         {
@@ -101,13 +106,12 @@ class Users {
           lastName,
           email,
           password: hashPassword,
-          image,
         },
         { where: { id: req.loginUser.id } }
       );
 
       const data = await user.findOne({
-        attributes: ["firstName", "lastName", "email", "image"],
+        attributes: ["id", "firstName", "lastName", "email"],
         where: {
           id: req.loginUser.id,
         },
@@ -134,17 +138,16 @@ class Users {
       });
 
       if (!deletedUser) {
-        res.status(404).json({
+        return res.status(404).json({
           status: 404,
-          msg: "The User Not Found",
+          message: "The User Not Found",
         });
-        return;
       }
 
-      res.status(200).json({
+      return res.status(200).json({
         status: 200,
         data: {
-          msg: "Your account has been deleted! ",
+          message: "Your account has been deleted! ",
         },
       });
     } catch (error) {

@@ -24,6 +24,8 @@ module.exports = (sequelize, DataTypes) => {
       comment: DataTypes.STRING,
       userId: DataTypes.INTEGER,
       eventId: DataTypes.INTEGER,
+      createAt: DataTypes.DATE,
+      updateAt: DataTypes.DATEONLY,
     },
     {
       sequelize,

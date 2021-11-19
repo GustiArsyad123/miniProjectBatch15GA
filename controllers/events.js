@@ -4,8 +4,17 @@ const { event, comment, user, category, rating } = require("../models");
 // Import sequelize
 const { Op } = require("sequelize");
 
+const sequelize = require("sequelize");
+
 // Import moment
 const moment = require("moment-timezone");
+
+const cloudinary = require("cloudinary");
+cloudinary.config({
+  cloud_name: "drta3xh4e",
+  api_key: "699989283326316",
+  api_secret: "urll8J8oczRkKJlCxHkLv6yQv9g",
+});
 
 // Make pagination
 const getPagination = (page, size) => {
@@ -28,22 +37,19 @@ class Events {
   static async getStartedEvent(req, res, next) {
     try {
       // Get started
-      const startOfDay = moment().startOf("day");
-      const endOfDay = moment().endOf("day");
-
       const dataStarted = await event.findAll({
         where: {
           dateEvent: {
-            [Op.between]: [startOfDay, endOfDay],
+            [Op.between]: [moment().startOf("day"), moment().add(7, "days")],
           },
         },
-        attributes: ["photoEvent", "dateEvent", "title"],
+        attributes: ["photoEvent", "dateEvent", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
         ],
         limit: 4,
-        order: [["dateEvent", "DESC"]],
+        order: [["dateEvent", "ASC"]],
       });
 
       if (!dataStarted) {
@@ -56,6 +62,7 @@ class Events {
       // - Design event
       const dataDesign = await event.findAll({
         where: { categoryId: 2 },
+        attributes: ["photoEvent", "dateEvent", "eventTime", "title"],
         attributes: ["photoEvent", "dateEvent", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
@@ -77,7 +84,7 @@ class Events {
       const { limit, offset } = getPagination(page, size);
 
       let data = await event.findAndCountAll({
-        attributes: ["photoEvent", "dateEvent", "title"],
+        attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -87,7 +94,7 @@ class Events {
         order: [["dateEvent", "DESC"]],
       });
 
-      if (data.length === 0) {
+      if (data.rows.length === 0) {
         return res.status(404).json({ errors: ["Events not found"] });
       }
 
@@ -119,7 +126,13 @@ class Events {
             },
           ],
         },
-        attributes: ["photoEvent", "dateEvent", "title", "speakerName"],
+        attributes: [
+          "photoEvent",
+          "dateEvent",
+          "eventTime",
+          "title",
+          "speakerName",
+        ],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -128,6 +141,10 @@ class Events {
         offset,
         order: [["dateEvent", "DESC"]],
       });
+
+      if (data.rows.length === 0) {
+        return res.status(404).json({ errors: ["Events not found"] });
+      }
 
       return res.status(200).json(getPagingData(data, page, limit));
     } catch (error) {
@@ -142,7 +159,7 @@ class Events {
       const { limit, offset } = getPagination(page, size);
 
       let data = await event.findAndCountAll({
-        attributes: ["photoEvent", "dateEvent", "title"],
+        attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -168,9 +185,6 @@ class Events {
       const { page, size } = req.query;
       const { limit, offset } = getPagination(page, size);
 
-      console.log("start: ", moment().startOf("day").local());
-      console.log("end: ", moment().endOf("day").local());
-
       // today
       let data = await event.findAndCountAll({
         where: {
@@ -181,7 +195,7 @@ class Events {
             ],
           },
         },
-        attributes: ["photoEvent", "dateEvent", "title"],
+        attributes: ["photoEvent", "dateEvent", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -190,7 +204,8 @@ class Events {
         offset,
         order: [["dateEvent", "ASC"]],
       });
-      if (data.length === 0) {
+
+      if (data.rows.length === 0) {
         return res.status(404).json({ errors: ["Events not found"] });
       }
 
@@ -217,7 +232,7 @@ class Events {
             [Op.between]: [moment(c).local(), moment(d).local()],
           },
         },
-        attributes: ["photoEvent", "dateEvent", "title"],
+        attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -226,7 +241,8 @@ class Events {
         offset,
         order: [["dateEvent", "ASC"]],
       });
-      if (data.length === 0) {
+
+      if (data.rows.length === 0) {
         return res.status(404).json({ errors: ["Events not found"] });
       }
 
@@ -245,13 +261,13 @@ class Events {
       // week
       const where = {
         dateEvent: {
-          [Op.between]: [moment().startOf("day"), moment().add(6, "days")],
+          [Op.between]: [moment().startOf("day"), moment().add(7, "days")],
         },
       };
 
       let data = await event.findAndCountAll({
         where,
-        attributes: ["photoEvent", "dateEvent", "title"],
+        attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -260,7 +276,8 @@ class Events {
         offset,
         order: [["dateEvent", "ASC"]],
       });
-      if (data.length === 0) {
+
+      if (data.rows.length === 0) {
         return res.status(404).json({ errors: ["Events not found"] });
       }
 
@@ -283,7 +300,7 @@ class Events {
             [Op.between]: [moment().startOf("month"), moment().endOf("month")],
           },
         },
-        attributes: ["photoEvent", "dateEvent", "title"],
+        attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -293,7 +310,7 @@ class Events {
         order: [["dateEvent", "ASC"]],
       });
 
-      if (data.length === 0) {
+      if (data.rows.length === 0) {
         return res.status(404).json({ errors: ["Events not found"] });
       }
 
@@ -316,7 +333,7 @@ class Events {
             [Op.between]: [moment().startOf("year"), moment().endOf("year")],
           },
         },
-        attributes: ["photoEvent", "dateEvent", "title"],
+        attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -326,7 +343,7 @@ class Events {
         order: [["dateEvent", "ASC"]],
       });
 
-      if (data.length === 0) {
+      if (data.rows.length === 0) {
         return res.status(404).json({ errors: ["Events not found"] });
       }
 
@@ -348,10 +365,29 @@ class Events {
       }
 
       const komen = await comment.findAll({
+<<<<<<< HEAD
         attributes: ["id", "comment"],
+=======
+        attributes: ["id", "comment", "createdAt", "updatedAt"],
+>>>>>>> 557c4d7fd6040e79cfe58aee8a4d70b52e791ac2
         include: [{ model: user, attributes: ["firstName", "image"] }],
         where: { eventId: data.id },
       });
+
+      let komenTime = [];
+      let commentTime = [];
+      for (let i = 0; i < komen.length; i++) {
+        let waktu = komen[i].createdAt;
+        komenTime.push(
+          new Date(waktu).toLocaleString("en-US", {
+            timeZone: "Asia/Jakarta",
+          })
+        );
+
+        commentTime.push(
+          moment(komenTime[i], "MM/DD/YYYY hh:mm:ss A").fromNow()
+        );
+      }
 
       const sumRate = await rating.sum("rating", {
         where: { eventId: req.params.id },
@@ -363,7 +399,61 @@ class Events {
 
       const avg = sumRate / countRate;
 
-      return res.status(201).json({ data, komen, avg });
+      return res.status(201).json({ data, komen, commentTime, avg });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // Make getEventSortingByName function
+  static async getEventsSortingByName(req, res, next) {
+    try {
+      const { page, size } = req.query;
+      const { limit, offset } = getPagination(page, size);
+
+      let data = await event.findAndCountAll({
+        attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
+        include: [
+          { model: user, attributes: ["firstName"] },
+          { model: category, attributes: ["category"] },
+        ],
+        limit,
+        offset,
+        order: [["title", "ASC"]],
+      });
+
+      if (data.rows.length === 0) {
+        return res.status(404).json({ errors: ["Events not found"] });
+      }
+
+      return res.status(200).json(getPagingData(data, page, limit));
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // Make getEventSortingByDate function
+  static async getEventsSortingByDate(req, res, next) {
+    try {
+      const { page, size } = req.query;
+      const { limit, offset } = getPagination(page, size);
+
+      let data = await event.findAndCountAll({
+        attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
+        include: [
+          { model: user, attributes: ["firstName"] },
+          { model: category, attributes: ["category"] },
+        ],
+        limit,
+        offset,
+        order: [["dateEvent", "ASC"]],
+      });
+
+      if (data.rows.length === 0) {
+        return res.status(404).json({ errors: ["Events not found"] });
+      }
+
+      return res.status(200).json(getPagingData(data, page, limit));
     } catch (error) {
       next(error);
     }
@@ -372,29 +462,66 @@ class Events {
   // Make create event function
   static async createEvent(req, res, next) {
     try {
+      const {
+        title,
+        photoEvent,
+        dateEvent,
+        eventTime,
+        detail,
+        linkMeet,
+        speakerName,
+        speakerJobTitle,
+        categoryId,
+      } = req.body;
       const insertEvent = await event.create({
-        title: req.body.title,
-        photoEvent: req.body.photoEvent,
-        dateEvent: req.body.dateEvent,
-        detail: req.body.detail,
-        linkMeet: req.body.linkMeet,
-        speakerPhoto: req.body.speakerPhoto,
-        speakerName: req.body.speakerName,
-        speakerJobTitle: req.body.speakerJobTitle,
+        title,
+        photoEvent,
+        dateEvent,
+        eventTime,
+        detail,
+        linkMeet,
+        speakerName,
+        speakerJobTitle,
         userId: req.loginUser.id,
-        categoryId: req.body.categoryId,
+        categoryId,
       });
 
-      // Get inserted event
-      console.log(insertEvent);
-      const data = await event.findOne({
-        where: { id: insertEvent.id },
-      });
+      // Upload image to cloudinary and updated photo event value and send data
+      cloudinary.uploader.upload(
+        `./public/images/events/${req.body.photoEvent}`,
+        async function (result, error) {
+          let a = result.secure_url;
 
-      // send response with inserted event
-      return res
-        .status(201)
-        .json({ data, message: ["Event has been created!"] });
+          let b = insertEvent.dataValues.id;
+
+          // update photo event value with image url
+          const updateEvent = await event.update(
+            {
+              title,
+              photoEvent: a,
+              dateEvent,
+              eventTime,
+              detail,
+              linkMeet,
+              speakerName,
+              speakerJobTitle,
+              userId: req.loginUser.id,
+              categoryId,
+            },
+            { where: { id: b } }
+          );
+
+          // Get inserted event
+          const data = await event.findOne({
+            where: { id: b },
+          });
+
+          // send response with inserted event
+          return res
+            .status(201)
+            .json({ data, message: ["Event has been created!"] });
+        }
+      );
     } catch (error) {
       console.log(error);
       next(error);
@@ -404,31 +531,81 @@ class Events {
   // Make update event function
   static async updateEvent(req, res, next) {
     try {
+      const eventUser = await event.findOne({
+        where: { id: req.params.id },
+      });
+
+      if (!eventUser) {
+        return res.status(400).json({ message: ["Event not found!"] });
+      }
+
+      if (eventUser.userId !== req.loginUser.id) {
+        return res.status(401).json({
+          errors: ["You do not have permission to access this!"],
+        });
+      }
+
+      const {
+        title,
+        photoEvent,
+        dateEvent,
+        eventTime,
+        detail,
+        linkMeet,
+        speakerName,
+        speakerJobTitle,
+        categoryId,
+      } = req.body;
       const updateEvent = await event.update(
         {
-          title: req.body.title,
-          photoEvent: req.body.photoEvent,
-          dateEvent: req.body.dateEvent,
-          detail: req.body.detail,
-          linkMeet: req.body.linkMeet,
-          speakerPhoto: req.body.speakerPhoto,
-          speakerName: req.body.speakerName,
-          speakerJobTitle: req.body.speakerJobTitle,
+          title,
+          photoEvent,
+          dateEvent,
+          eventTime,
+          detail,
+          linkMeet,
+          speakerName,
+          speakerJobTitle,
           userId: req.loginUser.id,
-          categoryId: req.body.categoryId,
+          categoryId,
         },
         { where: { id: req.params.id } }
       );
 
-      // Get updated event
-      const data = await event.findOne({
-        where: { id: req.params.id },
-      });
+      // Upload image to cloudinary and updated photo event value and send data
+      cloudinary.uploader.upload(
+        `./public/images/events/${req.body.photoEvent}`,
+        async function (result, error) {
+          let a = result.secure_url;
 
-      // send response with inserted event
-      return res
-        .status(201)
-        .json({ data, message: ["Event has been updated!"] });
+          // update photo event value with image url
+          const updateEvent2 = await event.update(
+            {
+              title,
+              photoEvent: a,
+              dateEvent,
+              eventTime,
+              detail,
+              linkMeet,
+              speakerName,
+              speakerJobTitle,
+              userId: req.loginUser.id,
+              categoryId,
+            },
+            { where: { id: req.params.id } }
+          );
+
+          // Get inserted event
+          const data = await event.findOne({
+            where: { id: req.params.id },
+          });
+
+          // send response with inserted event
+          return res
+            .status(201)
+            .json({ data, message: ["Event has been updated!"] });
+        }
+      );
     } catch (error) {
       next(error);
     }
@@ -437,6 +614,20 @@ class Events {
   // Make delete event function
   static async deleteEvent(req, res, next) {
     try {
+      const eventUser = await event.findOne({
+        where: { id: req.params.id },
+      });
+
+      if (!eventUser) {
+        return res.status(400).json({ message: ["Event not found!"] });
+      }
+
+      if (eventUser.userId !== req.loginUser.id) {
+        return res.status(401).json({
+          errors: ["You do not have permission to access this!"],
+        });
+      }
+
       let data = await event.destroy({
         where: { id: req.params.id },
       });

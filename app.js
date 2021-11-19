@@ -1,5 +1,6 @@
 const express = require("express"); // Import express
 const fileUpload = require("express-fileupload"); // import express fileUpload
+const cors = require("cors");
 
 // Import routes
 const router = require("./routes/index");
@@ -7,11 +8,26 @@ const router = require("./routes/index");
 // Import error Handler
 const errorHandler = require("./middlewares/errorHandler");
 
+const corsOptions = {
+  origin: "*",
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "Content-Length",
+    "X-Requested-With",
+    "Accept",
+  ],
+  methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"],
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
 // Make port
 const port = process.env.PORT || 3000;
 
 // Make express app
 const app = express();
+
+app.use(cors(corsOptions));
 
 /* Enable req.body */
 app.use(express.json());
@@ -36,5 +52,9 @@ app.all("*", (req, res, next) => {
 // Enable error handler
 app.use(errorHandler);
 
-/* Run server */
-app.listen(port, () => console.log(`Server running on ${port}`));
+if (process.env.NODE_ENV !== "test") {
+  /* Run server */
+  app.listen(port, () => console.log(`Server running on ${port}`));
+}
+
+module.exports = app;

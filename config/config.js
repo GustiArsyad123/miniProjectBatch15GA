@@ -6,18 +6,18 @@ module.exports = {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
     host: process.env.DB_HOST,
-    dialect: "postgres",
+    dialect: process.env.DB_DIALECT,
     dialectOptions: {
-      //useUTC: true, // for reading from database
+      // useUTC: true, // for reading from database
     },
-    //timezone: "+07:00", // for writing to database
+    // timezone: "+07:00", // for writing to database
   },
   test: {
-    username: "root",
+    username: "dena",
     password: null,
-    database: "database_test",
-    host: "127.0.0.1",
-    dialect: "mysql",
+    database: "seeEventTeamD_test",
+    host: "localhost",
+    dialect: "postgres",
   },
   production: {
     username: "pglranbneidtaj",

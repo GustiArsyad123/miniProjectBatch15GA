@@ -1,4 +1,7 @@
 node_modules
 .env.development
-public
 prAtauKerjaanYangBelumKelar.js
+public
+.env
+coverage
+tests

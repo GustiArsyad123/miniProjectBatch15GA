@@ -12,7 +12,6 @@ const bookmark = require("./bookmark");
 const comment = require("./commentsRouter");
 const rating = require("./ratingsRouter");
 const authentication = require("../middlewares/validators/authentication");
-const authorization = require("../middlewares/validators/authorization");
 
 // Import validator
 const {

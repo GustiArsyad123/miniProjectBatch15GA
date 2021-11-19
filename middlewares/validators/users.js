@@ -30,46 +30,61 @@ exports.createOrUpadateUserValidator = async (req, res, next) => {
       errors.push("Email is not valid");
     }
 
-    if (!validator.isStrongPassword(req.body.password)) {
+    if (req.body.password !== req.body.confirmPassword) {
+      errors.push("password and confirm password didn't match!");
+    }
+
+    if (
+      !validator.isStrongPassword(req.body.password, [
+        {
+          minLength: 10,
+          minLowercase: 1,
+          minUppercase: 1,
+          minNumbers: 1,
+          minSymbols: 1,
+          maxLength: 20,
+        },
+      ])
+    ) {
       errors.push(
-        "password must include lowercase: min 1, uppercase: min 1, numbers: min 1, symbol: min 1, and length: min 8 characters."
+        "password must include lowercase: min 1, uppercase: min 1, numbers: min 1, symbol: min 1, and length: min 10 characters & max 20 characters."
       );
     }
 
-    // Check for the image of Users was upload or not
-    if (!(req.files && req.files.image)) {
-      errors.push("Please upload the image");
-    } else if (req.files.image) {
-      // If image was uploaded the photo user
+    // // Check for the image of Users was upload or not
+    // if (!(req.files && req.files.image)) {
+    //   errors.push("Please upload the image");
+    // } else if (req.files.image) {
+    //   // If image was uploaded the photo user
 
-      // req.files.photoUser is come from key (file) in postman
-      const file = req.files.image;
+    //   // req.files.photoUser is come from key (file) in postman
+    //   const file = req.files.image;
 
-      // Make sure image is photo
-      if (!file.mimetype.startsWith("image")) {
-        errors.push("File must be an image");
-      }
+    //   // Make sure image is photo
+    //   if (!file.mimetype.startsWith("image")) {
+    //     errors.push("File must be an image");
+    //   }
 
-      // Check file size (max 1MB)
-      if (file.size > 1000000) {
-        errors.push("Image must be less than 1MB");
-      }
+    //   // Check file size (max 1MB)
+    //   if (file.size > 1000000) {
+    //     errors.push("Image must be less than 1MB");
+    //   }
 
-      // Create custom filename
-      let fileName = crypto.randomBytes(16).toString("hex");
+    //   // Create custom filename
+    //   let fileName = crypto.randomBytes(16).toString("hex");
 
-      // Rename the file
-      file.name = `${fileName}${path.parse(file.name).ext}`;
+    //   // Rename the file
+    //   file.name = `${fileName}${path.parse(file.name).ext}`;
 
-      // Make file.mv to promise
-      const move = promisify(file.mv);
+    //   // Make file.mv to promise
+    //   const move = promisify(file.mv);
 
-      // Upload image to /public/images
-      await move(`./public/images/users/${file.name}`);
+    //   // Upload image to /public/images
+    //   await move(`./public/images/users/${file.name}`);
 
-      // assign req.body.image with file.name
-      req.body.image = file.name;
-    }
+    //   // assign req.body.image with file.name
+    //   req.body.image = `https://timdevent.herokuapp.com/images/speaker/users/${file.name}`;
+    // }
 
     if (errors.length > 0) {
       return res.status(400).json({ errors: errors });

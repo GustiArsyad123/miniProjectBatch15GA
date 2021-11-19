@@ -1,4 +1,5 @@
 const { bookmark, user, category, event } = require("../models");
+const { Op } = require("sequelize");
 
 // Make pagination
 const getPagination = (page, size) => {
@@ -30,8 +31,7 @@ class Bookmark {
         include: [
           { model: event, attributes: ["photoEvent", "dateEvent", "title"] },
           { model: user, attributes: ["firstName"] },
-          // ---------- PR => category belum ada relasi dengan tabel bookmark
-          // { model: category, attributes: ["category"] },
+          { model: category, attributes: ["category"] },
         ],
         where: {
           userId: req.loginUser.id,
@@ -43,7 +43,7 @@ class Bookmark {
       if (data.length === 0) {
         return res.status(400).json({ errors: ["Bookmark not found!"] });
       }
-      res.status(200).json({ data });
+      return res.status(200).json({ data });
     } catch (error) {
       next(error);
     }
@@ -53,13 +53,15 @@ class Bookmark {
     try {
       const eventId = req.params.id;
       const userId = req.loginUser.id;
+      const categoryId = req.body.categoryId;
 
       const newData = await bookmark.create({
         eventId,
         userId,
+        categoryId,
       });
 
-      res.status(201).json({ message: ["Event has been saved!"] });
+      return res.status(201).json({ message: ["Event has been saved!"] });
     } catch (error) {
       next(error);
     }
@@ -73,7 +75,11 @@ class Bookmark {
         },
       });
 
-      res.status(200).json({ message: ["Success remove bookmark!"] });
+      if (!deletedData) {
+        return res.status(400).json({ message: ["Bookmark not found!"] });
+      }
+
+      return res.status(200).json({ message: ["Success remove bookmark!"] });
     } catch (error) {
       console.log(error);
       next(error);
