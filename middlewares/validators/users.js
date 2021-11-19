@@ -19,13 +19,6 @@ exports.createOrUpadateUserValidator = async (req, res, next) => {
       errors.push("Please input the LastName!");
     }
 
-    // Find unique email
-    const findEmail = await user.findOne({ where: { email: req.body.email } });
-
-    if (findEmail) {
-      errors.push("This email is already registered");
-    }
-
     if (!validator.isEmail(req.body.email)) {
       errors.push("Email is not valid");
     }

@@ -8,6 +8,15 @@ class Users {
       const { firstName, lastName, email, password } = req.body;
       const hashPassword = encodePin(password);
 
+      // Find unique email
+      const findEmail = await user.findOne({
+        where: { email },
+      });
+
+      if (findEmail) {
+        errors.push("This email is already registered");
+      }
+
       const newUser = await user.create({
         firstName,
         lastName,
@@ -46,7 +55,7 @@ class Users {
         message: ["Your account has been created!"],
       });
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 
@@ -59,7 +68,6 @@ class Users {
           email,
         },
       });
-      console.log("ini data user", dataUser);
 
       if (!validator.isEmail(email)) {
         return res.status(400).json({

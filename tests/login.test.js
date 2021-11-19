@@ -4,7 +4,6 @@ const { user } = require("../models");
 const { encodePin } = require("../utils");
 
 beforeAll(async () => {
-  console.log("Masuk fungsi beforeAll");
   const hashPassword = encodePin("rahasia");
   let users = await user.create({
     firstName: "Dena",
