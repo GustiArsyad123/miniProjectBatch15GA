@@ -1,26 +1,20 @@
 image: node:latest
 
-cache:
-  paths:
-    - node_modules/
-
-stages:
-  - test
-  - staging
-
-test:
-  stage: test
-  script:
-    - "jest --ci"
-
-staging:
-  type: deploy
-  stage: staging
-  image: ruby:latest
-  script:
+before_script:
     - apt-get update -qy
     - apt-get install -y ruby-dev
     - gem install dpl
-    - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
-  only:
-    - master
+
+stages:
+    - staging
+    
+
+staging:
+    type: deploy
+    stage: staging
+    image: ruby:latest
+    script:
+        - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
+    only:
+        - development
+
