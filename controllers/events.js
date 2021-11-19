@@ -28,9 +28,11 @@ const getPagination = (page, size) => {
 const getPagingData = (data, page, limit) => {
   const { count: totalItems, rows: events } = data;
   const currentPage = page ? +page : 1;
+  const nextPage = page ? +page + 1 : 2;
+  const prevPage = page ? +page - 1 : 1;
   const totalPages = Math.ceil(totalItems / limit);
 
-  return { totalItems, events, totalPages, currentPage };
+  return { totalItems, events, totalPages, currentPage, prevPage, nextPage };
 };
 
 class Events {
@@ -370,21 +372,6 @@ class Events {
         where: { eventId: data.id },
       });
 
-      let komenTime = [];
-      let commentTime = [];
-      for (let i = 0; i < komen.length; i++) {
-        let waktu = komen[i].createdAt;
-        komenTime.push(
-          new Date(waktu).toLocaleString("en-US", {
-            timeZone: "Asia/Jakarta",
-          })
-        );
-
-        commentTime.push(
-          moment(komenTime[i], "MM/DD/YYYY hh:mm:ss A").fromNow()
-        );
-      }
-
       const sumRate = await rating.sum("rating", {
         where: { eventId: req.params.id },
       });
@@ -395,7 +382,7 @@ class Events {
 
       const avg = sumRate / countRate;
 
-      return res.status(201).json({ data, komen, commentTime, avg });
+      return res.status(201).json({ data, komen, avg });
     } catch (error) {
       next(error);
     }

@@ -59,6 +59,7 @@ class Users {
           email,
         },
       });
+      console.log("ini data user", dataUser);
 
       if (!validator.isEmail(email)) {
         return res.status(400).json({
