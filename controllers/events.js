@@ -363,12 +363,14 @@ class Events {
         res.status(401).json({ message: ["Event not found"] });
       }
 
+      // To show all comments of this event
       const komen = await comment.findAll({
         attributes: ["id", "comment", "createdAt", "updatedAt"],
         include: [{ model: user, attributes: ["firstName", "image"] }],
         where: { eventId: data.id },
       });
 
+      // To show all comments time
       comment.afterFind((instance) => {
         instance.forEach((el) => {
           let waktu = new Date(el.dataValues.updatedAt).toLocaleString(
@@ -385,6 +387,7 @@ class Events {
         });
       });
 
+      /** count rating */
       const sumRate = await rating.sum("rating", {
         where: { eventId: req.params.id },
       });
@@ -395,6 +398,7 @@ class Events {
 
       const avg = sumRate / countRate;
 
+      // send response
       return res.status(201).json({ data, komen, avg });
     } catch (error) {
       next(error);
