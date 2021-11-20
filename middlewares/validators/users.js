@@ -7,6 +7,8 @@ const { user } = require("../../models");
 // Make class of create or update users validator
 exports.createOrUpadateUserValidator = async (req, res, next) => {
   try {
+    const errors = [];
+
     //Check input of FirstName
     if (validator.isEmpty(req.body.firstName, { ignore_whitespace: true })) {
       errors.push("Please input the FirstName!");
