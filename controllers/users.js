@@ -24,6 +24,7 @@ class Users {
       return res.status(201).json({
         status: 201,
         data,
+        message: ['Your Account Success Created'],
       });
     } catch (error) {
       next(error);

@@ -365,11 +365,7 @@ class Events {
       }
 
       const komen = await comment.findAll({
-<<<<<<< HEAD
-        attributes: ["id", "comment"],
-=======
         attributes: ["id", "comment", "createdAt", "updatedAt"],
->>>>>>> 557c4d7fd6040e79cfe58aee8a4d70b52e791ac2
         include: [{ model: user, attributes: ["firstName", "image"] }],
         where: { eventId: data.id },
       });
