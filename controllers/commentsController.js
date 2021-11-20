@@ -11,21 +11,7 @@ class Comment {
         userId: req.loginUser.id,
       });
 
-      // Find Data Comment
-      const data = await comment.findOne({
-        where: {
-          id: newData.id,
-        },
-        attributes: ["comment", "createdAt"],
-        include: [
-          {
-            model: user,
-            attributes: ["firstName", "lastName", "image"],
-          },
-        ],
-      });
-
-      res.status(201).json({ data, message: ["Success add your comment"] });
+      return res.status(201).json({ message: ["Success add your comment"] });
     } catch (error) {
       next(error);
     }
