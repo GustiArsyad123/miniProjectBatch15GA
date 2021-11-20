@@ -1,21 +1,23 @@
 {
   "name": "backendteam_d",
   "version": "1.0.0",
-  "description": "",
+  "description": "TESTING MINI PROJECT",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "dev": "NODE_ENV=development npx nodemon app.js",
     "test": "set NODE_ENV=test&& jest --detectOpenHandles --forceExit --coverage"
   },
   "engines": {
-    "node": "14.18.0"
+    "node": "14.18.0",
+    "npm": "8.1.0"
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.com:binarxglints_batch15/miniproject/team-d/backendteam_d.git"
+    "url": "git+ssh://git@gitlab.com/binarxglints_batch15/miniproject/team-d/backendteam_d.git"
   },
   "author": "Team D",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "nodemon": "^2.0.15",
     "sequelize-cli": "^6.3.0"
@@ -39,5 +41,12 @@
     "sequelize": "^6.9.0",
     "supertest": "^6.1.6",
     "validator": "^13.7.0"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/binarxglints_batch15/miniproject/team-d/backendteam_d/issues"
+  },
+  "homepage": "https://gitlab.com/binarxglints_batch15/miniproject/team-d/backendteam_d#readme",
+  "directories": {
+    "test": "tests"
   }
 }
