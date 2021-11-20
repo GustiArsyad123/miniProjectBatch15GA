@@ -209,8 +209,6 @@ class Users {
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
         ],
-        limit,
-        offset,
         order: [["dateEvent", "DESC"]],
       });
 

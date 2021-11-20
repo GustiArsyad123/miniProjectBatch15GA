@@ -16,8 +16,6 @@ class Bookmark {
         where: {
           userId: req.loginUser.id,
         },
-        limit,
-        offset,
       });
 
       if (data.length === 0) {
