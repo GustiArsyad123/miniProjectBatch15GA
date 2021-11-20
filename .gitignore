@@ -3,5 +3,3 @@ node_modules
 prAtauKerjaanYangBelumKelar.js
 public
 .env
-coverage
-tests

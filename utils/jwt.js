@@ -5,7 +5,6 @@ require("dotenv").config();
 
 // Make function generate token
 function generateToken(payload) {
-  console.log(process.env.SECRET_KEY_JWT);
   return jwt.sign(payload, process.env.SECRET_KEY_JWT);
 }
 

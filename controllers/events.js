@@ -4,8 +4,6 @@ const { event, comment, user, category, rating } = require("../models");
 // Import sequelize
 const { Op } = require("sequelize");
 
-const sequelize = require("sequelize");
-
 // Import moment
 const moment = require("moment-timezone");
 
@@ -99,7 +97,6 @@ class Events {
       if (data.rows.length === 0) {
         return res.status(404).json({ errors: ["Events not found"] });
       }
-
       return res.status(200).json(getPagingData(data, page, limit));
     } catch (error) {
       next(error);

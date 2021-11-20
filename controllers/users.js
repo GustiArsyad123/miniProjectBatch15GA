@@ -1,11 +1,18 @@
 const { user, event, category } = require("../models");
 const { generateToken, encodePin, compare } = require("../utils");
 const validator = require("validator");
+const faker = require("faker");
+const cloudinary = require("cloudinary");
+cloudinary.config({
+  cloud_name: "drta3xh4e",
+  api_key: "699989283326316",
+  api_secret: "urll8J8oczRkKJlCxHkLv6yQv9g",
+});
 
 class Users {
   static async createUser(req, res, next) {
     try {
-      const { firstName, lastName, email, password } = req.body;
+      const { firstName, lastName, email, password, image } = req.body;
       const hashPassword = encodePin(password);
 
       // Find unique email
@@ -25,6 +32,7 @@ class Users {
         lastName,
         email,
         password: hashPassword,
+        image: faker.image.avatar(),
       });
 
       const data = await user.findOne({
@@ -36,6 +44,7 @@ class Users {
       return res.status(201).json({
         status: 201,
         data,
+        message: ["Your account has been created"],
       });
     } catch (error) {
       next(error);
@@ -44,9 +53,9 @@ class Users {
 
   static async getUserDetail(req, res, next) {
     try {
-      const id = req.params.id;
+      const id = req.loginUser.id;
       const userData = await user.findOne({
-        attributes: ["id", "firstName", "lastName", "email"],
+        attributes: ["id", "firstName", "lastName", "email", "image"],
         where: {
           id,
         },
@@ -55,7 +64,6 @@ class Users {
       res.status(200).json({
         status: 200,
         data: userData,
-        message: ["Your account has been created!"],
       });
     } catch (error) {
       next(error);
@@ -110,7 +118,7 @@ class Users {
   //update user
   static async updateUser(req, res, next) {
     try {
-      const { firstName, lastName, email, password } = req.body;
+      const { firstName, lastName, email, password, image } = req.body;
       const hashPassword = encodePin(password);
       await user.update(
         {
@@ -118,21 +126,43 @@ class Users {
           lastName,
           email,
           password: hashPassword,
+          image,
         },
         { where: { id: req.loginUser.id } }
       );
 
-      const data = await user.findOne({
-        attributes: ["id", "firstName", "lastName", "email"],
-        where: {
-          id: req.loginUser.id,
-        },
-      });
-      return res.status(201).json({
-        status: 201,
-        data,
-        message: ["Your account has been updated!"],
-      });
+      // Upload image to cloudinary and updated photo event value and send data
+      cloudinary.uploader.upload(
+        `./public/images/users/${req.body.image}`,
+        async function (result, error) {
+          let a = result.secure_url;
+
+          // update photo of user value with image url
+          const updateEvent2 = await user.update(
+            {
+              firstName,
+              lastName,
+              email,
+              password: hashPassword,
+              image: a,
+            },
+            { where: { id: req.loginUser.id } }
+          );
+
+          // Get inserted user
+          const data = await user.findOne({
+            attributes: {
+              exclude: ["password", "createdAt", "updatedAt", "deletedAt"],
+            },
+            where: { id: req.loginUser.id },
+          });
+
+          // send response with inserted data of user
+          return res
+            .status(201)
+            .json({ data, message: ["Your profil has been updated!"] });
+        }
+      );
     } catch (error) {
       next(error);
     }
@@ -170,25 +200,6 @@ class Users {
   // Make myEvents function
   static async myEvents(req, res, next) {
     try {
-      // Make pagination
-      const getPagination = (page, size) => {
-        const limit = size ? +size : 8;
-        const offset = (page - 1) * limit || 0;
-
-        return { limit, offset };
-      };
-
-      // make paging data
-      const getPagingData = (data, page, limit) => {
-        const { count: totalItems, rows: events } = data;
-        const currentPage = page ? +page : 1;
-        const totalPages = Math.ceil(totalItems / limit);
-
-        return { totalItems, events, totalPages, currentPage };
-      };
-      const { page, size } = req.query;
-      const { limit, offset } = getPagination(page, size);
-
       let data = await event.findAll({
         where: {
           userId: req.loginUser.id,
