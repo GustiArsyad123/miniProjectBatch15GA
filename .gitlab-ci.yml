@@ -11,7 +11,7 @@ stages:
 test:
   stage: test
   script:
-    - "jest --ci"
+    - "npm test"
 
 staging:
   type: deploy
