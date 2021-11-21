@@ -24,9 +24,8 @@ init:
 staging:
   type: deploy
   stage: staging
-  image: ruby:latest
+  image: node:14.18.0
   script:
-    - gem install dpl
-    - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
+    - --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
   only:
     - master
