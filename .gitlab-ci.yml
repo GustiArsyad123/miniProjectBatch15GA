@@ -1,7 +1,7 @@
 image: node:latest
 
 before_script:
-  # - brew update -qy
+  - brew update -qy
   - brew install ruby-dev
   - gem install dpl
 
