@@ -18,6 +18,10 @@ module.exports = {
       },
       dateEvent: {
         allowNull: false,
+        type: Sequelize.DATEONLY,
+      },
+      eventDate: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       eventTime: {

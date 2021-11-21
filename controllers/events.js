@@ -46,7 +46,7 @@ class Events {
             ],
           },
         },
-        attributes: ["photoEvent", "dateEvent", "eventTime", "title"],
+        attributes: ["photoEvent", "eventDate", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -65,8 +65,7 @@ class Events {
       // - Design event
       const dataDesign = await event.findAll({
         where: { categoryId: 2 },
-        attributes: ["photoEvent", "dateEvent", "eventTime", "title"],
-        attributes: ["photoEvent", "dateEvent", "title"],
+        attributes: ["photoEvent", "eventDate", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -87,7 +86,7 @@ class Events {
       const { limit, offset } = getPagination(page, size);
 
       let data = await event.findAndCountAll({
-        attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
+        attributes: ["id", "photoEvent", "eventDate", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -130,7 +129,7 @@ class Events {
         },
         attributes: [
           "photoEvent",
-          "dateEvent",
+          "eventDate",
           "eventTime",
           "title",
           "speakerName",
@@ -161,7 +160,7 @@ class Events {
       const { limit, offset } = getPagination(page, size);
 
       let data = await event.findAndCountAll({
-        attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
+        attributes: ["id", "photoEvent", "eventDate", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -197,7 +196,7 @@ class Events {
             ],
           },
         },
-        attributes: ["photoEvent", "dateEvent", "eventTime", "title"],
+        attributes: ["photoEvent", "eventDate", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -234,7 +233,7 @@ class Events {
             [Op.between]: [moment(c).format(), moment(d).format()],
           },
         },
-        attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
+        attributes: ["id", "photoEvent", "eventDate", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -273,7 +272,7 @@ class Events {
 
       let data = await event.findAndCountAll({
         where,
-        attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
+        attributes: ["id", "photoEvent", "eventDate", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -309,7 +308,7 @@ class Events {
             ],
           },
         },
-        attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
+        attributes: ["id", "photoEvent", "eventDate", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -345,7 +344,7 @@ class Events {
             ],
           },
         },
-        attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
+        attributes: ["id", "photoEvent", "eventDate", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -412,7 +411,7 @@ class Events {
       const { limit, offset } = getPagination(page, size);
 
       let data = await event.findAndCountAll({
-        attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
+        attributes: ["id", "photoEvent", "eventDate", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -439,7 +438,7 @@ class Events {
       const { limit, offset } = getPagination(page, size);
 
       let data = await event.findAndCountAll({
-        attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
+        attributes: ["id", "photoEvent", "eventDate", "eventTime", "title"],
         include: [
           { model: user, attributes: ["firstName"] },
           { model: category, attributes: ["category"] },
@@ -465,6 +464,7 @@ class Events {
       const {
         title,
         photoEvent,
+        dateEvent,
         eventTime,
         detail,
         linkMeet,
@@ -480,7 +480,8 @@ class Events {
       const insertEvent = await event.create({
         title,
         photoEvent,
-        dateEvent: tanggal,
+        dateEvent,
+        eventDate: tanggal,
         eventTime,
         detail,
         linkMeet,
@@ -503,7 +504,8 @@ class Events {
             {
               title,
               photoEvent: a,
-              dateEvent: tanggal,
+              dateEvent,
+              eventDate: tanggal,
               eventTime,
               detail,
               linkMeet,
@@ -559,11 +561,16 @@ class Events {
         speakerJobTitle,
         categoryId,
       } = req.body;
+
+      let date1 = moment(req.body.dateEvent).format("dddd");
+      let date2 = moment(req.body.dateEvent).format("ll");
+      let tanggal = `${date1}, ${date2}`;
       const updateEvent = await event.update(
         {
           title,
           photoEvent,
           dateEvent,
+          eventDate: tanggal,
           eventTime,
           detail,
           linkMeet,
@@ -587,6 +594,7 @@ class Events {
               title,
               photoEvent: a,
               dateEvent,
+              eventDate: tanggal,
               eventTime,
               detail,
               linkMeet,
