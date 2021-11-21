@@ -1,12 +1,14 @@
 image: node:14.x
 
-# before_script:
-# - brew update -qy
-# - brew install ruby-build
-# - gem install dpl
-
 stages:
+  - test
   - production
+
+test:
+  stage: test
+  script:
+    - npm install
+    - "npm test"
 
 production:
   type: deploy
