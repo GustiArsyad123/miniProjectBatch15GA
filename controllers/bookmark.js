@@ -58,6 +58,7 @@ class Bookmark {
     }
   }
 
+  // Make create bookmark function
   static async createBookmark(req, res, next) {
     try {
       const eventId = req.params.id;
