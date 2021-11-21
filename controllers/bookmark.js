@@ -12,7 +12,7 @@ class Bookmark {
         return { limit, offset };
       };
 
-      // make paging dataa
+      // make paging data
       const getPagingData = (data, page, limit) => {
         const { count: totalItems, rows: events } = data;
         const currentPage = page ? +page : 1;
