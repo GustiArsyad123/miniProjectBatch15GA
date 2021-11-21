@@ -23,6 +23,7 @@ beforeAll(async () => {
       photoEvent: faker.image.imageUrl(),
       dateEvent: "2021-11-20",
       eventTime: "19:00",
+      eventDate: "Monday, Nov 22, 2021",
       detail: faker.lorem.paragraph(),
       linkMeet: faker.internet.url(),
       speakerName: faker.name.findName(),
