@@ -357,6 +357,10 @@ class Events {
     try {
       const data = await event.findOne({
         where: { id: req.params.id },
+        include: [
+          { model: user, attributes: ["firstName", "lastName", "image"] },
+          { model: category, attributes: ["category"] },
+        ],
       });
 
       if (!data) {
