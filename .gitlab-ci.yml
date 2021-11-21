@@ -1,9 +1,9 @@
-image: node:latest
+image: node:14.x
 
-before_script:
-  - brew update -qy
-  - brew install ruby-build
-  - gem install dpl
+# before_script:
+# - brew update -qy
+# - brew install ruby-build
+# - gem install dpl
 
 stages:
   - production
@@ -11,7 +11,7 @@ stages:
 production:
   type: deploy
   stage: production
-  image: ruby:latest
+  image: ruby:3
   script:
     - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
   only:
