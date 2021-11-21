@@ -5,7 +5,7 @@ const { event, comment, user, category, rating } = require("../models");
 const { Op } = require("sequelize");
 
 // Import moment
-const moment = require("moment-timezone");
+const moment = require("moment");
 
 const cloudinary = require("cloudinary");
 cloudinary.config({
@@ -464,7 +464,6 @@ class Events {
       let date1 = moment(dateEvent).format("dddd");
       let date2 = moment(dateEvent).format("ll");
       let tanggal = `${date1}, ${date2}`;
-      console.log(tanggal);
 
       const insertEvent = await event.create({
         title,
