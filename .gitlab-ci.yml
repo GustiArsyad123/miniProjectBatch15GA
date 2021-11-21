@@ -26,6 +26,6 @@ staging:
   stage: staging
   image: node:14.18.0
   script:
-    - --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
+    - git push https://$HEROKU_USER:$HEROKU_API_KEY@https://git.heroku.com/timdevent.git HEAD:master
   only:
     - master
