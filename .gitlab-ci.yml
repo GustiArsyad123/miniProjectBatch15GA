@@ -5,15 +5,27 @@ cache:
   paths:
     - node_modules/
 
+
 stages:
   - test
   - staging
 
 test:
+  type: test
   stage: test
+  services:
+    - postgres:14-alpine # Add postgres service in Gitlab to test the code
   script:
-    - npm install
+    - npm i
+    #- npm install
     - "npm test"
+
+    #- npx sequelize db:create
+    #- npx sequelize db:migrate
+    # - npx sequelize db:seed:all
+    #- npm run test # It will run test in Gitlab before it upload to heroku
+  only:
+    - staging
 
 staging:
   type: deploy
