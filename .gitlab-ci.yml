@@ -1,3 +1,5 @@
+image: node:latest
+
 cache:
   paths:
     - node_modules/
@@ -22,12 +24,9 @@ init:
 staging:
   type: deploy
   stage: staging
-  image: node:14.18.0
+  image: ruby:latest
   script:
-    - git push https://$HEROKU_USER:$HEROKU_API_KEY@git.heroku.com/timdevent.git HEAD:master
-    - echo "Deployed to heroku server"
-  environtment:
-    name: deploy
-    url: https://timdevent.herokuapp.com/
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
   only:
     - master
