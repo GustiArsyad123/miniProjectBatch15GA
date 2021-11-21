@@ -6,6 +6,7 @@ cache:
 
 stages:
   - test
+  - init
   - staging
 
 test:
@@ -14,12 +15,21 @@ test:
     - npm install
     - "npm test"
 
+init:
+  stage: init
+  image: node:14.18.0
+  script:
+    - npm install
+
 staging:
   type: deploy
   stage: staging
-  image: ruby:latest
+  image: node:14.18.0
   script:
-    - gem install dpl
-    - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
+    - git push https://$HEROKU_USER:$HEROKU_API_KEY@git.heroku.com/timdevent.git HEAD:master
+    - echo "Deployed to heroku server"
+  environtment:
+    name: deploy
+    url: https://timdevent.herokuapp.com/
   only:
     - master
