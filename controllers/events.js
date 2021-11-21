@@ -55,7 +55,7 @@ class Events {
       if (!dataStarted) {
         return res.status(404).json({ errors: ["Events not found"] });
       }
-      // - Explore by category
+      // - Explore by categories
       const dataCategory = await category.findAll({
         attributes: ["category"],
       });
@@ -372,19 +372,21 @@ class Events {
 
       // To show all comments time
       comment.afterFind((instance) => {
-        instance.forEach((el) => {
-          let waktu = new Date(el.dataValues.updatedAt).toLocaleString(
-            "en-US",
-            {
-              timeZone: "Asia/Jakarta",
-            }
-          );
+        if (instance.length > 0) {
+          instance.forEach((el) => {
+            let waktu = new Date(el.dataValues.updatedAt).toLocaleString(
+              "en-US",
+              {
+                timeZone: "Asia/Jakarta",
+              }
+            );
 
-          el.dataValues.waktuKomen = moment(
-            waktu,
-            "MM/DD/YYYY hh:mm:ss A"
-          ).fromNow();
-        });
+            el.dataValues.waktuKomen = moment(
+              waktu,
+              "MM/DD/YYYY hh:mm:ss A"
+            ).fromNow();
+          });
+        }
       });
 
       /** count rating */
