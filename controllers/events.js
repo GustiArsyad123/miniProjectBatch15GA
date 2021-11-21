@@ -461,14 +461,14 @@ class Events {
         categoryId,
       } = req.body;
 
-      let date1 = moment(dateEvent).format("dddd");
-      let date2 = moment(dateEvent).format("ll");
-      let tanggal = `${date1}, ${date2}`;
+      // let date1 = moment(dateEvent).format("dddd");
+      // let date2 = moment(dateEvent).format("ll");
+      // let tanggal = `${date1}, ${date2}`;
 
       const insertEvent = await event.create({
         title,
         photoEvent,
-        dateEvent: tanggal,
+        dateEvent,
         eventTime,
         detail,
         linkMeet,
