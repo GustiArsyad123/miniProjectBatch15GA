@@ -27,7 +27,7 @@ describe("user signup", () => {
     it("Should return 201 and obj (user)", (done) => {
       const hashPassword = encodePin("Rahasiaaa1@");
       let input = {
-        id: 6,
+        id: 8,
         firstName: "Dena",
         lastName: "Eka",
         email: "dena@gmail.com",
@@ -42,7 +42,7 @@ describe("user signup", () => {
           expect(status).toBe(201);
           expect(body).toHaveProperty("data");
           expect(body.data).toMatchObject({
-            id: 6,
+            id: 8,
             firstName: "Dena",
             lastName: "Eka",
             email: "dena@gmail.com",
