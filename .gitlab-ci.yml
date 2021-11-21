@@ -2,7 +2,7 @@ image: node:latest
 
 before_script:
   - brew update -qy
-  - brew install ruby-dev
+  - brew install ruby-build
   - gem install dpl
 
 stages:
