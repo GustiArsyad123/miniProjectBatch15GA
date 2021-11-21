@@ -13,6 +13,7 @@ beforeAll(async () => {
   });
 
   let categories = await category.create({
+    id: 5,
     category: "Design",
   });
 
@@ -27,7 +28,7 @@ beforeAll(async () => {
       speakerName: faker.name.findName(),
       speakerJobTitle: faker.name.jobTitle(),
       userId: 5,
-      categoryId: 1,
+      categoryId: 5,
     });
   }
 });
