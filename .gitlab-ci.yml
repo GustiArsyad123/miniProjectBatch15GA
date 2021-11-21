@@ -4,11 +4,6 @@ cache:
   paths:
     - node_modules/
 
-before_script:
-  - apt-get update -qy
-  - apt-get install -y ruby-dev
-  - gem install dpl
-
 stages:
   - test
   - staging
@@ -24,6 +19,7 @@ staging:
   stage: staging
   image: ruby:latest
   script:
+    - gem install dpl
     - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
   only:
     - master
