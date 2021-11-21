@@ -10,6 +10,7 @@ cloudinary.config({
 });
 
 class Users {
+  // make create user function
   static async createUser(req, res, next) {
     try {
       const { firstName, lastName, email, password, image } = req.body;
