@@ -374,25 +374,6 @@ class Events {
         where: { eventId: data.id },
       });
 
-      // To show all comments time
-      comment.afterFind((instance) => {
-        if (instance.length > 0) {
-          instance.forEach((el) => {
-            let waktu = new Date(el.dataValues.updatedAt).toLocaleString(
-              "en-US",
-              {
-                timeZone: "Asia/Jakarta",
-              }
-            );
-
-            el.dataValues.waktuKomen = moment(
-              waktu,
-              "MM/DD/YYYY hh:mm:ss A"
-            ).fromNow();
-          });
-        }
-      });
-
       /** count rating */
       const sumRate = await rating.sum("rating", {
         where: { eventId: req.params.id },
@@ -479,10 +460,16 @@ class Events {
         speakerJobTitle,
         categoryId,
       } = req.body;
+
+      let date1 = moment(dateEvent).format("dddd");
+      let date2 = moment(dateEvent).format("ll");
+      let tanggal = `${date1}, ${date2}`;
+      console.log(tanggal);
+
       const insertEvent = await event.create({
         title,
         photoEvent,
-        dateEvent,
+        dateEvent: tanggal,
         eventTime,
         detail,
         linkMeet,

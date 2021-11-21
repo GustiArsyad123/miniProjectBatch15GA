@@ -2,7 +2,6 @@ const path = require("path");
 const crypto = require("crypto");
 const validator = require("validator");
 const { promisify } = require("util");
-const cloudinary = require("cloudinary").v2;
 
 // Make class of create or update event validatro
 exports.createOrUpadateEventValidator = async (req, res, next) => {

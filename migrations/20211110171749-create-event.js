@@ -20,7 +20,7 @@ module.exports = {
       },
       dateEvent: {
         allowNull: false,
-        type: Sequelize.DATEONLY,
+        type: Sequelize.STRING,
       },
       eventTime: {
         allowNull: false,
