@@ -5,6 +5,7 @@ const faker = require("faker");
 
 beforeAll(async () => {
   let users = await user.create({
+    id: 5,
     firstName: "Dena",
     lastName: "Eka",
     email: "na@yahoo.com",
@@ -25,7 +26,7 @@ beforeAll(async () => {
       linkMeet: faker.internet.url(),
       speakerName: faker.name.findName(),
       speakerJobTitle: faker.name.jobTitle(),
-      userId: 1,
+      userId: 5,
       categoryId: 1,
     });
   }
