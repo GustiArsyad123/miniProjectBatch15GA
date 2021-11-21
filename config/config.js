@@ -10,7 +10,7 @@ module.exports = {
     dialectOptions: {
       // useUTC: true, // for reading from database
     },
-    // timezone: "+07:00", // for writing to database
+    timezone: "+07:00", // for writing to database
   },
   test: {
     username: "dena",

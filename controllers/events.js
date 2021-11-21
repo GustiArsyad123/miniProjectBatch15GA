@@ -40,7 +40,10 @@ class Events {
       const dataStarted = await event.findAll({
         where: {
           dateEvent: {
-            [Op.between]: [moment().startOf("day"), moment().add(7, "days")],
+            [Op.between]: [
+              moment().startOf("day").format(),
+              moment().add(7, "days").format(),
+            ],
           },
         },
         attributes: ["photoEvent", "dateEvent", "eventTime", "title"],
@@ -189,8 +192,8 @@ class Events {
         where: {
           dateEvent: {
             [Op.between]: [
-              moment().startOf("day").local(),
-              moment().endOf("day").local(),
+              moment().startOf("day").format(),
+              moment().endOf("day").format(),
             ],
           },
         },
@@ -228,7 +231,7 @@ class Events {
       let data = await event.findAndCountAll({
         where: {
           dateEvent: {
-            [Op.between]: [moment(c).local(), moment(d).local()],
+            [Op.between]: [moment(c).format(), moment(d).format()],
           },
         },
         attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
@@ -247,6 +250,7 @@ class Events {
 
       return res.status(200).json(getPagingData(data, page, limit));
     } catch (error) {
+      console.log(error);
       next(error);
     }
   }
@@ -260,7 +264,10 @@ class Events {
       // week
       const where = {
         dateEvent: {
-          [Op.between]: [moment().startOf("day"), moment().add(7, "days")],
+          [Op.between]: [
+            moment().startOf("day").format(),
+            moment().add(7, "days").format(),
+          ],
         },
       };
 
@@ -296,7 +303,10 @@ class Events {
       let data = await event.findAndCountAll({
         where: {
           dateEvent: {
-            [Op.between]: [moment().startOf("month"), moment().endOf("month")],
+            [Op.between]: [
+              moment().startOf("month").format(),
+              moment().endOf("month").format(),
+            ],
           },
         },
         attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
@@ -329,7 +339,10 @@ class Events {
       let data = await event.findAndCountAll({
         where: {
           dateEvent: {
-            [Op.between]: [moment().startOf("year"), moment().endOf("year")],
+            [Op.between]: [
+              moment().startOf("year").format(),
+              moment().endOf("year").format(),
+            ],
           },
         },
         attributes: ["id", "photoEvent", "dateEvent", "eventTime", "title"],
@@ -452,7 +465,6 @@ class Events {
       const {
         title,
         photoEvent,
-        dateEvent,
         eventTime,
         detail,
         linkMeet,
@@ -461,14 +473,14 @@ class Events {
         categoryId,
       } = req.body;
 
-      // let date1 = moment(dateEvent).format("dddd");
-      // let date2 = moment(dateEvent).format("ll");
-      // let tanggal = `${date1}, ${date2}`;
+      let date1 = moment(req.body.dateEvent).format("dddd");
+      let date2 = moment(req.body.dateEvent).format("ll");
+      let tanggal = `${date1}, ${date2}`;
 
       const insertEvent = await event.create({
         title,
         photoEvent,
-        dateEvent,
+        dateEvent: tanggal,
         eventTime,
         detail,
         linkMeet,
@@ -491,7 +503,7 @@ class Events {
             {
               title,
               photoEvent: a,
-              dateEvent,
+              dateEvent: tanggal,
               eventTime,
               detail,
               linkMeet,

@@ -1,6 +1,4 @@
 "use strict";
-const moment = require("moment");
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable("events", {
