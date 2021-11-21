@@ -1,31 +1,18 @@
 image: node:latest
 
-cache:
-  paths:
-    - node_modules/
+before_script:
+  - apt-get update -qy
+  - apt-get install -y ruby-dev
+  - gem install dpl
 
 stages:
-  - test
-  - init
-  - staging
+  - production
 
-test:
-  stage: test
-  script:
-    - npm install
-    - "npm test"
-
-init:
-  stage: init
-  image: node:14.18.0
-  script:
-    - npm install
-
-staging:
+production:
   type: deploy
-  stage: staging
-  image: node:14.18.0
+  stage: production
+  image: ruby:latest
   script:
-    - git push $HEROKU_USER:$HEROKU_API_KEY@https://git.heroku.com/timdevent.git HEAD:master
+    - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
   only:
-    - master
+    - production
