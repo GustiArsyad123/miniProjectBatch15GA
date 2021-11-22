@@ -249,7 +249,6 @@ class Events {
 
       return res.status(200).json(getPagingData(data, page, limit));
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
@@ -259,7 +258,6 @@ class Events {
     try {
       const { page, size } = req.query;
       const { limit, offset } = getPagination(page, size);
-
       // week
       const where = {
         dateEvent: {
