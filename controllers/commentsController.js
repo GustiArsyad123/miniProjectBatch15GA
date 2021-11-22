@@ -1,6 +1,27 @@
 const { comment, user } = require("../models");
 
 class Comment {
+  // Create Get All Comment
+  static async getAllComments(req, res, next) {
+    try {
+      // Create Data Comment
+      const allComments = await comment.findAll({
+        attributes: ["id", "comment", "createdAt", "updatedAt"],
+        include: [{ model: user, attributes: ["firstName", "image"] }],
+        where: { eventId: req.params.id },
+      });
+
+      // If no comments
+      if (allComments.length === 0) {
+        return res.status(404).json({ message: ["There is no comments"] });
+      }
+
+      return res.status(201).json({ allComments });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   // Create Comment
   static async createComment(req, res, next) {
     try {
