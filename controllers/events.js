@@ -110,7 +110,7 @@ class Events {
     try {
       const { page, size } = req.query;
       const { limit, offset } = getPagination(page, size);
-      const cari = req.body.cari;
+      const cari = req.query.cari;
 
       let data = await event.findAndCountAll({
         where: {
