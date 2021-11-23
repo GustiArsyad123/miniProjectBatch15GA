@@ -6,6 +6,7 @@ const {
   updateEvent,
   deleteEvent,
 } = require("../controllers/events");
+const { getAllComments } = require("../controllers/commentsController");
 const users = require("./users");
 const events = require("./events");
 const bookmark = require("./bookmark");
@@ -26,6 +27,7 @@ route.get("/", getStartedEvent);
 route.use("/events", events);
 route.post("/signin", login);
 route.post("/signup", createOrUpadateUserValidator, createUser);
+route.get("/comments/:id", getAllComments);
 
 route.use(authentication);
 

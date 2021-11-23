@@ -1,31 +1,33 @@
 const request = require("supertest");
 const app = require("../app");
 const { user } = require("../models");
+const { encodePin } = require("../utils");
 
-// beforeAll(() => {
-//   user.create({
-//     firstName: "Dena",
-//     lastName: "Eka",
-//     email: "iuja@gmail.com",
-//     password: "rahasia",
-//   });
-// });
-// afterAll((done) => {
-//   user
-//     .destroy({ where: {} })
-//     .then(() => {
-//       done();
-//     })
-//     .catch((err) => {
-//       done(err);
-//     });
-// });
+beforeAll(async () => {
+  const hashPassword = encodePin("rahasia");
+  let users = await user.create({
+    firstName: "Dena",
+    lastName: "Eka",
+    email: "dena@gmail.com",
+    password: hashPassword,
+  });
+});
+afterAll((done) => {
+  user
+    .destroy({ where: {}, force: true })
+    .then(() => {
+      done();
+    })
+    .catch((err) => {
+      done(err);
+    });
+});
 
 describe("User try to login:", () => {
   describe("Success:", () => {
     it("Should return 200 and access_token", (done) => {
       let input = {
-        email: "uja@gmail.com",
+        email: "dena@gmail.com",
         password: "rahasia",
       };
       request(app)
@@ -34,7 +36,6 @@ describe("User try to login:", () => {
         .then((response) => {
           let { body, status } = response;
           expect(status).toBe(200);
-          console.log("user token", body.token);
           expect(body).toHaveProperty("token");
           expect(typeof body.token).toBe("string");
           done();
@@ -71,7 +72,7 @@ describe("User try to login:", () => {
     describe("Wrong password", () => {
       it("Should return 400 and 'Please input password correctly!'", (done) => {
         let input = {
-          email: "uja@gmail.com",
+          email: "dena@gmail.com",
           password: "rafsdhasia",
         };
         request(app)

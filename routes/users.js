@@ -2,6 +2,7 @@ const express = require("express");
 
 const {
   createOrUpadateUserValidator,
+  UpadateUserValidator,
 } = require("../middlewares/validators/users");
 
 const {
@@ -14,8 +15,13 @@ const {
 const router = express.Router();
 
 router.get("/myevent", myEvents);
-router.get("/:id", getUserDetail);
-router.put("/update", createOrUpadateUserValidator, updateUser);
+router.get("/myprofile", getUserDetail);
+router.put(
+  "/update",
+  createOrUpadateUserValidator,
+  UpadateUserValidator,
+  updateUser
+);
 router.delete("/:id", deleteUser);
 
 module.exports = router;

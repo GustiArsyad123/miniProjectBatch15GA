@@ -7,7 +7,7 @@ const encodePin = (plain) => {
     const hash = bcrypt.hashSync(plain, salt);
     return hash;
   } catch (error) {
-    // console.log(error);
+    next(error);
   }
 };
 
