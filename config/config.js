@@ -18,6 +18,7 @@ module.exports = {
     database: "seeEventTeamD_test",
     host: "localhost",
     dialect: "postgres",
+    logging: false,
   },
   production: {
     username: "pglranbneidtaj",

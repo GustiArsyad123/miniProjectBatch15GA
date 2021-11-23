@@ -10,8 +10,8 @@ const moment = require("moment");
 const cloudinary = require("cloudinary");
 cloudinary.config({
   cloud_name: "drta3xh4e",
-  api_key: "699989283326316",
-  api_secret: "urll8J8oczRkKJlCxHkLv6yQv9g",
+  api_key: process.env.SECRET_KEY_CLOUDINARY,
+  api_secret: process.env.SECRET_API_CLOUDINARY,
 });
 
 // Make pagination
@@ -82,23 +82,175 @@ class Events {
   // Make getAllEvent function
   static async getAllEvents(req, res, next) {
     try {
-      const { page, size } = req.query;
+      const { page, size, kategori } = req.query;
+      let { waktu, nata } = req.query;
       const { limit, offset } = getPagination(page, size);
+      let data = "";
+      let a = new Date();
+      let b = a.setDate(a.getDate() + 1);
+      let c = new Date(b).setHours(0, 0, 0, 0);
+      let d = new Date(b).setHours(23, 59, 0, 0);
 
-      let data = await event.findAndCountAll({
-        attributes: ["id", "photoEvent", "eventDate", "eventTime", "title"],
-        include: [
-          { model: user, attributes: ["firstName"] },
-          { model: category, attributes: ["category"] },
-        ],
-        limit,
-        offset,
-        order: [["dateEvent", "DESC"]],
-      });
+      let today1 = moment().startOf("day").format();
+      let today2 = moment().endOf("day").format();
+      let tomorrow1 = moment(c).format();
+      let tomorrow2 = moment(d).format();
+      let week1 = moment().startOf("day").format();
+      let week2 = moment().add(7, "days").format();
+      let bulan1 = moment().startOf("month").format();
+      let bulan2 = moment().endOf("month").format();
+      let year1 = moment().startOf("year").format();
+      let year2 = moment().endOf("year").format();
+      let waktu1 = "";
+      let waktu2 = "";
+
+      if (waktu == "today") {
+        waktu1 = today1;
+        waktu2 = today2;
+      } else if (req.query.waktu == "tomorrow") {
+        waktu1 = tomorrow1;
+        waktu2 = tomorrow2;
+      } else if (req.query.waktu == "week") {
+        waktu1 = week1;
+        waktu2 = week2;
+      } else if (req.query.waktu == "month") {
+        waktu1 = bulan1;
+        waktu2 = bulan2;
+      } else if (req.query.waktu == "year") {
+        waktu1 = year1;
+        waktu2 = year2;
+      }
+
+      if (nata == "date") {
+        nata = "dateEvent";
+      } else if (nata == "name") {
+        nata = "title";
+      }
+
+      if (waktu && kategori && nata) {
+        data = await event.findAndCountAll({
+          where: {
+            [Op.and]: [
+              {
+                categoryId: kategori,
+                dateEvent: {
+                  [Op.between]: [waktu1, waktu2],
+                },
+              },
+            ],
+          },
+          attributes: ["photoEvent", "eventDate", "eventTime", "title"],
+          include: [
+            { model: user, attributes: ["firstName"] },
+            { model: category, attributes: ["category"] },
+          ],
+          limit,
+          offset,
+          order: [[nata, "ASC"]],
+        });
+      } else if (waktu && kategori) {
+        data = await event.findAndCountAll({
+          where: {
+            [Op.and]: [
+              {
+                categoryId: kategori,
+                dateEvent: {
+                  [Op.between]: [waktu1, waktu2],
+                },
+              },
+            ],
+          },
+          attributes: ["photoEvent", "eventDate", "eventTime", "title"],
+          include: [
+            { model: user, attributes: ["firstName"] },
+            { model: category, attributes: ["category"] },
+          ],
+          limit,
+          offset,
+          order: [["dateEvent", "ASC"]],
+        });
+      } else if (waktu && nata) {
+        data = await event.findAndCountAll({
+          where: {
+            dateEvent: {
+              [Op.between]: [waktu1, waktu2],
+            },
+          },
+          attributes: ["photoEvent", "eventDate", "eventTime", "title"],
+          include: [
+            { model: user, attributes: ["firstName"] },
+            { model: category, attributes: ["category"] },
+          ],
+          limit,
+          offset,
+          order: [[nata, "ASC"]],
+        });
+      } else if (kategori && nata) {
+        data = await event.findAndCountAll({
+          attributes: ["id", "photoEvent", "eventDate", "eventTime", "title"],
+          include: [
+            { model: user, attributes: ["firstName"] },
+            { model: category, attributes: ["category"] },
+          ],
+          where: { categoryId: kategori },
+          limit,
+          offset,
+          order: [[nata, "ASC"]],
+        });
+      } else if (waktu) {
+        data = await event.findAndCountAll({
+          where: {
+            dateEvent: {
+              [Op.between]: [waktu1, waktu2],
+            },
+          },
+          attributes: ["photoEvent", "eventDate", "eventTime", "title"],
+          include: [
+            { model: user, attributes: ["firstName"] },
+            { model: category, attributes: ["category"] },
+          ],
+          limit,
+          offset,
+        });
+      } else if (kategori) {
+        data = await event.findAndCountAll({
+          attributes: ["id", "photoEvent", "eventDate", "eventTime", "title"],
+          include: [
+            { model: user, attributes: ["firstName"] },
+            { model: category, attributes: ["category"] },
+          ],
+          limit,
+          offset,
+          where: { categoryId: kategori },
+        });
+      } else if (nata) {
+        data = await event.findAndCountAll({
+          attributes: ["id", "photoEvent", "eventDate", "eventTime", "title"],
+          include: [
+            { model: user, attributes: ["firstName"] },
+            { model: category, attributes: ["category"] },
+          ],
+          limit,
+          offset,
+          order: [[nata, "ASC"]],
+        });
+      } else {
+        data = await event.findAndCountAll({
+          attributes: ["id", "photoEvent", "eventDate", "eventTime", "title"],
+          include: [
+            { model: user, attributes: ["firstName"] },
+            { model: category, attributes: ["category"] },
+          ],
+          limit,
+          offset,
+          order: [["dateEvent", "DESC"]],
+        });
+      }
 
       if (data.rows.length === 0) {
         return res.status(404).json({ errors: ["Events not found"] });
       }
+
       return res.status(200).json(getPagingData(data, page, limit));
     } catch (error) {
       next(error);
@@ -153,215 +305,6 @@ class Events {
     }
   }
 
-  // Make getEventByCategory
-  static async getEventByCategory(req, res, next) {
-    try {
-      const { page, size } = req.query;
-      const { limit, offset } = getPagination(page, size);
-
-      let data = await event.findAndCountAll({
-        attributes: ["id", "photoEvent", "eventDate", "eventTime", "title"],
-        include: [
-          { model: user, attributes: ["firstName"] },
-          { model: category, attributes: ["category"] },
-        ],
-        limit,
-        offset,
-        where: { categoryId: req.params.id },
-      });
-
-      if (data.rows.length === 0) {
-        return res.status(404).json({ errors: ["Events not found"] });
-      }
-
-      return res.status(200).json(getPagingData(data, page, limit));
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  // Make getAllEventByToday filter by Today
-  static async getAllEventsByToday(req, res, next) {
-    try {
-      const { page, size } = req.query;
-      const { limit, offset } = getPagination(page, size);
-
-      // today
-      let data = await event.findAndCountAll({
-        where: {
-          dateEvent: {
-            [Op.between]: [
-              moment().startOf("day").format(),
-              moment().endOf("day").format(),
-            ],
-          },
-        },
-        attributes: ["photoEvent", "eventDate", "eventTime", "title"],
-        include: [
-          { model: user, attributes: ["firstName"] },
-          { model: category, attributes: ["category"] },
-        ],
-        limit,
-        offset,
-        order: [["dateEvent", "ASC"]],
-      });
-
-      if (data.rows.length === 0) {
-        return res.status(404).json({ errors: ["Events not found"] });
-      }
-
-      return res.status(200).json(getPagingData(data, page, limit));
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  // Make getAllEventByTomorrow filter by tomorrow
-  static async getAllEventsByTomorrow(req, res, next) {
-    try {
-      const { page, size } = req.query;
-      const { limit, offset } = getPagination(page, size);
-
-      let a = new Date();
-      let b = a.setDate(a.getDate() + 1);
-      let c = new Date(b).setHours(0, 0, 0, 0);
-      let d = new Date(b).setHours(23, 59, 0, 0);
-
-      let data = await event.findAndCountAll({
-        where: {
-          dateEvent: {
-            [Op.between]: [moment(c).format(), moment(d).format()],
-          },
-        },
-        attributes: ["id", "photoEvent", "eventDate", "eventTime", "title"],
-        include: [
-          { model: user, attributes: ["firstName"] },
-          { model: category, attributes: ["category"] },
-        ],
-        limit,
-        offset,
-        order: [["dateEvent", "ASC"]],
-      });
-
-      if (data.rows.length === 0) {
-        return res.status(404).json({ errors: ["Events not found"] });
-      }
-
-      return res.status(200).json(getPagingData(data, page, limit));
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  // Make getAllEventByWeek filter by week
-  static async getAllEventsByWeek(req, res, next) {
-    try {
-      const { page, size } = req.query;
-      const { limit, offset } = getPagination(page, size);
-      // week
-      const where = {
-        dateEvent: {
-          [Op.between]: [
-            moment().startOf("day").format(),
-            moment().add(7, "days").format(),
-          ],
-        },
-      };
-
-      let data = await event.findAndCountAll({
-        where,
-        attributes: ["id", "photoEvent", "eventDate", "eventTime", "title"],
-        include: [
-          { model: user, attributes: ["firstName"] },
-          { model: category, attributes: ["category"] },
-        ],
-        limit,
-        offset,
-        order: [["dateEvent", "ASC"]],
-      });
-
-      if (data.rows.length === 0) {
-        return res.status(404).json({ errors: ["Events not found"] });
-      }
-
-      return res.status(200).json(getPagingData(data, page, limit));
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  // Make getAllEventByMonth filter by month
-  static async getAllEventsByMonth(req, res, next) {
-    try {
-      const { page, size } = req.query;
-      const { limit, offset } = getPagination(page, size);
-
-      // Month
-      let data = await event.findAndCountAll({
-        where: {
-          dateEvent: {
-            [Op.between]: [
-              moment().startOf("month").format(),
-              moment().endOf("month").format(),
-            ],
-          },
-        },
-        attributes: ["id", "photoEvent", "eventDate", "eventTime", "title"],
-        include: [
-          { model: user, attributes: ["firstName"] },
-          { model: category, attributes: ["category"] },
-        ],
-        limit,
-        offset,
-        order: [["dateEvent", "ASC"]],
-      });
-
-      if (data.rows.length === 0) {
-        return res.status(404).json({ errors: ["Events not found"] });
-      }
-
-      return res.status(200).json(getPagingData(data, page, limit));
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  // Make getAllEventByYear filter by year
-  static async getAllEventsByYear(req, res, next) {
-    try {
-      const { page, size } = req.query;
-      const { limit, offset } = getPagination(page, size);
-
-      // Year
-      let data = await event.findAndCountAll({
-        where: {
-          dateEvent: {
-            [Op.between]: [
-              moment().startOf("year").format(),
-              moment().endOf("year").format(),
-            ],
-          },
-        },
-        attributes: ["id", "photoEvent", "eventDate", "eventTime", "title"],
-        include: [
-          { model: user, attributes: ["firstName"] },
-          { model: category, attributes: ["category"] },
-        ],
-        limit,
-        offset,
-        order: [["dateEvent", "ASC"]],
-      });
-
-      if (data.rows.length === 0) {
-        return res.status(404).json({ errors: ["Events not found"] });
-      }
-
-      return res.status(200).json(getPagingData(data, page, limit));
-    } catch (error) {
-      next(error);
-    }
-  }
-
   // Make getDetailEvent function
   static async getDetailEvent(req, res, next) {
     try {
@@ -397,60 +340,6 @@ class Events {
 
       // send response
       return res.status(201).json({ data, komen, avg });
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  // Make getEventSortingByName function
-  static async getEventsSortingByName(req, res, next) {
-    try {
-      const { page, size } = req.query;
-      const { limit, offset } = getPagination(page, size);
-
-      let data = await event.findAndCountAll({
-        attributes: ["id", "photoEvent", "eventDate", "eventTime", "title"],
-        include: [
-          { model: user, attributes: ["firstName"] },
-          { model: category, attributes: ["category"] },
-        ],
-        limit,
-        offset,
-        order: [["title", "ASC"]],
-      });
-
-      if (data.rows.length === 0) {
-        return res.status(404).json({ errors: ["Events not found"] });
-      }
-
-      return res.status(200).json(getPagingData(data, page, limit));
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  // Make getEventSortingByDate function
-  static async getEventsSortingByDate(req, res, next) {
-    try {
-      const { page, size } = req.query;
-      const { limit, offset } = getPagination(page, size);
-
-      let data = await event.findAndCountAll({
-        attributes: ["id", "photoEvent", "eventDate", "eventTime", "title"],
-        include: [
-          { model: user, attributes: ["firstName"] },
-          { model: category, attributes: ["category"] },
-        ],
-        limit,
-        offset,
-        order: [["dateEvent", "ASC"]],
-      });
-
-      if (data.rows.length === 0) {
-        return res.status(404).json({ errors: ["Events not found"] });
-      }
-
-      return res.status(200).json(getPagingData(data, page, limit));
     } catch (error) {
       next(error);
     }
