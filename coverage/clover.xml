@@ -33,7 +33,7 @@
     <metrics statements="627" coveredstatements="270" conditionals="185" coveredconditionals="34" methods="69" coveredmethods="25" elements="881" coveredelements="329" complexity="0" loc="627" ncloc="627" packages="8" files="30" classes="30"/>
     <package name="backendteam_d">
       <metrics statements="20" coveredstatements="18" conditionals="4" coveredconditionals="3" methods="2" coveredmethods="0"/>
-      <file name="app.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/app.js">
+      <file name="app.js" path="/home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s">
         <metrics statements="20" coveredstatements="18" conditionals="4" coveredconditionals="3" methods="2" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
@@ -81,7 +81,7 @@
         <line num="14" count="0" type="stmt"/>
         <line num="15" count="0" type="cond" truecount="0" falsecount="2"/>
 =======
-      <file name="config.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/config/config.js">
+      <file name="config.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/config/config.js">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="3" count="3" type="stmt"/>
@@ -89,7 +89,7 @@
     </package>
     <package name="backendteam_d.controllers">
       <metrics statements="308" coveredstatements="62" conditionals="90" coveredconditionals="18" methods="38" coveredmethods="5"/>
-      <file name="bookmark.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/controllers/bookmark.js">
+      <file name="bookmark.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/controllers/bookmark.js">
         <metrics statements="35" coveredstatements="3" conditionals="14" coveredconditionals="0" methods="5" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
@@ -137,7 +137,7 @@
         <line num="94" count="0" type="stmt"/>
         <line num="99" count="3" type="stmt"/>
       </file>
-      <file name="commentsController.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/controllers/commentsController.js">
+      <file name="commentsController.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/controllers/commentsController.js">
         <metrics statements="32" coveredstatements="2" conditionals="10" coveredconditionals="0" methods="4" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
 >>>>>>> 0c6afeeef8658b26c5e27b641516f4057de5b67a
@@ -198,7 +198,7 @@
         <line num="124" count="0" type="stmt"/>
         <line num="129" count="3" type="stmt"/>
       </file>
-      <file name="events.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/controllers/events.js">
+      <file name="events.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/controllers/events.js">
         <metrics statements="160" coveredstatements="24" conditionals="42" coveredconditionals="8" methods="19" coveredmethods="3"/>
         <line num="2" count="3" type="stmt"/>
         <line num="5" count="3" type="stmt"/>
@@ -382,7 +382,7 @@
         <line num="647" count="0" type="stmt"/>
         <line num="652" count="3" type="stmt"/>
       </file>
-      <file name="ratingControllers.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/controllers/ratingControllers.js">
+      <file name="ratingControllers.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/controllers/ratingControllers.js">
         <metrics statements="7" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
 >>>>>>> 0c6afeeef8658b26c5e27b641516f4057de5b67a
@@ -436,7 +436,7 @@
 =======
         <line num="30" count="3" type="stmt"/>
       </file>
-      <file name="users.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/controllers/users.js">
+      <file name="users.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/controllers/users.js">
         <metrics statements="74" coveredstatements="31" conditionals="24" coveredconditionals="10" methods="9" coveredmethods="2"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
@@ -529,7 +529,7 @@
         <metrics statements="2" coveredstatements="1" conditionals="4" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
 =======
-      <file name="index.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/middlewares/errorHandler/index.js">
+      <file name="index.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/middlewares/errorHandler/index.js">
         <metrics statements="2" coveredstatements="1" conditionals="4" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
 >>>>>>> 0c6afeeef8658b26c5e27b641516f4057de5b67a
@@ -545,7 +545,7 @@
         <line num="3" count="1" type="stmt"/>
 =======
       <metrics statements="134" coveredstatements="32" conditionals="72" coveredconditionals="5" methods="7" coveredmethods="1"/>
-      <file name="authentication.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/middlewares/validators/authentication.js">
+      <file name="authentication.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/middlewares/validators/authentication.js">
         <metrics statements="11" coveredstatements="3" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="3" count="3" type="stmt"/>
@@ -570,7 +570,7 @@
 =======
         <line num="21" count="3" type="stmt"/>
       </file>
-      <file name="bookmark.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/middlewares/validators/bookmark.js">
+      <file name="bookmark.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/middlewares/validators/bookmark.js">
         <metrics statements="15" coveredstatements="3" conditionals="6" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
@@ -595,7 +595,7 @@
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
 =======
-      <file name="commentsValidator.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/middlewares/validators/commentsValidator.js">
+      <file name="commentsValidator.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/middlewares/validators/commentsValidator.js">
         <metrics statements="10" coveredstatements="2" conditionals="4" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="3" count="3" type="stmt"/>
@@ -619,7 +619,7 @@
         <line num="5" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
 =======
-      <file name="events.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/middlewares/validators/events.js">
+      <file name="events.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/middlewares/validators/events.js">
         <metrics statements="38" coveredstatements="5" conditionals="26" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
@@ -669,7 +669,7 @@
         <line num="3" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
 =======
-      <file name="ratingsValidator.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/middlewares/validators/ratingsValidator.js">
+      <file name="ratingsValidator.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/middlewares/validators/ratingsValidator.js">
         <metrics statements="20" coveredstatements="4" conditionals="12" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
@@ -706,7 +706,7 @@
         <line num="10" count="0" type="stmt"/>
         <line num="13" count="0" type="cond" truecount="0" falsecount="2"/>
 =======
-      <file name="users.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/middlewares/validators/users.js">
+      <file name="users.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/middlewares/validators/users.js">
         <metrics statements="40" coveredstatements="15" conditionals="22" coveredconditionals="5" methods="2" coveredmethods="1"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
@@ -968,7 +968,7 @@
         <line num="17" count="2" type="stmt"/>
 =======
       <metrics statements="70" coveredstatements="65" conditionals="11" coveredconditionals="6" methods="17" coveredmethods="15"/>
-      <file name="bookmark.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/models/bookmark.js">
+      <file name="bookmark.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/models/bookmark.js">
         <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="2" count="3" type="stmt"/>
         <line num="3" count="3" type="stmt"/>
@@ -978,7 +978,7 @@
         <line num="25" count="3" type="stmt"/>
         <line num="38" count="3" type="stmt"/>
       </file>
-      <file name="category.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/models/category.js">
+      <file name="category.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/models/category.js">
         <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="2" count="3" type="stmt"/>
         <line num="3" count="3" type="stmt"/>
@@ -988,7 +988,7 @@
         <line num="23" count="3" type="stmt"/>
         <line num="34" count="3" type="stmt"/>
       </file>
-      <file name="comment.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/models/comment.js">
+      <file name="comment.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/models/comment.js">
         <metrics statements="12" coveredstatements="8" conditionals="2" coveredconditionals="0" methods="4" coveredmethods="2"/>
         <line num="2" count="3" type="stmt"/>
         <line num="3" count="3" type="stmt"/>
@@ -1003,7 +1003,7 @@
         <line num="47" count="0" type="stmt"/>
         <line num="55" count="3" type="stmt"/>
       </file>
-      <file name="event.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/models/event.js">
+      <file name="event.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/models/event.js">
         <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="2" count="3" type="stmt"/>
         <line num="3" count="3" type="stmt"/>
@@ -1015,7 +1015,7 @@
         <line num="30" count="3" type="stmt"/>
         <line num="52" count="3" type="stmt"/>
       </file>
-      <file name="index.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/models/index.js">
+      <file name="index.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/models/index.js">
         <metrics statements="20" coveredstatements="19" conditionals="9" coveredconditionals="6" methods="3" coveredmethods="3"/>
         <line num="3" count="3" type="stmt"/>
         <line num="4" count="3" type="stmt"/>
@@ -1038,7 +1038,7 @@
         <line num="35" count="3" type="stmt"/>
         <line num="37" count="3" type="stmt"/>
       </file>
-      <file name="rating.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/models/rating.js">
+      <file name="rating.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/models/rating.js">
         <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="2" count="3" type="stmt"/>
         <line num="3" count="3" type="stmt"/>
@@ -1048,7 +1048,7 @@
         <line num="25" count="3" type="stmt"/>
         <line num="37" count="3" type="stmt"/>
       </file>
-      <file name="user.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/models/user.js">
+      <file name="user.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/models/user.js">
         <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="2" count="3" type="stmt"/>
         <line num="3" count="3" type="stmt"/>
@@ -1062,7 +1062,7 @@
     </package>
     <package name="backendteam_d.routes">
       <metrics statements="72" coveredstatements="72" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="bookmark.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/routes/bookmark.js">
+      <file name="bookmark.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/routes/bookmark.js">
         <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="2" count="3" type="stmt"/>
         <line num="9" count="3" type="stmt"/>
@@ -1073,7 +1073,7 @@
         <line num="24" count="3" type="stmt"/>
         <line num="27" count="3" type="stmt"/>
       </file>
-      <file name="commentsRouter.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/routes/commentsRouter.js">
+      <file name="commentsRouter.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/routes/commentsRouter.js">
         <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="5" count="3" type="stmt"/>
@@ -1084,7 +1084,7 @@
         <line num="18" count="3" type="stmt"/>
         <line num="20" count="3" type="stmt"/>
       </file>
-      <file name="events.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/routes/events.js">
+      <file name="events.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/routes/events.js">
         <metrics statements="15" coveredstatements="15" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="16" count="3" type="stmt"/>
@@ -1102,7 +1102,7 @@
         <line num="41" count="3" type="stmt"/>
         <line num="44" count="3" type="stmt"/>
       </file>
-      <file name="index.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/routes/index.js">
+      <file name="index.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/routes/index.js">
         <metrics statements="26" coveredstatements="26" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
@@ -1131,7 +1131,7 @@
         <line num="40" count="3" type="stmt"/>
         <line num="42" count="3" type="stmt"/>
       </file>
-      <file name="ratingsRouter.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/routes/ratingsRouter.js">
+      <file name="ratingsRouter.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.se/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/routes/ratingsRouter.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="5" count="3" type="stmt"/>
@@ -1140,7 +1140,7 @@
         <line num="11" count="3" type="stmt"/>
         <line num="13" count="3" type="stmt"/>
       </file>
-      <file name="users.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/routes/users.js">
+      <file name="users.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/routes/users.js">
         <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="6" count="3" type="stmt"/>
@@ -1155,7 +1155,7 @@
     </package>
     <package name="backendteam_d.utils">
       <metrics statements="19" coveredstatements="18" conditionals="4" coveredconditionals="2" methods="4" coveredmethods="4"/>
-      <file name="bcrypt.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/utils/bcrypt.js">
+      <file name="bcrypt.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/utils/bcrypt.js">
         <metrics statements="11" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="1" count="3" type="stmt"/>
         <line num="3" count="3" type="stmt"/>
@@ -1169,13 +1169,13 @@
         <line num="15" count="2" type="stmt"/>
         <line num="18" count="3" type="stmt"/>
       </file>
-      <file name="index.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/utils/index.js">
+      <file name="index.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/utils/index.js">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
         <line num="4" count="3" type="stmt"/>
       </file>
-      <file name="jwt.js" path="/Users/dena/GlintsBootcamp/miniProject backup 2/backendteam_d/utils/jwt.js">
+      <file name="jwt.js" path="/Users//home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s/GlintsBootcamp/miniProject backup 2/backendteam_d/utils/jwt.js">
         <metrics statements="5" coveredstatements="5" conditionals="4" coveredconditionals="2" methods="2" coveredmethods="2"/>
         <line num="2" count="4" type="stmt"/>
         <line num="4" count="4" type="stmt"/>

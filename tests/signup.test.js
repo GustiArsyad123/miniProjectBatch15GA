@@ -5,10 +5,11 @@ const { encodePin } = require("../utils");
 
 beforeAll(async () => {
   let users = await user.create({
-    firstName: "Dena",
-    lastName: "Eka",
-    email: "de@gmail.com",
-    password: "password",
+    firstName:
+      "/home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s",
+    lastName: "Gusti Arsyad",
+    email: "gusti@gmail.com",
+    password: "oke12345",
   });
 });
 afterAll((done) => {
@@ -27,9 +28,11 @@ describe("user signup", () => {
     it("Should return 201 and obj (user)", (done) => {
       const hashPassword = encodePin("Rahasiaaa1@");
       let input = {
-        firstName: "Dena",
+        firstName:
+          "/home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s",
         lastName: "Eka",
-        email: "dena@gmail.com",
+        email:
+          "/home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s@gmail.com",
         password: hashPassword,
         confirmPassword: hashPassword,
       };
@@ -41,9 +44,11 @@ describe("user signup", () => {
           expect(status).toBe(201);
           expect(body).toHaveProperty("data");
           expect(body.data).toMatchObject({
-            firstName: "Dena",
+            firstName:
+              "/home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s",
             lastName: "Eka",
-            email: "dena@gmail.com",
+            email:
+              "/home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s@gmail.com",
           });
           done();
         })
@@ -56,7 +61,8 @@ describe("user signup", () => {
   describe("Email already registered", () => {
     it("Should return 400 and error messages", (done) => {
       let input = {
-        firstName: "Dena",
+        firstName:
+          "/home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s",
         lastName: "Eka",
         email: "de@gmail.com",
         password: "Rahasiaaa1@",

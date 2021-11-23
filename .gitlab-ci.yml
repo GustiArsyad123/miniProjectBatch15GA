@@ -1,48 +1,8 @@
-<<<<<<< HEAD
-# We will try to use machine (Linux) that includes node.js (temporary)
-image: node:16-alpine
-
-cache:
-  paths:
-    - node_modules/
+image: node:16.x
 
 stages:
   - test
-  - staging
-
-test:
-  type: test
-  stage: test
-  services:
-    - postgres:14-alpine # Add postgres service in Gitlab to test the code
-  script:
-    - npm i
-    #- npm install
-    - "npm test"
-
-    #- npx sequelize db:create
-    #- npx sequelize db:migrate
-    # - npx sequelize db:seed:all
-    #- npm run test # It will run test in Gitlab before it upload to heroku
-  only:
-    - staging
-
-staging:
-  type: deploy
-  stage: staging
-  image: ruby:3 # Using ruby image to deploy to heroku 
-  script:
-    # dpl is package to deploy to heroku
-    - gem install dpl
-    - dpl --provider=heroku --app=$HEROKU_APP --api-key=$HEROKU_API_KEY
-  only:
-    - staging
-=======
-image: node:14.x
-
-stages:
-  - test
-  - production
+  - gusti
 
 test:
   stage: test
@@ -50,14 +10,13 @@ test:
     - npm install
     - "npm test"
 
-production:
+gusti:
   type: deploy
-  stage: production
+  stage: gusti
   image: ruby:3
   script:
-    - brew install brew-gem
-    - brew gem install dpl
-    - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
+    - apt-get update -yq
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APP_GUSTI --api-key=$HEROKU_API_KEY_GUSTI
   only:
-    - production
->>>>>>> 0c6afeeef8658b26c5e27b641516f4057de5b67a
+    - gusti

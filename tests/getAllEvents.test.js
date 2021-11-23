@@ -6,10 +6,11 @@ const faker = require("faker");
 beforeAll(async () => {
   let users = await user.create({
     id: 5,
-    firstName: "Dena",
-    lastName: "Eka",
-    email: "na@yahoo.com",
-    password: "abcd",
+    firstName:
+      "/home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s",
+    lastName: "Gusti Arsyad",
+    email: "arsyad@yahoo.com",
+    password: "12345",
   });
 
   let categories = await category.create({
