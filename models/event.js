@@ -32,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       title: DataTypes.STRING,
       photoEvent: DataTypes.STRING,
       dateEvent: DataTypes.DATEONLY,
+      eventDate: DataTypes.STRING,
       eventTime: DataTypes.STRING,
       detail: DataTypes.STRING(600),
       linkMeet: DataTypes.STRING,
@@ -47,5 +48,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "event",
     }
   );
+
   return event;
 };

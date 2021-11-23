@@ -44,40 +44,47 @@ exports.createOrUpadateUserValidator = async (req, res, next) => {
       );
     }
 
-    // // Check for the image of Users was upload or not
-    // if (!(req.files && req.files.image)) {
-    //   errors.push("Please upload the image");
-    // } else if (req.files.image) {
-    //   // If image was uploaded the photo user
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
 
-    //   // req.files.photoUser is come from key (file) in postman
-    //   const file = req.files.image;
+exports.UpadateUserValidator = async (req, res, next) => {
+  try {
+    const errors = [];
 
-    //   // Make sure image is photo
-    //   if (!file.mimetype.startsWith("image")) {
-    //     errors.push("File must be an image");
-    //   }
+    if (!(req.files && req.files.image)) {
+      errors.push("Please upload the image");
+    } else if (req.files.image) {
+      // req.files.photoUser is come from key (file) in postman
+      const file = req.files.image;
 
-    //   // Check file size (max 1MB)
-    //   if (file.size > 1000000) {
-    //     errors.push("Image must be less than 1MB");
-    //   }
+      // Make sure image is photo
+      if (!file.mimetype.startsWith("image")) {
+        errors.push("File must be an image");
+      }
 
-    //   // Create custom filename
-    //   let fileName = crypto.randomBytes(16).toString("hex");
+      // Check file size (max 1MB)
+      if (file.size > 1000000) {
+        errors.push("Image must be less than 1MB");
+      }
 
-    //   // Rename the file
-    //   file.name = `${fileName}${path.parse(file.name).ext}`;
+      // Create custom filename
+      let fileName = crypto.randomBytes(16).toString("hex");
 
-    //   // Make file.mv to promise
-    //   const move = promisify(file.mv);
+      // Rename the file
+      file.name = `${fileName}${path.parse(file.name).ext}`;
 
-    //   // Upload image to /public/images
-    //   await move(`./public/images/users/${file.name}`);
+      // Make file.mv to promise
+      const move = promisify(file.mv);
 
-    //   // assign req.body.image with file.name
-    //   req.body.image = `https://timdevent.herokuapp.com/images/speaker/users/${file.name}`;
-    // }
+      // Upload image to /public/images
+      await move(`./public/images/users/${file.name}`);
+
+      // assign req.body.image with file.name
+      req.body.image = file.name;
+    }
 
     if (errors.length > 0) {
       return res.status(400).json({ errors: errors });
@@ -85,7 +92,6 @@ exports.createOrUpadateUserValidator = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };

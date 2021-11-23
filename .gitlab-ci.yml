@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # We will try to use machine (Linux) that includes node.js (temporary)
 image: node:16-alpine
 
@@ -36,3 +37,27 @@ staging:
     - dpl --provider=heroku --app=$HEROKU_APP --api-key=$HEROKU_API_KEY
   only:
     - staging
+=======
+image: node:14.x
+
+stages:
+  - test
+  - production
+
+test:
+  stage: test
+  script:
+    - npm install
+    - "npm test"
+
+production:
+  type: deploy
+  stage: production
+  image: ruby:3
+  script:
+    - brew install brew-gem
+    - brew gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
+  only:
+    - production
+>>>>>>> 0c6afeeef8658b26c5e27b641516f4057de5b67a
