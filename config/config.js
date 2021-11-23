@@ -24,11 +24,10 @@ module.exports = {
     timezone: "+07:00", // for writing to database
   },
   production: {
-    username: "pglranbneidtaj",
-    password:
-      "859d93132a1cdba1b59f803031235313f324e7c448a8e3d5105df2ba42995e4f",
-    database: "d3e64ki6lhtad8",
-    host: "ec2-34-198-189-252.compute-1.amazonaws.com",
+    username: "sekwfwwf ",
+    password: "3ega02l1jwS68gkobERhQmgvwvU2RLCC",
+    database: "sekwfwwf",
+    host: "john.db.elephantsql.com",
     dialect: "postgres",
     dialectOptions: {
       ssl: {
