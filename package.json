@@ -8,12 +8,8 @@
     "test": "set NODE_ENV=test&& jest --detectOpenHandles --forceExit --coverage"
   },
   "engines": {
-<<<<<<< HEAD
     "node": "16.13.0",
     "npm": "8.1.0"
-=======
-    "node": "14.x"
->>>>>>> 0c6afeeef8658b26c5e27b641516f4057de5b67a
   },
   "repository": {
     "type": "git",
