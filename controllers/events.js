@@ -7,12 +7,12 @@ const { Op } = require("sequelize");
 // Import moment
 const moment = require("moment");
 
-const cloudinary = require("cloudinary");
-cloudinary.config({
-  cloud_name: "drta3xh4e",
-  api_key: process.env.SECRET_KEY_CLOUDINARY,
-  api_secret: process.env.SECRET_API_CLOUDINARY,
-});
+// const cloudinary = require("cloudinary");
+// cloudinary.config({
+//   cloud_name: "drta3xh4e",
+//   api_key: process.env.SECRET_KEY_CLOUDINARY,
+//   api_secret: process.env.SECRET_API_CLOUDINARY,
+// });
 
 // Make pagination
 const getPagination = (page, size) => {

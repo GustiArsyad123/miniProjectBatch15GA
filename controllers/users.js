@@ -2,12 +2,12 @@ const { user, event, category } = require("../models");
 const { generateToken, encodePin, compare } = require("../utils");
 const validator = require("validator");
 const faker = require("faker");
-const cloudinary = require("cloudinary");
-cloudinary.config({
-  cloud_name: "drta3xh4e",
-  api_key: "699989283326316",
-  api_secret: "urll8J8oczRkKJlCxHkLv6yQv9g",
-});
+// const cloudinary = require("cloudinary");
+// cloudinary.config({
+//   cloud_name: "drta3xh4e",
+//   api_key: "699989283326316",
+//   api_secret: "urll8J8oczRkKJlCxHkLv6yQv9g",
+// });
 
 class Users {
   // make create user function
