@@ -6,9 +6,9 @@ const { encodePin } = require("../utils");
 beforeAll(async () => {
   const hashPassword = encodePin("rahasia");
   let users = await user.create({
-    firstName: "gusti",
-    lastName: "arsyad",
-    email: "gusti@gmail.com",
+    firstName: "Gusti",
+    lastName: "Arsyad",
+    email: "selamat@gmail.com",
     password: hashPassword,
   });
 });
@@ -27,7 +27,7 @@ describe("User try to login:", () => {
   describe("Success:", () => {
     it("Should return 200 and access_token", (done) => {
       let input = {
-        email: "gusti@gmail.com",
+        email: "selamat@gmail.com",
         password: "rahasia",
       };
       request(app)
@@ -72,7 +72,7 @@ describe("User try to login:", () => {
     describe("Wrong password", () => {
       it("Should return 400 and 'Please input password correctly!'", (done) => {
         let input = {
-          email: "gusti@gmail.com",
+          email: "selamat@gmail.com",
           password: "rafsdhasia",
         };
         request(app)
