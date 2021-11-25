@@ -1,9 +1,6 @@
 #test CI CD
 image: node:16.x
 
-before_script:
-  - gem install dpl
-
 stages:
   - test
   - gusti
@@ -19,6 +16,8 @@ gusti:
   stage: gusti
   image: ruby:3
   script:
+    - brew install brew-gem
+    - brew gem install dpl
     - dpl --provider=heroku --app=$HEROKU_APP_GUSTI --api-key=$HEROKU_API_KEY_GUSTI
   only:
     - gusti
