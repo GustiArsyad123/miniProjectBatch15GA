@@ -9,7 +9,7 @@ test:
   stage: test
   script:
     - npm install
-    - "npm test"
+    - "NODE_ENV=development npm test"
 
 gusti:
   type: deploy
