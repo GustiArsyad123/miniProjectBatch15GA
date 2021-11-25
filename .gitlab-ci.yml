@@ -1,4 +1,4 @@
-#test CI CD
+#test CI CD ok
 image: node:16.x
 
 stages:
