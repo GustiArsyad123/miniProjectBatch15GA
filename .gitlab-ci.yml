@@ -1,5 +1,5 @@
 # We will try to use machine (Linux) that includes node.js (temporary)
-image: node:14-alpine
+image: node:latest
 
 stages:
   - test
