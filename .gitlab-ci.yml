@@ -1,25 +1,31 @@
+# We will try to use machine (Linux) that includes node.js (temporary)
 image: node:latest
 
-before_script:
-    - apt-get update -qy
-    - apt-get install -y ruby-dev
-    - gem install dpl
-
 stages:
-    - test
-    - staging
+  - test
+  - production
 
 test:
-    stage: test
-    script:
-        - npm install
-        - npm test
+  type: test
+  stage: test
+  services:
+    - mysql:latest # Add postgres service in Gitlab to test the code
+  script:
+    - npm i
+    # - npx sequelize db:create
+    # - npx sequelize db:migrate
+    # - npx sequelize db:seed:all
+    - npm run test # It will run test in Gitlab before it upload to heroku
+  only:
+    - sagipul-tugas
 
-staging:
-    type: deploy
-    stage: staging
-    image: ruby:latest
-    script:
-        - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
-    only:
-        - sagipul-tugas
+production:
+  type: deploy
+  stage: production
+  image: ruby:3 # Using ruby image to deploy to heroku
+  script:
+    # dpl is package to deploy to heroku
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APP_AGIF --api-key=$HEROKU_API_KEY
+  only:
+    - sagipul-tugas
