@@ -6,7 +6,7 @@ const cors = require("cors");
 const router = require("./routes/index");
 
 // Import error Handler
-const errorHandler = require("./middlewares/errorHandler");
+const errorHandler = require("./middlewares/errorHandler/index");
 
 const corsOptions = {
   origin: "*",
