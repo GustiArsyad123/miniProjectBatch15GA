@@ -1,33 +1,31 @@
-image: node:latest
+# We will try to use machine (Linux) that includes node.js (temporary)
+image: node:14-alpine
 
 stages:
   - test
-  - production
+  - staging
 
 test:
+  type: test
   stage: test
-  # services:
-  #   - postgres:12.2-alpine
-
-  # variables:
-  #   POSTGRES_DB: $gerrympa_test
-  #   POSTGRES_USER: $postgres
-  #   POSTGRES_PASSWORD: $Bantenku1
-  #   POSTGRES_HOST_AUTH_METHOD: trust
-
+  services:
+    - mysql:latest # Add postgres service in Gitlab to test the code
   script:
-    - npm install
-    # - npx sequelize-cli db:create
-    # - npx sequelize-cli db:migrate
-    - "npm test"
-production:
+    - npm i
+    # - npx sequelize db:create
+    # - npx sequelize db:migrate
+    # - npx sequelize db:seed:all
+    - npm run test # It will run test in Gitlab before it upload to heroku
+  only:
+    - sagipul-tugas
+
+staging:
   type: deploy
-  stage: production
-  image: ruby:3 # Using ruby image to deploy to heroku
+  stage: staging
+  image: ruby:3
   script:
     # dpl is package to deploy to heroku
     - gem install dpl
-    - dpl --provider=heroku --app=$HEROKU_APP --api-key=$HEROKU_API_KEY
+    - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
   only:
-    - production
-# vv
+    - sagipul-tugas
