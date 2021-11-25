@@ -1,5 +1,5 @@
 # We will try to use machine (Linux) that includes node.js (temporary)
-image: node:14-alpine
+# image: node:14-alpine
 
 stages:
   - test
@@ -22,10 +22,27 @@ test:
 staging:
   type: deploy
   stage: staging
-  image: ruby:3 # Using ruby image to deploy to heroku
+  # image: ruby:3 
   script:
-    # dpl is package to deploy to heroku
-    - gem install dpl
-    - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
+    - cp -r -u * .sequelizerc $PROJECT_DIR
+    - cd $PROJECT_DIR
+    - echo "POSTGRES_USERNAME"=$MYSQL_USERNAME > .env.production
+    - echo "POSTGRES_PASSWORD"=$MYSQL_PASSWORD >> .env.production
+    - echo "POSTGRES_DATABASE"=$MYSQL_DATABASE_PRODUCTION >> .env.production
+    - echo "POSTGRES_HOST"=$MYSQL_HOST >> .env.production
+    - echo "S3_ACCESS_KEY"=$S3_ACCESS_KEY >> .env.production
+    - echo "S3_SECRET_KEY"=$S3_SECRET_KEY >> .env.production
+    - echo "S3_BUCKET"=$S3_BUCKET_PRODUCTION >> .env.production
+    - echo "S3_URL"=$S3_URL_PRODUCTION >> .env.production
+    - echo "JWT_SECRET"=$JWT_SECRET >> .env.production
+    - echo "MIDTRANS_SERVER_KEY"=$MIDTRANS_SERVER_KEY >> .env.production
+    # - yarn install
+    - npm i
+    - NODE_ENV=production sequelize db:create # create database test
+    - NODE_ENV=production sequelize db:migrate # create migration
+    # Restart NodeJS service
+    - npm run stop
+    - npm run start
+
   only:
     - sagipul-tugas
