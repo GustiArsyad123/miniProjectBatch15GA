@@ -16,7 +16,6 @@ gusti:
   stage: gusti
   image: ruby:3
   script:
-    - apt-get update -yq
     - gem install dpl
     - dpl --provider=heroku --app=$HEROKU_APP_GUSTI --api-key=$HEROKU_API_KEY_GUSTI
   only:
