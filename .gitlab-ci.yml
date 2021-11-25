@@ -9,7 +9,13 @@ test:
   stage: test
   script:
     - npm install
+    - "npx sequelize db:create"
+    - "npx sequelize db:migrate"
+    - "NODE_ENV=development npx sequelize db:seed:all"
     - "NODE_ENV=development npm test"
+    only:
+    - test
+
 
 gusti:
   type: deploy
