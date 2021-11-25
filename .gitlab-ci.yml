@@ -3,7 +3,7 @@ image: node:latest
 
 stages:
   - test
-  - production
+  - staging
 
 test:
   type: test
@@ -19,13 +19,13 @@ test:
   only:
     - sagipul-tugas
 
-production:
+staging:
   type: deploy
-  stage: production
+  stage: staging
   image: ruby:3 # Using ruby image to deploy to heroku
   script:
     # dpl is package to deploy to heroku
     - gem install dpl
-    - dpl --provider=heroku --app=$HEROKU_APP_AGIF --api-key=$HEROKU_API_KEY
+    - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
   only:
     - sagipul-tugas
