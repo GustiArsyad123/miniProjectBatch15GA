@@ -1,5 +1,5 @@
 # We will try to use machine (Linux) that includes node.js (temporary)
-image: node:latest
+image: node:14-alpine
 
 stages:
   - test
@@ -22,7 +22,7 @@ test:
 staging:
   type: deploy
   stage: staging
-  image: ruby:latest # Using ruby image to deploy to heroku
+  image: ruby:3 # Using ruby image to deploy to heroku
   script:
     # dpl is package to deploy to heroku
     - gem install dpl
