@@ -25,7 +25,9 @@ staging:
   image: ruby:3 # Using ruby image to deploy to heroku
   script:
     # dpl is package to deploy to heroku
-    - gem install bundler
+    - apt-get update -yq
+    - apt-get install -y ruby-dev
+    - gem install dpl
     - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
   only:
     - sagipul-tugas
