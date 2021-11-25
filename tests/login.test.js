@@ -6,11 +6,9 @@ const { encodePin } = require("../utils");
 beforeAll(async () => {
   const hashPassword = encodePin("rahasia");
   let users = await user.create({
-    firstName:
-      "/home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s",
-    lastName: "Eka",
-    email:
-      "/home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s@gmail.com",
+    firstName: "gusti",
+    lastName: "arsyad",
+    email: "gusti@gmail.com",
     password: hashPassword,
   });
 });
@@ -29,8 +27,7 @@ describe("User try to login:", () => {
   describe("Success:", () => {
     it("Should return 200 and access_token", (done) => {
       let input = {
-        email:
-          "/home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s@gmail.com",
+        email: "gusti@gmail.com",
         password: "rahasia",
       };
       request(app)
@@ -75,8 +72,7 @@ describe("User try to login:", () => {
     describe("Wrong password", () => {
       it("Should return 400 and 'Please input password correctly!'", (done) => {
         let input = {
-          email:
-            "/home/cryptography/Documents/Glints Academy Batch 15/Back-End/miniProject/mini project fix/backendteam_d/app.s@gmail.com",
+          email: "gusti@gmail.com",
           password: "rafsdhasia",
         };
         request(app)
