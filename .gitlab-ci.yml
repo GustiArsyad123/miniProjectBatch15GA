@@ -1,63 +1,31 @@
-<<<<<<< HEAD
 # We will try to use machine (Linux) that includes node.js (temporary)
 image: node:16-alpine
-
-cache:
-  paths:
-    - node_modules/
-
-stages:
-  - test
-  - staging
-
-test:
-  type: test
-  stage: test
-  services:
-    - postgres:14-alpine # Add postgres service in Gitlab to test the code
-  script:
-    - npm i
-    #- npm install
-    - "npm test"
-
-    #- npx sequelize db:create
-    #- npx sequelize db:migrate
-    # - npx sequelize db:seed:all
-    #- npm run test # It will run test in Gitlab before it upload to heroku
-  only:
-    - staging
-
-staging:
-  type: deploy
-  stage: staging
-  image: ruby:3 # Using ruby image to deploy to heroku 
-  script:
-    # dpl is package to deploy to heroku
-    - gem install dpl
-    - dpl --provider=heroku --app=$HEROKU_APP --api-key=$HEROKU_API_KEY
-  only:
-    - staging
-=======
-image: node:14.x
 
 stages:
   - test
   - production
 
 test:
+  type: test
   stage: test
+  services:
+    - mysql:latest # Add postgres service in Gitlab to test the code
   script:
-    - npm install
-    - "npm test"
+    - npm i
+    - npx sequelize db:create
+    - npx sequelize db:migrate
+    # - npx sequelize db:seed:all
+    - npm run test # It will run test in Gitlab before it upload to heroku
+  only:
+    - sagipul-tugas
 
 production:
   type: deploy
   stage: production
-  image: ruby:3
+  image: ruby:3 # Using ruby image to deploy to heroku
   script:
-    - brew install brew-gem
-    - brew gem install dpl
-    - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
+    # dpl is package to deploy to heroku
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APP_AGIF --api-key=$HEROKU_API_KEY
   only:
-    - production
->>>>>>> 0c6afeeef8658b26c5e27b641516f4057de5b67a
+    - sagipul-tugas
