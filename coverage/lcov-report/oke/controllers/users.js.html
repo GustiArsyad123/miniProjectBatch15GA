@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">29.72% </span>
+                <span class="strong">36.11% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>22/74</span>
+                <span class='fraction'>26/72</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">37.5% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/24</span>
+                <span class='fraction'>9/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">11.11% </span>
+                <span class="strong">22.22% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/9</span>
+                <span class='fraction'>2/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">29.72% </span>
+                <span class="strong">36.11% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>22/74</span>
+                <span class='fraction'>26/72</span>
             </div>
         
             
@@ -316,12 +316,10 @@
 <a name='L257'></a><a href='#L257'>257</a>
 <a name='L258'></a><a href='#L258'>258</a>
 <a name='L259'></a><a href='#L259'>259</a>
-<a name='L260'></a><a href='#L260'>260</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L260'></a><a href='#L260'>260</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -330,17 +328,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -574,32 +574,32 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const { user, event, category } = require("../models");
 const { generateToken, encodePin, compare } = require("../utils");
 const validator = require("validator");
 const faker = require("faker");
-const cloudinary = require("cloudinary");
-cloudinary.config({
-  cloud_name: "drta3xh4e",
-  api_key: "699989283326316",
-  api_secret: "urll8J8oczRkKJlCxHkLv6yQv9g",
-});
+// const cloudinary = require("cloudinary");
+// cloudinary.config({
+//   cloud_name: "drta3xh4e",
+//   api_key: "699989283326316",
+//   api_secret: "urll8J8oczRkKJlCxHkLv6yQv9g",
+// });
 &nbsp;
 class Users {
   // make create user function
-<span class="fstat-no" title="function not covered" >  st</span>atic async createUser(req, res, next) {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-      const { firstName, lastName, email, password, image } = <span class="cstat-no" title="statement not covered" >req.body;</span>
-      const hashPassword = <span class="cstat-no" title="statement not covered" >encodePin(password);</span>
+  static async createUser(req, res, next) {
+    try {
+      const { firstName, lastName, email, password, image } = req.body;
+      const hashPassword = encodePin(password);
 &nbsp;
       // Find unique email
-      const findEmail = <span class="cstat-no" title="statement not covered" >await user.findOne({</span>
+      const findEmail = await user.findOne({
         where: { email },
       });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      if (findEmail) {</span>
-<span class="cstat-no" title="statement not covered" >        return res.status(400).json({</span>
+      if (findEmail) {
+        return res.status(400).json({
           status: 400,
           message: "Email already registered!",
         });
@@ -841,7 +841,7 @@ module.exports = Users;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu Nov 25 2021 22:07:21 GMT+0800 (Central Indonesia Time)
+                at Thu Nov 25 2021 23:24:44 GMT+0800 (Central Indonesia Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>

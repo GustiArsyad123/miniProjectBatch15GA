@@ -9,10 +9,18 @@ test:
   type: test
   stage: test
   services:
-    - postgres:14-alpine
-  script:
+    - postgres:latest
+
+variables:
+    RAILS_ENV: test
+    POSTGRES_DB: sekwfwwf
+    POSTGRES_USER: sekwfwwf
+    POSTGRES_PASSWORD: 3ega02l1jwS68gkobERhQmgvwvU2RLCC
+    POSTGRES_HOST_AUTH_METHOD: trust
+    DATABASE_URL: "postgres://sekwfwwf:3ega02l1jwS68gkobERhQmgvwvU2RLCC@john.db.elephantsql.com/sekwfwwf"
+script:
     - npm install
-    - "NODE_ENV=development npm test"
+    - npm run test
   only:
     - test
 
