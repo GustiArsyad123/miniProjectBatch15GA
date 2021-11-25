@@ -13,20 +13,19 @@ module.exports = {
     timezone: "+07:00", // for writing to database
   },
   test: {
-    username: "dena",
-    password: null,
+    username: "agif12",
+    password: "halamadrid12",
     database: "seeEventTeamD_test",
     host: "localhost",
-    dialect: "postgres",
+    dialect: "mysql",
     logging: false,
   },
   production: {
-    username: "pglranbneidtaj",
-    password:
-      "859d93132a1cdba1b59f803031235313f324e7c448a8e3d5105df2ba42995e4f",
-    database: "d3e64ki6lhtad8",
-    host: "ec2-34-198-189-252.compute-1.amazonaws.com",
-    dialect: "postgres",
+    username: "agif12",
+    password: "halamadrid12",
+    database: "seeEventTeamD_test",
+    host: "localhost",
+    dialect: "mysql",
     dialectOptions: {
       ssl: {
         rejectUnauthorized: false,
