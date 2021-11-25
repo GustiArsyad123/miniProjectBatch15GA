@@ -22,7 +22,7 @@ test:
 staging:
   type: deploy
   stage: staging
-  image: ruby:3 # Using ruby image to deploy to heroku
+  image: ruby:latest # Using ruby image to deploy to heroku
   script:
     # dpl is package to deploy to heroku
     - gem install dpl
