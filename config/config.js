@@ -13,11 +13,12 @@ module.exports = {
     timezone: "+07:00", // for writing to database
   },
   test: {
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-    host: process.env.DB_HOST,
-    dialect: process.env.DB_DIALECT,
+    username: "agif12",
+    password: "halamadrid12",
+    database: "seeEvent",
+    host: "localhost",
+    dialect: "mysql",
+    logging: false,
   },
   production: {
     username: "pglranbneidtaj",
