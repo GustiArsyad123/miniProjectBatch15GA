@@ -2,7 +2,6 @@
 image: node:16.x
 
 before_script:
-  - apt-get update -qy
   - gem install dpl
 
 stages:
