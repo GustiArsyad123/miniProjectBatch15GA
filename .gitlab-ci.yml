@@ -3,7 +3,7 @@ image: node:16.x
 
 stages:
   - test
-  - gusti
+  - gusti_arsyad
 
 test:
   stage: test
@@ -11,13 +11,13 @@ test:
     - npm install
     - "npm test"
 
-gusti:
+gusti_arsyad:
   type: deploy
-  stage: gusti
+  stage: gusti_arsyad
   image: ruby:3
   script:
     - apt-get update -yq
     - gem install dpl
     - dpl --provider=heroku --app=$HEROKU_APP_GUSTI --api-key=$HEROKU_API_KEY_GUSTI
   only:
-    - gusti
+    - gusti_arsyad
