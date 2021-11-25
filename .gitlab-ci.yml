@@ -1,48 +1,33 @@
-# We will try to use machine (Linux) that includes node.js (temporary)
-# image: node:14-alpine
+image: node:latest
 
 stages:
   - test
-  - staging
+  - production
 
 test:
-  type: test
   stage: test
-  services:
-    - mysql:latest # Add postgres service in Gitlab to test the code
-  script:
-    - npm i
-    # - npx sequelize db:create
-    # - npx sequelize db:migrate
-    # - npx sequelize db:seed:all
-    - npm run test # It will run test in Gitlab before it upload to heroku
-  only:
-    - sagipul-tugas
+  # services:
+  #   - postgres:12.2-alpine
 
-staging:
+  # variables:
+  #   POSTGRES_DB: $gerrympa_test
+  #   POSTGRES_USER: $postgres
+  #   POSTGRES_PASSWORD: $Bantenku1
+  #   POSTGRES_HOST_AUTH_METHOD: trust
+
+  script:
+    - npm install
+    # - npx sequelize-cli db:create
+    # - npx sequelize-cli db:migrate
+    - "npm test"
+production:
   type: deploy
-  stage: staging
-  # image: ruby:3 
+  stage: production
+  image: ruby:3 # Using ruby image to deploy to heroku
   script:
-    - cp -r -u * .sequelizerc $PROJECT_DIR
-    - cd $PROJECT_DIR
-    - echo "POSTGRES_USERNAME"=$MYSQL_USERNAME > .env.production
-    - echo "POSTGRES_PASSWORD"=$MYSQL_PASSWORD >> .env.production
-    - echo "POSTGRES_DATABASE"=$MYSQL_DATABASE_PRODUCTION >> .env.production
-    - echo "POSTGRES_HOST"=$MYSQL_HOST >> .env.production
-    - echo "S3_ACCESS_KEY"=$S3_ACCESS_KEY >> .env.production
-    - echo "S3_SECRET_KEY"=$S3_SECRET_KEY >> .env.production
-    - echo "S3_BUCKET"=$S3_BUCKET_PRODUCTION >> .env.production
-    - echo "S3_URL"=$S3_URL_PRODUCTION >> .env.production
-    - echo "JWT_SECRET"=$JWT_SECRET >> .env.production
-    - echo "MIDTRANS_SERVER_KEY"=$MIDTRANS_SERVER_KEY >> .env.production
-    # - yarn install
-    - npm i
-    - NODE_ENV=production sequelize db:create # create database test
-    - NODE_ENV=production sequelize db:migrate # create migration
-    # Restart NodeJS service
-    - npm run stop
-    - npm run start
-
+    # dpl is package to deploy to heroku
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APP --api-key=$HEROKU_API_KEY
   only:
-    - sagipul-tugas
+    - production
+# vv
