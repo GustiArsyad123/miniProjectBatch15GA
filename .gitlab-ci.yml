@@ -6,13 +6,15 @@ stages:
   - gusti
 
 test:
+  type: test
   stage: test
+  services:
+    - postgres:14-alpine
   script:
     - npm install
     - "NODE_ENV=development npm test"
-    only:
+  only:
     - test
-
 
 gusti:
   type: deploy
