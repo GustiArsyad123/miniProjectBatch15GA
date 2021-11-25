@@ -14,7 +14,7 @@ test:
     - npm i
     - npx sequelize db:create
     - npx sequelize db:migrate
-    - npx sequelize db:seed:all
+    # - npx sequelize db:seed:all
     - npm run test # It will run test in Gitlab before it upload to heroku
   only:
     - sagipul-tugas
