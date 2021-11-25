@@ -9,10 +9,10 @@ test:
   stage: test
   script:
     - npm install
-    - "NODE_ENV=development npx sequelize db:create"
-    - "NODE_ENV=development npx sequelize db:migrate"
-    - "NODE_ENV=development npx sequelize db:seed:all"
-    - "NODE_ENV=development npm test"
+    - NODE_ENV=development npx sequelize db:create
+    - NODE_ENV=development npx sequelize db:migrate
+    - NODE_ENV=development npx sequelize db:seed:all
+    - NODE_ENV=development npm test
     only:
     - test
 
