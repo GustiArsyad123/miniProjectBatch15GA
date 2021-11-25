@@ -23,7 +23,7 @@ module.exports = {
     },
     timezone: "+07:00", // for writing to database
   },
-  production: {
+  gusti: {
     username: "sekwfwwf ",
     password: "3ega02l1jwS68gkobERhQmgvwvU2RLCC",
     database: "sekwfwwf",
