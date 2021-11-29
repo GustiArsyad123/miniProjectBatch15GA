@@ -16,7 +16,7 @@ class Users {
       const { firstName, lastName, email, password, image } = req.body;
       const hashPassword = encodePin(password);
 
-      // Find unique emailllllll
+      // Find unique email
       const findEmail = await user.findOne({
         where: { email },
       });
