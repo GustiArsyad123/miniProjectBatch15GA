@@ -5,8 +5,8 @@ const faker = require("faker");
 const cloudinary = require("cloudinary");
 cloudinary.config({
   cloud_name: "drta3xh4e",
-  api_key: "699989283326316",
-  api_secret: "urll8J8oczRkKJlCxHkLv6yQv9g",
+  api_key: process.env.SECRET_KEY_CLOUDINARY,
+  api_secret: process.env.SECRET_API_CLOUDINARY,
 });
 
 class Users {
@@ -16,7 +16,7 @@ class Users {
       const { firstName, lastName, email, password, image } = req.body;
       const hashPassword = encodePin(password);
 
-      // Find unique email
+      // Find unique emailllllll
       const findEmail = await user.findOne({
         where: { email },
       });

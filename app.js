@@ -34,7 +34,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Enable req.body (form-data)
-app.use(fileUpload());
+app.use(
+  fileUpload({
+    useTempFiles: true,
+  })
+);
 
 /* 
   Add public folder to be static folder
